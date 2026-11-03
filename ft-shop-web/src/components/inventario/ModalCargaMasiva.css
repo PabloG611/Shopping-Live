@@ -1,0 +1,320 @@
+/* ===========================================================
+   ModalCargaMasiva — diseño moderno y elegante
+   =========================================================== */
+
+.cm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(5px);
+  animation: cm-fade 0.18s ease;
+}
+@keyframes cm-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.cm-modal {
+  width: 100%;
+  max-width: 600px;
+  max-height: 88vh;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: cm-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes cm-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* ── Header con degradado de marca ── */
+.cm-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.15rem 1.4rem;
+  background: linear-gradient(135deg, #365072 0%, #24344a 100%);
+  color: #fff;
+}
+.cm-header__icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 42px; height: 42px; border-radius: 11px;
+  background: rgba(255, 255, 255, 0.18); color: #fff;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.cm-header__texts { flex: 1; min-width: 0; }
+.cm-header__title { margin: 0; font-size: 1.12rem; font-weight: 700; letter-spacing: 0.01em; }
+.cm-header__sub { margin: 0.1rem 0 0; font-size: 0.76rem; color: rgba(255, 255, 255, 0.85); }
+.cm-close {
+  width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.14);
+  color: #fff; font-size: 1.25rem; line-height: 1; cursor: pointer;
+  transition: background 0.15s ease; flex-shrink: 0;
+}
+.cm-close:hover { background: rgba(255, 255, 255, 0.28); }
+
+/* ── Tabs segmentados ── */
+.cm-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin: 1rem 1.4rem 0;
+  padding: 0.28rem;
+  background: #eef1f6;
+  border-radius: 12px;
+}
+.cm-tab {
+  flex: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  border: none; border-radius: 9px;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  background: transparent; color: #64748b;
+  transition: all 0.18s ease;
+}
+.cm-tab:hover:not(.is-active) { color: #334155; }
+.cm-tab.is-active {
+  background: #fff; color: #1e293b;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
+}
+.cm-tab.is-active.cm-tab--excel { color: #15803d; }
+
+/* ── Body ── */
+.cm-body { padding: 1.1rem 1.4rem; flex: 1; overflow: auto; }
+
+/* Banner de ayuda */
+.cm-help {
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  margin: 0 0 0.9rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  font-size: 0.78rem; line-height: 1.4; color: #475569;
+  background: #f8fafc; border: 1px solid #e8edf3;
+}
+.cm-help--excel { background: #f0fdf4; border-color: #c9f0d5; color: #3f6b4e; }
+.cm-help__icon { flex-shrink: 0; margin-top: 1px; opacity: 0.8; }
+
+/* Textarea */
+.cm-textarea {
+  width: 100%; padding: 0.8rem;
+  border: 1.5px solid #e2e8f0; border-radius: 12px;
+  font-size: 0.88rem; font-family: ui-monospace, Consolas, monospace;
+  resize: vertical; outline: none; background: #fafbfd;
+  transition: border-color 0.15s, background 0.15s;
+}
+.cm-textarea:focus { border-color: #365072; background: #fff; }
+
+.cm-textarea-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 0.5rem;
+}
+.cm-count { font-size: 0.74rem; font-weight: 600; color: #94a3b8; }
+.cm-count.is-active { color: #365072; }
+.cm-link-danger {
+  font-size: 0.72rem; background: transparent; border: none;
+  color: #ef4444; cursor: pointer; font-weight: 600;
+}
+
+/* Barra de acciones Excel */
+.cm-excel-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.cm-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem; border-radius: 9px;
+  font-size: 0.78rem; font-weight: 600; cursor: pointer;
+  border: 1px solid transparent; transition: all 0.15s ease;
+}
+.cm-btn--import { background: #15803d; color: #fff; }
+.cm-btn--import:hover { background: #166534; }
+.cm-btn--export { background: #365072; color: #fff; }
+.cm-btn--export:hover { background: #2a4058; }
+.cm-btn--ghost { background: #fff; color: #64748b; border-color: #e2e8f0; }
+.cm-btn--ghost:hover { border-color: #94a3b8; color: #334155; }
+.cm-btn:disabled { background: #eef1f6; color: #b6bfcc; border-color: #eef1f6; cursor: not-allowed; }
+
+/* Chip de archivo cargado */
+.cm-file {
+  display: flex; align-items: center; gap: 0.55rem;
+  margin-bottom: 0.85rem; padding: 0.6rem 0.85rem;
+  background: #f8fafc; border: 1px solid #e8edf3; border-radius: 10px;
+}
+.cm-file__icon { color: #15803d; flex-shrink: 0; }
+.cm-file__name { font-size: 0.8rem; font-weight: 600; color: #1e293b; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cm-file__rows {
+  font-size: 0.7rem; font-weight: 700; color: #15803d;
+  background: #dcfce7; border-radius: 999px; padding: 0.15rem 0.55rem; white-space: nowrap;
+}
+.cm-file__del { background: transparent; border: none; color: #ef4444; cursor: pointer; font-size: 0.9rem; line-height: 1; padding: 0 0.15rem; }
+
+/* Tabla de preview */
+.cm-preview {
+  border: 1px solid #e8edf3; border-radius: 12px; overflow: hidden;
+  margin-bottom: 0.85rem;
+}
+.cm-preview__scroll { max-height: 190px; overflow-y: auto; }
+.cm-table { width: 100%; font-size: 0.74rem; border-collapse: collapse; }
+.cm-table thead th {
+  position: sticky; top: 0;
+  background: #f1f5f9; color: #475569;
+  padding: 0.5rem 0.7rem; text-align: left;
+  font-weight: 700; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.04em;
+  border-bottom: 1px solid #e2e8f0;
+}
+.cm-table tbody td { padding: 0.45rem 0.7rem; border-bottom: 1px solid #f1f5f9; color: #475569; }
+.cm-table tbody tr:last-child td { border-bottom: none; }
+.cm-table tbody tr:nth-child(even) { background: #fafbfc; }
+.cm-table__idx { text-align: center; color: #a3adba; width: 38px; }
+.cm-table__placa { font-weight: 700; font-family: ui-monospace, monospace; color: #1e293b; }
+.cm-preview__more { text-align: center; font-size: 0.68rem; color: #94a3b8; padding: 5px; margin: 0; background: #f8fafc; }
+
+/* ── Resultado de carga ── */
+.cm-res { margin-top: 1rem; border-radius: 12px; overflow: hidden; border: 1px solid #e8edf3; }
+.cm-res__head {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.6rem 0.95rem; font-size: 0.85rem; font-weight: 700;
+}
+.cm-res__head.is-ok { background: #dcfce7; color: #166534; }
+.cm-res__head.is-warn { background: #fef3c7; color: #92400e; }
+.cm-res__body { padding: 0.7rem 0.95rem; display: flex; flex-direction: column; gap: 0.45rem; }
+.cm-res__line { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #5c6474; }
+.cm-res__dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.cm-res__dot--warn { background: #f59e0b; }
+.cm-res__dot--gray { background: #94a3b8; }
+.cm-res__dot--danger { background: #dc2626; }
+.cm-res__placas {
+  margin: 0.15rem 0 0 1rem; padding: 0.35rem 0.55rem;
+  background: #fef2f2; border-radius: 6px;
+  font-family: ui-monospace, monospace; font-size: 0.72rem; color: #dc2626; word-break: break-all;
+}
+
+/* ── Footer ── */
+.cm-footer {
+  padding: 0.9rem 1.4rem; border-top: 1px solid #eef1f6;
+  display: flex; justify-content: space-between; align-items: center;
+  background: #fafbfc;
+}
+.cm-footer__btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.55rem 1.5rem; font-size: 0.83rem; font-weight: 600;
+  border-radius: 9px; cursor: pointer; border: none; transition: all 0.15s ease;
+}
+.cm-footer__btn--cancel { background: #fff; color: #475569; border: 1px solid #dbe1e8; }
+.cm-footer__btn--cancel:hover { background: #f1f5f9; }
+.cm-footer__btn--primary { background: #365072; color: #fff; }
+.cm-footer__btn--primary:hover { background: #2a4058; }
+.cm-footer__btn--excel { background: #15803d; color: #fff; }
+.cm-footer__btn--excel:hover { background: #166534; }
+.cm-footer__btn:disabled { background: #eef1f6; color: #b6bfcc; cursor: not-allowed; }
+
+/* ── Resumen detallado de la importación (tarjetas de métrica por grupo) ── */
+.cm-resumen {
+  margin-top: 0.6rem;
+  padding: 0.9rem 1rem 1rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+.cm-resumen__titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-bottom: 0.65rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #eef2f7;
+}
+.cm-resumen__titulo svg { color: #64748b; }
+/* Badge con el total agregado, a la derecha del título. */
+.cm-resumen__total {
+  margin-left: auto;
+  background: #dcfce7;
+  color: #15803d;
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+}
+.cm-resumen__grupo {
+  margin-bottom: 0.85rem;
+}
+.cm-resumen__grupo:last-child {
+  margin-bottom: 0;
+}
+.cm-resumen__grupo-label {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+.cm-resumen__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+.cm-resumen__cards--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.cm-resumen__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: 0.6rem 0.4rem;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  text-align: center;
+}
+.cm-resumen__card-num {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #303d50;
+}
+.cm-resumen__card-lbl {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+/* Variantes de color (borde + número) */
+.cm-resumen__card--ok   { border-color: #bbf7d0; }
+.cm-resumen__card--ok   .cm-resumen__card-num { color: #15803d; }
+.cm-resumen__card--baja { border-color: #fecaca; }
+.cm-resumen__card--baja .cm-resumen__card-num { color: #dc2626; }
+.cm-resumen__card--nota { border-color: #c7d2fe; }
+.cm-resumen__card--nota .cm-resumen__card-num { color: #4338ca; }
+.cm-resumen__card--user { border-color: #bae6fd; }
+.cm-resumen__card--user .cm-resumen__card-num { color: #0369a1; }
+.cm-resumen__card--warn { border-color: #fde68a; }
+.cm-resumen__card--warn .cm-resumen__card-num { color: #b45309; }
+.cm-resumen__card--gray { border-color: #e2e8f0; }
+.cm-resumen__card--gray .cm-resumen__card-num { color: #64748b; }
+.cm-resumen__card--novedad { border-color: #e9d5ff; }
+.cm-resumen__card--novedad .cm-resumen__card-num { color: #9333ea; }
+.cm-resumen__nota-novedad {
+  margin: 0.5rem 0 0;
+  font-size: 0.72rem;
+  color: #9333ea;
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  line-height: 1.35;
+}
+/* Tarjeta en cero: atenuada, para que no reste protagonismo a las que sí tienen datos. */
+.cm-resumen__card.is-cero {
+  opacity: 0.5;
+}

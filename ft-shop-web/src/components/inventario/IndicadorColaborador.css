@@ -1,0 +1,81 @@
+/* Indicador de colaboración — elegante y discreto, sin avatares de iniciales. */
+.indicador-colab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.4rem;
+  background: linear-gradient(135deg, #eef4ff 0%, #e6eefc 100%);
+  border: 1px solid #c9dbf7;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(30, 64, 175, 0.08);
+  white-space: nowrap;
+
+  /* Animación suave de entrada/salida (opacity + scale). Estado inicial oculto;
+     la clase --visible lo lleva al estado final. No usa layout (width/height)
+     para no reflowear el header. */
+  opacity: 0;
+  transform: scale(0.92) translateY(-2px);
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.34, 1.4, 0.64, 1);
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+.indicador-colab--visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicador-colab { transition: opacity 0.15s linear; transform: none; }
+  .indicador-colab--visible { transform: none; }
+}
+
+.indicador-colab__icono {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  font-size: 0.72rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.indicador-colab__texto {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.indicador-colab__label {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.indicador-colab__nombre {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+/* Punto verde "en vivo" con latido suave. */
+.indicador-colab__pulso {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  margin-left: 0.15rem;
+  flex-shrink: 0;
+  animation: indcolab-pulse 1.8s infinite;
+}
+
+@keyframes indcolab-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
+  50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
+}

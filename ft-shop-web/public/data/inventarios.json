@@ -1,0 +1,433 @@
+{
+  "version": 1,
+  "personas": [
+    {
+      "numeroIdentificacion": "1234567890",
+      "persona": {
+        "nombreCompleto": "María Fernanda López Ruiz",
+        "tipoIdentificacion": "C.C.",
+        "numeroIdentificacion": "1234567890"
+      },
+      "bienes": [
+        {
+          "id": "b1",
+          "placa": "8093281",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "5964814",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "5529916",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F7640035",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F5557738",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        },
+        {
+          "id": "b1",
+          "placa": "3346063",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "1194207",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "8014876",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F5117628",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F3047521",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        },
+        {
+          "id": "b1",
+          "placa": "7578321",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "5189785",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "3061868",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F9852745",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F7733756",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        },
+        {
+          "id": "b1",
+          "placa": "3187346",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "1059883",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "7426739",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F7387950",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F4998815",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        },
+        {
+          "id": "b1",
+          "placa": "5274594",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "5440872",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "3010613",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F2543567",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F9767150",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        },
+        {
+          "id": "b1",
+          "placa": "1170117",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "7283080",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "7670503",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F9596728",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F7179181",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        },
+        {
+          "id": "b1",
+          "placa": "5217047",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "3350856",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "1316454",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F4749826",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F2760488",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        },
+        {
+          "id": "b1",
+          "placa": "9851013",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "7700041",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "5662898",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F2894067",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F9743443",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        },
+        {
+          "id": "b1",
+          "placa": "3493604",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "3036411",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "9764962",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F6961928",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F4868322",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        },
+        {
+          "id": "b1",
+          "placa": "7375788",
+          "descripcion": "Computador portátil",
+          "serial": "SN-LAP-77821",
+          "codigo": "INT-N-1001",
+          "tipo": "normal"
+        },
+        {
+          "id": "b2",
+          "placa": "5510745",
+          "descripcion": "Monitor LED 24\"",
+          "serial": null,
+          "codigo": "INT-N-1002",
+          "tipo": "normal"
+        },
+        {
+          "id": "b3",
+          "placa": "5269153",
+          "descripcion": "Escáner documental",
+          "serial": "SN-SC-9921",
+          "codigo": "INT-N-1003",
+          "tipo": "normal"
+        },
+        {
+          "id": "f1",
+          "placa": "F4960277",
+          "descripcion": "Lote urbano sector Floresta",
+          "serial": null,
+          "codigo": "INT-F-2001",
+          "tipo": "floresta"
+        },
+        {
+          "id": "f2",
+          "placa": "F2732697",
+          "descripcion": "Construcción almacén auxiliar",
+          "serial": null,
+          "codigo": "INT-F-2002",
+          "tipo": "floresta"
+        }
+      ]
+    },
+    {
+      "numeroIdentificacion": "9876543210",
+      "persona": {
+        "nombreCompleto": "Carlos Andrés Pérez Gómez",
+        "tipoIdentificacion": "C.C.",
+        "numeroIdentificacion": "9876543210"
+      },
+      "bienes": [
+        {
+          "id": "o1",
+          "placa": "2855004",
+          "descripcion": "Impresora multifuncional",
+          "serial": "SN-PR-441",
+          "codigo": "INT-N-9001",
+          "tipo": "normal"
+        }
+      ]
+    }
+  ]
+}

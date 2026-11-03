@@ -1,0 +1,42 @@
+{
+  "dependencias": [
+    { "value": "Dirección Secretaría General", "label": "Dirección Secretaría General" },
+    { "value": "Dirección Grupo Almacén General", "label": "Dirección Grupo Almacén General" },
+    { "value": "Subdirección de Apoyo Logístico", "label": "Subdirección de Apoyo Logístico" },
+    { "value": "Oficina Jurídica", "label": "Oficina Jurídica" }
+  ],
+  "grupos": [
+    { "value": "Apoyo administrativo", "label": "Apoyo administrativo" },
+    { "value": "Almacén e inventarios", "label": "Almacén e inventarios" },
+    { "value": "Tecnología e información", "label": "Tecnología e información" },
+    { "value": "Operaciones de campo", "label": "Operaciones de campo" }
+  ],
+  "sedes": [
+    { "value": "Bogotá", "label": "Bogotá" },
+    { "value": "Medellín", "label": "Medellín" },
+    { "value": "Cali", "label": "Cali" },
+    { "value": "Barranquilla", "label": "Barranquilla" }
+  ],
+  "receptoresRegistrados": [
+    {
+      "tipoIdentificacion": "C.C.",
+      "numeroIdentificacion": "9876543210",
+      "nombreCompleto": "Mariana López García",
+      "cargo": "Profesional universitario",
+      "dependencia": "Dirección Secretaría General",
+      "grupo": "Apoyo administrativo",
+      "sede": "Bogotá",
+      "numeroContrato": "CT-UNP-2024-015"
+    },
+    {
+      "tipoIdentificacion": "C.C.",
+      "numeroIdentificacion": "8001234567",
+      "nombreCompleto": "Carlos Andrés Mejía Ruiz",
+      "cargo": "Técnico operativo",
+      "dependencia": "Dirección Grupo Almacén General",
+      "grupo": "Almacén e inventarios",
+      "sede": "Medellín",
+      "numeroContrato": ""
+    }
+  ]
+}

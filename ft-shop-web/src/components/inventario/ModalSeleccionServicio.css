@@ -1,0 +1,117 @@
+/* ─── Modal de selección de servicio destino (Incluir al inventario) ───────── */
+.gi-selserv-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 1rem;
+}
+
+.gi-selserv {
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3);
+  overflow: hidden;
+}
+
+.gi-selserv__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.1rem 1.25rem 0.9rem;
+  border-bottom: 1px solid #eef2f7;
+}
+.gi-selserv__icono {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e7ebf1;
+  color: #303d50;
+}
+.gi-selserv__titulos { flex: 1; min-width: 0; }
+.gi-selserv__titulo { margin: 0; font-size: 1rem; font-weight: 800; color: #1e3a5f; }
+.gi-selserv__sub { margin: 0.2rem 0 0; font-size: 0.8rem; color: #64748b; }
+.gi-selserv__cerrar {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gi-selserv__cerrar:hover { background: #f1f5f9; color: #334155; }
+
+.gi-selserv__body {
+  padding: 0.9rem 1.25rem 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.gi-selserv__filtro {
+  width: 100%;
+  padding: 0.5rem 0.85rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  outline: none;
+}
+.gi-selserv__filtro:focus { border-color: #1565c0; }
+
+.gi-selserv__hint {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.84rem;
+  color: #64748b;
+}
+
+.gi-selserv__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.gi-selserv__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.gi-selserv__item:hover {
+  border-color: #303d50;
+  background: #f8fafc;
+}
+.gi-selserv__item-codigo {
+  font-family: ui-monospace, monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #303d50;
+}
+.gi-selserv__item-nombre {
+  font-size: 0.8rem;
+  color: #64748b;
+}

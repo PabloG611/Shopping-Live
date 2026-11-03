@@ -1,0 +1,825 @@
+/* Inventario Físico */
+
+.inventario-inicio {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.inventario-inicio h3 {
+  color: #303d50;
+  margin-bottom: 0.5rem;
+}
+
+.inventario-inicio p {
+  color: #5c6474;
+  margin-bottom: 1.5rem;
+}
+
+.inventario-inicio__form {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.inventario-inicio__form input {
+  flex: 1;
+}
+
+/* Sesión info */
+.inventario-sesion-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: rgb(48 61 80 / 0.05);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.inventario-sesion-info__nombre {
+  font-weight: 600;
+  color: #303d50;
+}
+
+.inventario-sesion-info__cerrar {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid #d13c47;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #d13c47;
+  background: transparent;
+  cursor: pointer;
+}
+
+.inventario-sesion-info__cerrar:hover {
+  background: #d13c47;
+  color: #fff;
+}
+
+/* Resumen */
+.inventario-resumen {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.inventario-resumen__item {
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+  padding: 0.6rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid rgb(48 61 80 / 0.1);
+}
+
+.inventario-resumen__num {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.inventario-resumen__label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #5c6474;
+}
+
+.inventario-resumen__item--total { border-color: #303d50; }
+.inventario-resumen__item--total .inventario-resumen__num { color: #303d50; }
+.inventario-resumen__item--ok { border-color: #1a7a3a; background: rgb(26 122 58 / 0.04); }
+.inventario-resumen__item--ok .inventario-resumen__num { color: #1a7a3a; }
+.inventario-resumen__item--pendiente { border-color: #c4880e; background: rgb(196 136 14 / 0.04); }
+.inventario-resumen__item--pendiente .inventario-resumen__num { color: #c4880e; }
+.inventario-resumen__item--sin { border-color: #6b3fa0; background: rgb(107 63 160 / 0.04); }
+.inventario-resumen__item--sin .inventario-resumen__num { color: #6b3fa0; }
+.inventario-resumen__item--no { border-color: #d13c47; background: rgb(209 60 71 / 0.04); }
+.inventario-resumen__item--no .inventario-resumen__num { color: #d13c47; }
+
+/* Scanner input */
+.inventario-scanner {
+  margin-bottom: 1rem;
+}
+
+.inventario-scanner__input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.inventario-scanner__input {
+  flex: 1;
+  height: 48px;
+  padding: 0 1rem;
+  border: 2px solid #303d50;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #303d50;
+  text-transform: uppercase;
+}
+
+.inventario-scanner__input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(48 61 80 / 0.15);
+}
+
+.inventario-scanner__btn-camara {
+  height: 48px;
+  padding: 0 1.2rem;
+  border: 2px solid #303d50;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #303d50;
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.inventario-scanner__btn-camara:hover {
+  background: #303d50;
+  color: #fff;
+}
+
+.inventario-scanner__camara {
+  display: none;
+  margin-top: 0.75rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.inventario-scanner__camara--activa {
+  display: block;
+}
+
+/* Alerta */
+.inventario-alerta {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  animation: inventario-alerta-in 0.3s ease;
+}
+
+@keyframes inventario-alerta-in {
+  from { transform: translateY(-5px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.inventario-alerta--pendiente {
+  background: rgb(196 136 14 / 0.1);
+  border: 1px solid rgb(196 136 14 / 0.3);
+  color: #946200;
+}
+
+.inventario-alerta--sin_responsable {
+  background: rgb(107 63 160 / 0.08);
+  border: 1px solid rgb(107 63 160 / 0.2);
+  color: #6b3fa0;
+}
+
+.inventario-alerta--no_encontrado {
+  background: rgb(209 60 71 / 0.08);
+  border: 1px solid rgb(209 60 71 / 0.2);
+  color: #d13c47;
+}
+
+/* Lecturas tabla */
+.inventario-lecturas {
+  margin-top: 1rem;
+}
+
+.inventario-lecturas h4 {
+  margin: 0 0 0.5rem;
+  color: #303d50;
+}
+
+.inventario-estado {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.inventario-estado--inventariado { color: #1a7a3a; background: rgb(26 122 58 / 0.1); }
+.inventario-estado--pendiente { color: #946200; background: rgb(196 136 14 / 0.1); }
+.inventario-estado--sin_responsable { color: #6b3fa0; background: rgb(107 63 160 / 0.08); }
+.inventario-estado--no_encontrado { color: #d13c47; background: rgb(209 60 71 / 0.08); }
+
+.inventario-fila--pendiente { box-shadow: inset 3px 0 0 0 #c4880e; }
+.inventario-fila--sin_responsable { box-shadow: inset 3px 0 0 0 #6b3fa0; }
+.inventario-fila--no_encontrado { box-shadow: inset 3px 0 0 0 #d13c47; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INVENTARIO FÍSICO - ADMIN FLORESTA
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.inventario-fisico {
+  padding: 0.5rem 0;
+}
+
+.inventario-fisico__header {
+  margin-bottom: 1.5rem;
+}
+
+.inventario-fisico__titulo {
+  margin: 0 0 0.5rem;
+  color: #303d50;
+  font-size: 1.3rem;
+}
+
+.inventario-fisico__descripcion {
+  margin: 0;
+  color: #5c6474;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Estadísticas */
+.inventario-fisico__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+}
+
+.inventario-fisico__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 2px solid;
+  background: rgb(255 255 255 / 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.inventario-fisico__stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+}
+
+.inventario-fisico__stat-numero {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.inventario-fisico__stat-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #5c6474;
+  text-align: center;
+}
+
+.inventario-fisico__stat--success {
+  border-color: #1a7a3a;
+  background: rgb(26 122 58 / 0.03);
+}
+
+.inventario-fisico__stat--success .inventario-fisico__stat-numero {
+  color: #1a7a3a;
+}
+
+.inventario-fisico__stat--warning {
+  border-color: #c4880e;
+  background: rgb(196 136 14 / 0.03);
+}
+
+.inventario-fisico__stat--warning .inventario-fisico__stat-numero {
+  color: #c4880e;
+}
+
+.inventario-fisico__stat--info {
+  border-color: #2563eb;
+  background: rgb(37 99 235 / 0.03);
+}
+
+.inventario-fisico__stat--info .inventario-fisico__stat-numero {
+  color: #2563eb;
+}
+
+.inventario-fisico__stat--error {
+  border-color: #d13c47;
+  background: rgb(209 60 71 / 0.03);
+}
+
+.inventario-fisico__stat--error .inventario-fisico__stat-numero {
+  color: #d13c47;
+}
+
+/* Scanner */
+.inventario-fisico__scanner {
+  margin-bottom: 0.75rem;
+  position: sticky;
+  top: 0;
+  /* Debe quedar por encima del thead sticky de la tabla de bienes
+     inventariados (.bienes-table thead th tiene z-index: 10), de lo
+     contrario el encabezado de la tabla se solapa sobre el lector. */
+  z-index: 20;
+  background: #fff;
+  padding: 4px 0;
+}
+
+/* Alertas */
+.inventario-fisico__alerta {
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inventario-fisico__alerta--success {
+  background: rgb(26 122 58 / 0.1);
+  border: 2px solid rgb(26 122 58 / 0.3);
+  color: #1a7a3a;
+}
+
+.inventario-fisico__alerta--warning {
+  background: rgb(196 136 14 / 0.1);
+  border: 2px solid rgb(196 136 14 / 0.3);
+  color: #946200;
+}
+
+.inventario-fisico__alerta--error {
+  background: rgb(209 60 71 / 0.1);
+  border: 2px solid rgb(209 60 71 / 0.3);
+  color: #d13c47;
+}
+
+/* Acciones */
+.inventario-fisico__acciones {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Badges de estado */
+.inventario-fisico__badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.inventario-fisico__badge--inventariado {
+  background: rgb(26 122 58 / 0.12);
+  color: #1a7a3a;
+}
+
+.inventario-fisico__badge--no-encontrado {
+  background: rgb(209 60 71 / 0.12);
+  color: #d13c47;
+}
+
+.inventario-fisico__badge--sin-responsable {
+  background: rgb(196 136 14 / 0.12);
+  color: #946200;
+}
+
+.inventario-fisico__badge--cambio-responsable {
+  background: rgb(37 99 235 / 0.12);
+  color: #2563eb;
+}
+
+/* Modal */
+.inventario-fisico__modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgb(0 0 0 / 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.inventario-fisico__modal {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.3);
+  animation: modalSlideUp 0.3s ease;
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inventario-fisico__modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgb(48 61 80 / 0.1);
+  position: relative;
+}
+
+.inventario-fisico__modal-header h5 {
+  margin: 0;
+  color: #303d50;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.inventario-fisico__modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #5c6474;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.inventario-fisico__modal-close:hover {
+  background: rgb(48 61 80 / 0.08);
+  color: #303d50;
+}
+
+.inventario-fisico__modal-body {
+  padding: 1.5rem;
+}
+
+.inventario-fisico__modal-footer {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgb(48 61 80 / 0.1);
+  background: rgb(48 61 80 / 0.02);
+}
+
+/* Tabla de bienes procesados - Scroll horizontal cuando no cabe */
+.inventario-fisico .bienes-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.inventario-fisico .bienes-table-frame {
+  width: 100%;
+  min-width: 700px;
+}
+
+.inventario-fisico .bienes-table {
+  width: 100%;
+  table-layout: fixed;
+  font-size: 0.9rem;
+}
+
+.inventario-fisico .bienes-table td,
+.inventario-fisico .bienes-table th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.inventario-fisico .bienes-table-scroll {
+  overflow-x: hidden;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .inventario-fisico__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .inventario-fisico__modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+  
+  /* Solo en móviles permitir scroll horizontal */
+  .inventario-fisico .bienes-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .inventario-fisico .bienes-table-frame {
+    min-width: 1000px;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NUEVOS ESTILOS - INVENTARIO FÍSICO CON LOCALSTORAGE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Info Banner */
+.inventario-info-banner {
+  padding: 1rem 1.25rem;
+  background: rgb(37 99 235 / 0.06);
+  border-left: 4px solid #2563eb;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.inventario-info-banner p {
+  margin: 0;
+  color: #1e40af;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Scanner Label */
+.inventario-scanner__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #303d50;
+  letter-spacing: 0.03em;
+}
+
+.inventario-scanner__label .required {
+  color: #d13c47;
+}
+
+/* Botón Procesar */
+.inventario-scanner__btn-procesar {
+  height: 48px;
+  padding: 0 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: #303d50;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.inventario-scanner__btn-procesar:hover:not(:disabled) {
+  background: #1e2936;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(48 61 80 / 0.2);
+}
+
+.inventario-scanner__btn-procesar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Header de lecturas */
+.inventario-lecturas__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.inventario-lecturas__header h4 {
+  margin: 0;
+  color: #303d50;
+  font-size: 1.2rem;
+}
+
+.inventario-lecturas__actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Botones de acción */
+.btn-danger-outline {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid #d13c47;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #d13c47;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-danger-outline:hover {
+  background: #d13c47;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(209 60 71 / 0.2);
+}
+
+.btn-primary {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  background: #2563eb;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(37 99 235 / 0.3);
+}
+
+/* Tabla de inventario */
+.inventario-table {
+  font-size: 0.85rem;
+}
+
+.inventario-table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 0.5rem;
+}
+
+.inventario-table td {
+  padding: 0.75rem 0.5rem;
+  vertical-align: middle;
+}
+
+.inventario-table__num {
+  text-align: center;
+  font-weight: 600;
+  color: #5c6474;
+}
+
+/* Input de serial editable */
+.inventario-table__input-serial {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  transition: all 0.15s;
+}
+
+.inventario-table__input-serial:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgb(37 99 235 / 0.1);
+}
+
+/* Select de estado */
+.inventario-table__select-estado {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.inventario-table__select-estado--B {
+  border-color: #1a7a3a;
+  background: rgb(26 122 58 / 0.08);
+  color: #1a7a3a;
+}
+
+.inventario-table__select-estado--R {
+  border-color: #c4880e;
+  background: rgb(196 136 14 / 0.08);
+  color: #946200;
+}
+
+.inventario-table__select-estado--M {
+  border-color: #d13c47;
+  background: rgb(209 60 71 / 0.08);
+  color: #d13c47;
+}
+
+.inventario-table__select-estado:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+}
+
+/* Timestamp */
+.inventario-table__timestamp {
+  font-size: 0.75rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* Botón eliminar */
+.inventario-table__btn-eliminar {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.inventario-table__btn-eliminar:hover {
+  background: rgb(209 60 71 / 0.1);
+  transform: scale(1.1);
+}
+
+/* Mensaje vacío */
+.inventario-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6b7280;
+}
+
+.inventario-empty p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .inventario-scanner__input-row {
+    flex-direction: column;
+  }
+
+  .inventario-scanner__btn-procesar,
+  .inventario-scanner__btn-camara {
+    width: 100%;
+  }
+
+  .inventario-lecturas__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inventario-lecturas__actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-danger-outline,
+  .btn-primary {
+    width: 100%;
+  }
+
+  .inventario-table {
+    font-size: 0.75rem;
+  }
+
+  .inventario-table th,
+  .inventario-table td {
+    padding: 0.5rem 0.3rem;
+  }
+}

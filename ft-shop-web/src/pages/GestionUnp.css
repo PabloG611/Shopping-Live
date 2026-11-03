@@ -1,0 +1,1115 @@
+/* Admin Floresta - Formulario de búsqueda (mismo estilo que receptor-trx) */
+
+.floresta-busqueda {
+  margin-bottom: 1.5rem;
+}
+
+.floresta-busqueda__fieldset {
+  width: 100%;
+  padding: 1.1rem 1.25rem 1.35rem;
+  border: 1px solid rgb(48 61 80 / 0.18);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgb(48 61 80 / 0.08);
+  text-align: left;
+}
+
+.floresta-busqueda__legend {
+  margin: 0 0 0.85rem;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #303d50;
+}
+
+.floresta-busqueda__fila {
+  display: grid;
+  grid-template-columns: minmax(11rem, 14rem) 1fr auto;
+  gap: 0.75rem 1rem;
+  align-items: end;
+}
+
+.floresta-busqueda__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.floresta-busqueda__campo--grow {
+  min-width: 0;
+}
+
+.floresta-busqueda__campo--btn {
+  align-self: end;
+}
+
+/* Labels ahora manejados por FloatingField */
+.floresta-busqueda__label {
+  display: none;
+}
+
+.floresta-busqueda__label::after {
+  content: '';
+}
+
+.floresta-busqueda__select,
+.floresta-busqueda__input {
+  height: 44px;
+  padding: 0.5rem 0.75rem 0;
+  border: 1px solid rgb(48 61 80 / 0.25);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #212529;
+  background: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.floresta-busqueda__select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+.floresta-busqueda__select:focus,
+.floresta-busqueda__input:focus {
+  outline: none;
+  border-color: #303d50;
+  box-shadow: 0 0 0 3px rgb(48 61 80 / 0.12);
+}
+
+.floresta-busqueda__input::placeholder {
+  color: rgb(48 61 80 / 0.4);
+}
+
+/* FloatingField sobre SelectorCoordinador */
+.floresta-busqueda__campo [data-selector="coordinador"] {
+  z-index: 1;
+}
+
+.floresta-busqueda__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 40px;
+  padding: 0 1.4rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: #303d50;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 2px 6px rgb(48 61 80 / 0.2);
+}
+
+.floresta-busqueda__btn:hover:not(:disabled) {
+  background: #1e2a38;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgb(48 61 80 / 0.25);
+}
+
+.floresta-busqueda__btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.floresta-busqueda__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@media (max-width: 640px) {
+  .floresta-busqueda__fila {
+    grid-template-columns: 1fr;
+  }
+
+  .floresta-busqueda__btn {
+    width: 100%;
+  }
+}
+
+
+/* ─── Detalle de bien por placa ─────────────────────────────────────────── */
+
+.floresta-detalle {
+  margin-top: 1.5rem;
+  animation: floresta-fadeIn 0.3s ease;
+}
+
+@keyframes floresta-fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.floresta-detalle__card {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgb(48 61 80 / 0.15);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgb(48 61 80 / 0.07);
+}
+
+.floresta-detalle__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgb(48 61 80 / 0.08);
+}
+
+.floresta-detalle__placa {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #303d50;
+  letter-spacing: 0.02em;
+}
+
+.floresta-detalle__estado {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+}
+
+.floresta-detalle__estado--activo {
+  color: #1a7a3a;
+  background: rgb(26 122 58 / 0.1);
+}
+
+.floresta-detalle__estado--almacen {
+  color: #8a6d00;
+  background: rgb(138 109 0 / 0.1);
+}
+
+.floresta-detalle__estado--baja {
+  color: #d13c47;
+  background: rgb(209 60 71 / 0.08);
+}
+
+.floresta-detalle__info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.floresta-detalle__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.floresta-detalle__info-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgb(48 61 80 / 0.6);
+}
+
+.floresta-detalle__info-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.floresta-detalle__btn-transferir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid #303d50;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #303d50;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.floresta-detalle__btn-transferir:hover {
+  background: #303d50;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgb(48 61 80 / 0.2);
+}
+
+/* Historial */
+
+.floresta-detalle__historial {
+  margin-top: 1.5rem;
+}
+
+.floresta-detalle__historial-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #303d50;
+}
+
+.floresta-detalle__historial-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: #303d50;
+  border-radius: 20px;
+}
+
+.floresta-detalle__tipo {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.floresta-detalle__tipo--transferencia { color: #303d50; background: rgb(48 61 80 / 0.1); }
+.floresta-detalle__tipo--asignacion { color: #1a7a3a; background: rgb(26 122 58 / 0.1); }
+.floresta-detalle__tipo--reintegro { color: #8a6d00; background: rgb(138 109 0 / 0.1); }
+.floresta-detalle__tipo--baja { color: #d13c47; background: rgb(209 60 71 / 0.08); }
+.floresta-detalle__tipo--entrada { color: #1a5a7a; background: rgb(26 90 122 / 0.1); }
+.floresta-detalle__tipo--salida { color: #6b3fa0; background: rgb(107 63 160 / 0.08); }
+
+.floresta-detalle__cc {
+  color: rgb(48 61 80 / 0.5);
+  font-size: 0.78rem;
+}
+
+
+/* Botón acción en tabla */
+.floresta-tabla__btn-accion {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid #303d50;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #303d50;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.floresta-tabla__btn-accion:hover {
+  background: #303d50;
+  color: #fff;
+}
+
+.floresta-tabla__btn-accion--inventariar {
+  background: #1a7a3a;
+  color: #fff;
+  border: 1.5px solid #1a7a3a;
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(26, 122, 58, 0.25);
+  white-space: nowrap;
+}
+
+.floresta-tabla__btn-accion--inventariar:hover {
+  background: #14612e;
+  border-color: #14612e;
+  box-shadow: 0 3px 8px rgba(26, 122, 58, 0.4);
+  transform: translateY(-1px);
+}
+
+.floresta-tabla__btn-accion--inventariar:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(26, 122, 58, 0.3);
+}
+
+.floresta-tabla__btn-accion--eliminar {
+  background: #fff;
+  color: #d13c47;
+  border: 1.5px solid #d13c47;
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.floresta-tabla__btn-accion--eliminar:hover {
+  background: #d13c47;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(209, 60, 71, 0.35);
+  transform: translateY(-1px);
+}
+
+.floresta-tabla__btn-accion--eliminar:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(209, 60, 71, 0.3);
+}
+
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); box-shadow: 0 0 8px rgba(209, 60, 71, 0.4); }
+}
+
+
+.floresta-detalle__descripcion {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  color: rgb(48 61 80 / 0.7);
+  font-weight: 400;
+}
+
+
+/* Agregar bien */
+.floresta-agregar {
+  margin-top: 1.5rem;
+  animation: floresta-fadeIn 0.3s ease;
+}
+
+
+/* Botón marcar como inventariado */
+.floresta-detalle__btn-inventariar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid #303d50;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #303d50;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.floresta-detalle__btn-inventariar:hover:not(:disabled) {
+  background: #303d50;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgb(48 61 80 / 0.2);
+}
+
+.floresta-detalle__btn-inventariar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANIMACIONES PARA INVENTARIO FÍSICO
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Efecto incandescente para el último bien agregado */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    background-color: transparent;
+    border: 2px solid transparent;
+  }
+  50% {
+    box-shadow: 0 0 30px 8px rgba(40, 167, 69, 0.8),
+                inset 0 0 30px 5px rgba(40, 167, 69, 0.3);
+    background-color: rgba(40, 167, 69, 0.15);
+    border: 2px solid rgba(40, 167, 69, 0.6);
+  }
+}
+
+/* Pulsante permanente para la fila del último bien */
+@keyframes pulseRow {
+  0%, 100% {
+    background-color: rgba(5, 150, 105, 0.05);
+  }
+  50% {
+    background-color: rgba(5, 150, 105, 0.14);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    border-left-color: transparent;
+    opacity: 0.7;
+  }
+  to {
+    border-left-color: #059669;
+    opacity: 1;
+  }
+}
+
+.inventario-ultimo-bien {
+  animation: pulseRow 2.5s ease-in-out infinite, slideInLeft 0.3s ease-out !important;
+  border-left: 4px solid #059669 !important;
+  background-color: rgba(5, 150, 105, 0.06) !important;
+  box-shadow: inset 0 0 0 1px rgba(5, 150, 105, 0.15);
+}
+
+.inventario-bien-sin-placa {
+  background: #fff8e1 !important;
+  border-left: 4px solid #ff8f00 !important;
+}
+
+.inventario-bien-sin-placa td {
+  color: #5d4037 !important;
+}
+
+.inventario-bien-sin-placa .bienes-table__placa {
+  color: #e65100 !important;
+  font-style: italic;
+}
+
+/* Efecto pulsante para el icono de alerta de observaciones */
+@keyframes pulseAlert {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TABS ADMIN FLORESTA - ESTILO CARD (como admin-base-datos)
+   ═══════════════════════════════════════════════════════════════ */
+
+.transferencia-page .consulta-tabs__list {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  background: rgb(48 61 80 / 0.06);
+  border-radius: 50px;
+  margin-bottom: 1.5rem;
+  width: fit-content;
+}
+
+.transferencia-page .consulta-tabs__tab {
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  padding: 0.55rem 1.2rem;
+  min-height: auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5c6474;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.transferencia-page .consulta-tabs__tab::after {
+  display: none;
+}
+
+.transferencia-page .consulta-tabs__tab:hover::after {
+  display: none;
+}
+
+.transferencia-page .consulta-tabs__tab:hover {
+  background: rgb(48 61 80 / 0.06);
+  color: #303d50;
+  transform: none;
+  box-shadow: none;
+}
+
+.transferencia-page .consulta-tabs__tab--activa {
+  background: #303d50;
+  border: none;
+  color: white;
+  box-shadow: 0 2px 8px rgb(48 61 80 / 0.25);
+  transform: none;
+  animation: tabEntrar 0.3s ease-out, tabPulso 3s ease-in-out 0.3s infinite;
+}
+
+@keyframes tabEntrar {
+  0% { transform: scale(0.92); opacity: 0.6; }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes tabPulso {
+  0%, 100% { box-shadow: 0 2px 8px rgb(48 61 80 / 0.25); }
+  50% { box-shadow: 0 3px 14px rgb(48 61 80 / 0.4); }
+}
+
+.transferencia-page .consulta-tabs__tab--activa:hover {
+  transform: none;
+  box-shadow: 0 3px 12px rgb(48 61 80 / 0.3);
+  color: white;
+  background: #303d50;
+}
+
+@media (max-width: 768px) {
+  .transferencia-page .consulta-tabs__list {
+    flex-wrap: wrap;
+    border-radius: 12px;
+    width: auto;
+  }
+
+  .transferencia-page .consulta-tabs__tab {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.75rem;
+    min-height: 2.8rem;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .transferencia-page .consulta-tabs__list {
+    flex-wrap: wrap;
+  }
+}
+
+/* Botón pulsante para generar formato */
+.btn-pulsante-generar-formato {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.btn-pulsante-generar-formato:hover {
+  animation: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgb(40 167 69 / 0.4);
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgb(40 167 69 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgb(40 167 69 / 0);
+  }
+}
+
+
+/* Spinner de carga */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Panel derecho: Catálogo de "Servicios habilitados" ──────────────
+   Debe quedar EMBEBIDO como columna del layout (igual que Módulos),
+   nunca flotante. Se blinda contra la regla :has(.gi-panel-contadores--expandido)
+   de ConsultaBienesPage.css que vuelve absoluto el panel derecho. */
+
+.servicios-catalogo-der.consulta-lateral--der {
+  width: 320px;
+}
+
+.servicios-catalogo-der.consulta-lateral--der.is-collapsed {
+  width: 42px;
+}
+
+/* Forzar columna estática, sin overlay ni sombra flotante */
+.servicios-catalogo-der.consulta-lateral--der:not(.is-collapsed) {
+  position: relative;
+  right: auto;
+  top: auto;
+  z-index: auto;
+}
+
+.servicios-catalogo-der.consulta-lateral--der:not(.is-collapsed) .consulta-lateral__panel {
+  position: relative;
+  height: 100%;
+  box-shadow: var(--consulta-shadow-panel);
+}
+
+/* ============================================================
+   Reportes › Bienes para baja — evitar solape de columnas
+   (Ubicación / Observación) con ellipsis + tooltip.
+   ============================================================ */
+.gi-baja-table {
+  min-width: 68rem; /* ancho estable para que las 8 columnas quepan sin solaparse */
+}
+
+/* Cada celda respeta su ancho del colgroup y recorta con puntos suspensivos. */
+.gi-baja-cell {
+  padding: 0.55rem 0.7rem;
+  font-size: 0.82rem;
+  max-width: 0;                 /* con table-layout:fixed obliga a respetar el % del colgroup */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+/* La observación se muestra en hasta 2 líneas (más legible). No usa max-width:0
+   para no colapsar; respeta su ancho de columna del colgroup. */
+.gi-baja-cell--obs {
+  max-width: none;
+  color: #5c6474;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.35;
+}
+
+/* La cédula bajo el nombre: pequeña y también recortada. */
+.gi-baja-cc {
+  display: block;
+  font-size: 0.7rem;
+  color: #5c6474;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── TABS como cards de acción grandes (Reportes de Inventario Físico) ───── */
+
+.gi-rep-tabs {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.gi-rep-tab-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 260px;
+  padding: 0.8rem 1rem;
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.gi-rep-tab-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.1);
+  border-color: #cbd5e1;
+}
+
+.gi-rep-tab-card.is-active {
+  border-color: #1565c0;
+  background: #eff6ff;
+  box-shadow: 0 4px 14px rgba(21, 101, 192, 0.12);
+}
+
+.gi-rep-tab-card.is-active.is-rojo {
+  border-color: #d13c47;
+  background: #fef2f3;
+  box-shadow: 0 4px 14px rgba(209, 60, 71, 0.12);
+}
+
+.gi-rep-tab-card.is-active.is-ambar {
+  border-color: #d97706;
+  background: #fffbeb;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.12);
+}
+.gi-rep-tab-card.is-ambar .gi-rep-tab-card__check { background: #d97706; }
+
+.gi-rep-tab-card__icon {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.gi-rep-tab-card__icon--azul { background: linear-gradient(135deg, #2563eb 0%, #1565c0 100%); }
+.gi-rep-tab-card__icon--rojo { background: linear-gradient(135deg, #ef4444 0%, #d13c47 100%); }
+.gi-rep-tab-card__icon--ambar { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+
+.gi-rep-tab-card__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.gi-rep-tab-card__titulo {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.gi-rep-tab-card__sub {
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
+.gi-rep-tab-card__check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1565c0;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gi-rep-tab-card.is-rojo .gi-rep-tab-card__check { background: #d13c47; }
+
+@media (max-width: 640px) {
+  .gi-rep-tabs { flex-direction: column; align-items: stretch; }
+  .gi-rep-tab-card { width: 100%; }
+}
+
+/* ─── Control y Seguimiento: botones de acción, métricas, acordeones ─────── */
+
+.gi-control-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.gi-control-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.gi-control-btn--ghost {
+  background: #fff;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+.gi-control-btn--ghost:hover:not(:disabled) { border-color: #94a3b8; }
+
+.gi-control-btn--excel {
+  background: linear-gradient(135deg, #1d6f42 0%, #15803d 100%);
+  color: #fff;
+}
+.gi-control-btn--excel:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.3);
+}
+
+/* Lista de bienes del panel de métricas como tarjetas. */
+#gi-reportes-metricas .gi-grupo__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.25rem;
+}
+#gi-reportes-metricas .gi-grupo__item {
+  background: #fff;
+  border: 1px solid #e8edf3;
+  border-left: 3px solid #1565c0;
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+#gi-reportes-metricas .gi-grupo__item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+  border-left-color: #0f3d6e;
+}
+#gi-reportes-metricas .gi-grupo__item-placa { font-size: 0.78rem; font-weight: 800; color: #1e3a5f; }
+#gi-reportes-metricas .gi-grupo__item-desc { font-size: 0.72rem; color: #475569; }
+#gi-reportes-metricas .gi-grupo__item-resp { font-size: 0.66rem; color: #94a3b8; }
+
+/* Filtro por usuario */
+.gi-ctrl-userfilter { display: flex; align-items: center; gap: 0.5rem; }
+.gi-ctrl-userfilter__label {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.68rem; font-weight: 700; color: #94a3b8;
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+.gi-ctrl-userfilter__btn {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: space-between;
+  min-width: 190px; padding: 0.45rem 0.85rem;
+  background: #fff; border: 1.5px solid #cbd5e1; border-radius: 999px;
+  font-size: 0.8rem; font-weight: 600; color: #334155; cursor: pointer;
+  transition: border-color 0.12s ease;
+}
+.gi-ctrl-userfilter__btn:hover { border-color: #1565c0; }
+.gi-ctrl-userfilter__menu {
+  position: absolute; top: calc(100% + 8px); left: 0; z-index: 50;
+  width: 260px; max-height: 320px; overflow-y: auto;
+  padding: 0.5rem; background: #fff;
+  border: 1px solid #e2e8f0; border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+}
+.gi-ctrl-userfilter__search {
+  width: 100%; padding: 0.4rem 0.5rem 0.4rem 1.7rem;
+  border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.78rem; outline: none;
+  box-sizing: border-box;
+}
+.gi-ctrl-userfilter__item {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 0.5rem 0.6rem; border: none; background: transparent;
+  border-radius: 8px; font-size: 0.8rem; color: #334155; cursor: pointer; text-align: left;
+}
+.gi-ctrl-userfilter__item:hover { background: #f8fafc; }
+.gi-ctrl-userfilter__item.is-active { background: #eff6ff; color: #1565c0; font-weight: 700; }
+.gi-ctrl-userfilter__check { color: #1565c0; font-weight: 700; }
+
+/* Acordeón servicio (compacto) */
+.gi-ctrl-grupo {
+  background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #cbd5e1;
+  border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.gi-ctrl-grupo.is-open { border-left-color: #1565c0; box-shadow: 0 4px 14px rgba(21,101,192,0.1); }
+.gi-ctrl-grupo__bar {
+  padding: 0.6rem 0.9rem; display: flex; justify-content: space-between; align-items: center;
+  background: #fff; transition: background 0.15s;
+}
+.gi-ctrl-grupo.is-open .gi-ctrl-grupo__bar { background: #eef4fb; }
+.gi-ctrl-grupo__main { display: flex; align-items: center; gap: 0.55rem; cursor: pointer; flex: 1; min-width: 0; }
+.gi-ctrl-grupo__chevron { font-size: 0.68rem; color: #1565c0; transition: transform 0.2s; }
+.gi-ctrl-grupo__chevron.is-open { transform: rotate(90deg); }
+.gi-ctrl-grupo__icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 7px; background: #e7ebf1; color: #475569; flex-shrink: 0;
+}
+.gi-ctrl-grupo.is-open .gi-ctrl-grupo__icon { background: #d6e6fb; color: #1565c0; }
+.gi-ctrl-grupo__titulo { font-weight: 700; font-size: 0.84rem; color: #1e3a5f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gi-ctrl-grupo__sub { font-size: 0.66rem; color: #6c757d; }
+.gi-ctrl-grupo__badge { background: #e3f0ff; color: #1565c0; padding: 0.22rem 0.65rem; border-radius: 12px; font-size: 0.76rem; font-weight: 700; }
+.gi-ctrl-pend-btn {
+  padding: 0.3rem 0.65rem; font-size: 0.7rem; font-weight: 600;
+  background: #eef2f7; color: #475569; border: 1px solid #dce3ec; border-radius: 6px; cursor: pointer;
+}
+.gi-ctrl-pend-btn.is-active { background: #fbe9dd; color: #c2410c; border-color: #f4c9a8; }
+
+/* Barra de sesión (nivel 2, compacta) */
+.gi-ctrl-sesion__bar {
+  padding: 0.4rem 1rem 0.4rem 2rem; background: #f1f3f5; color: #303d50;
+  font-weight: 600; font-size: 0.76rem; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+  border-top: 1px solid #dee2e6;
+}
+.gi-ctrl-sesion__bar:hover { background: #e8ecf1; }
+.gi-ctrl-sesion__nombre { font-weight: 700; }
+.gi-ctrl-sesion__fecha { font-size: 0.66rem; color: #6c757d; font-weight: 400; }
+.gi-ctrl-sesion__realizado {
+  display: inline-flex; align-items: center; gap: 5px; flex-wrap: wrap;
+  color: #64748b; font-weight: 400;
+}
+.gi-ctrl-chip {
+  background: #e7ebf1; color: #334155; padding: 0.1rem 0.5rem; border-radius: 10px;
+  font-size: 0.66rem; font-weight: 600;
+}
+.gi-ctrl-chip__cargo { color: #94a3b8; font-weight: 400; }
+.gi-ctrl-sesion__badge { background: #303d50; color: #fff; padding: 0.1rem 0.5rem; border-radius: 10px; font-size: 0.66rem; font-weight: 700; flex-shrink: 0; }
+
+@keyframes gi-ctrl-fade { from { opacity: 0 } to { opacity: 1 } }
+
+/* ─── Modal Exportar a Excel ─────────────────────────────────────────────── */
+
+.gi-excel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1300;
+  padding: 1rem;
+  animation: gi-ctrl-fade 0.2s ease;
+}
+
+.gi-excel-modal {
+  width: 100%;
+  max-width: 540px;
+  max-height: 88vh;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: gi-excel-pop 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes gi-excel-pop { from { opacity: 0; transform: translateY(12px) scale(0.98) } to { opacity: 1; transform: none } }
+
+.gi-excel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.1rem 1.25rem;
+  background: linear-gradient(135deg, #1d6f42 0%, #15803d 100%);
+  color: #fff;
+  position: relative;
+}
+.gi-excel-header__icon {
+  width: 46px; height: 46px; border-radius: 12px;
+  background: rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.gi-excel-header__texto { flex: 1; min-width: 0; }
+.gi-excel-header__titulo { margin: 0; font-size: 1.1rem; font-weight: 800; }
+.gi-excel-header__sub { margin: 2px 0 0; font-size: 0.78rem; opacity: 0.9; }
+.gi-excel-header__close {
+  width: 30px; height: 30px; border-radius: 8px; border: none;
+  background: rgba(255,255,255,0.15); color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  transition: background 0.15s;
+}
+.gi-excel-header__close:hover:not(:disabled) { background: rgba(255,255,255,0.3); }
+
+.gi-excel-stats {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.9rem 1.25rem;
+  background: #f8fafc;
+  border-bottom: 1px solid #eef2f7;
+}
+.gi-excel-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+.gi-excel-stat--verde { border-color: #bbf7d0; background: #f0fdf4; }
+.gi-excel-stat__num { font-size: 1.5rem; font-weight: 800; color: #303d50; line-height: 1; }
+.gi-excel-stat--verde .gi-excel-stat__num { color: #15803d; }
+.gi-excel-stat__lbl { font-size: 0.68rem; color: #64748b; margin-top: 3px; font-weight: 600; }
+
+.gi-excel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.25rem;
+  min-height: 0;
+}
+.gi-excel-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+.gi-excel-toolbar__title { font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.04em; }
+.gi-excel-selall {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 0.35rem 0.75rem; font-size: 0.74rem; font-weight: 700;
+  border: 1.5px solid #cbd5e1; border-radius: 999px;
+  background: #fff; color: #475569; cursor: pointer; transition: all 0.15s;
+}
+.gi-excel-selall.is-on { background: #15803d; border-color: #15803d; color: #fff; }
+
+.gi-excel-lista { display: flex; flex-direction: column; gap: 0.4rem; }
+.gi-excel-item {
+  display: flex; align-items: center; gap: 0.65rem;
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid #e2e8f0; border-radius: 10px;
+  cursor: pointer; transition: all 0.15s; background: #fff;
+}
+.gi-excel-item:hover { border-color: #cbd5e1; background: #f8fafc; }
+.gi-excel-item.is-active { border-color: #86efac; background: #f0fdf4; }
+.gi-excel-item__check {
+  width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+  border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center;
+  color: #15803d;
+}
+.gi-excel-item__check.is-on { border-color: #15803d; background: #fff; }
+.gi-excel-item__icon {
+  width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+  background: #eef2f7; color: #475569;
+  display: flex; align-items: center; justify-content: center;
+}
+.gi-excel-item.is-active .gi-excel-item__icon { background: #dcfce7; color: #15803d; }
+.gi-excel-item__nombre { flex: 1; font-size: 0.85rem; font-weight: 700; color: #1e293b; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gi-excel-item__badge { font-size: 0.72rem; font-weight: 700; color: #1565c0; background: #e3f0ff; padding: 0.15rem 0.6rem; border-radius: 10px; flex-shrink: 0; }
+.gi-excel-empty { text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 2rem; }
+
+.gi-excel-footer {
+  display: flex; gap: 0.75rem; justify-content: flex-end;
+  padding: 0.9rem 1.25rem;
+  border-top: 1px solid #eef2f7;
+  background: #f8fafc;
+}
+.gi-excel-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 0.6rem 1.1rem; border-radius: 9px; font-size: 0.85rem; font-weight: 700;
+  cursor: pointer; border: 1.5px solid transparent; transition: all 0.15s;
+}
+.gi-excel-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.gi-excel-btn--cancel { background: #fff; border-color: #cbd5e1; color: #475569; }
+.gi-excel-btn--cancel:hover:not(:disabled) { border-color: #94a3b8; }
+.gi-excel-btn--go { background: linear-gradient(135deg, #1d6f42 0%, #15803d 100%); color: #fff; }
+.gi-excel-btn--go:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(21,128,61,0.3); }
+
+/* ─── Bienes para baja: barra + tabla (EcoTabla) ─────────────────────────── */
+
+.gi-baja-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+.gi-baja-search { position: relative; display: flex; align-items: center; }
+.gi-baja-search__icon { position: absolute; left: 10px; color: #94a3b8; pointer-events: none; }
+.gi-baja-search__input {
+  width: 300px; max-width: 60vw;
+  padding: 0.5rem 0.75rem 0.5rem 1.9rem;
+  border: 1.5px solid #cbd5e1; border-radius: 8px;
+  font-size: 0.82rem; outline: none; transition: border-color 0.15s;
+}
+.gi-baja-search__input:focus { border-color: #303d50; }
+.gi-baja-chip {
+  padding: 0.4rem 0.85rem; border-radius: 999px;
+  background: #fef2f2; border: 1px solid #fecaca; color: #d13c47;
+  font-size: 0.78rem; font-weight: 700;
+}
+.gi-control-btn--dark { background: #303d50; color: #fff; }
+.gi-control-btn--dark:hover:not(:disabled) { background: #26303f; }
+
+/* Celdas de la tabla de baja */
+.gi-baja-placa {
+  display: inline-block; padding: 0.2rem 0.55rem; border-radius: 6px;
+  background: #fde8e8; color: #b91c1c; font-weight: 800; font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+.gi-baja-stack { display: flex; flex-direction: column; gap: 1px; }
+.gi-baja-fuerte { font-weight: 600; color: #334155; font-size: 0.8rem; }
+.gi-baja-sub { font-size: 0.66rem; color: #94a3b8; }
+.gi-baja-obs {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; font-size: 0.76rem; color: #475569;
+}
+.gi-baja-revertir {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 0.35rem 0.7rem; border-radius: 6px;
+  background: #fff; border: 1.5px solid #2e7d32; color: #2e7d32;
+  font-size: 0.74rem; font-weight: 700; cursor: pointer; transition: all 0.15s;
+}
+.gi-baja-revertir:hover { background: #2e7d32; color: #fff; }
+
+/* Tono rojizo suave en las filas (estado malo) */
+.gi-baja-eco .gi-baja-row:nth-child(odd) td { background: #fffafa; }
+.gi-baja-eco .gi-baja-row:hover td { background: #fff1f1; }

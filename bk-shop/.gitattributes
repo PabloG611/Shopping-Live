@@ -1,0 +1,23 @@
+# Asegurar que los scripts de shell usen LF (Linux)
+*.sh text eol=lf
+
+# Asegurar que los archivos de Python usen LF
+*.py text eol=lf
+
+# Archivos de texto generales
+*.txt text
+*.md text
+*.yml text
+*.yaml text
+*.json text
+
+# Archivos binarios
+*.dll binary
+*.so binary
+*.xlsx binary
+*.xls binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary

@@ -1,0 +1,622 @@
+/* ============================================================
+   Módulo Asignación de Vehículos Bogotá
+   Estilos propios: panel central ordenado + catálogo flotante
+   superpuesto y redimensionable.
+   ============================================================ */
+
+/* ── Panel central ── */
+.vbog-central {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  min-height: 0;
+}
+
+.vbog-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.vbog-header__titulo {
+  margin: 0 0 0.4rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #303d50;
+}
+.vbog-header__desc {
+  margin: 0 auto;
+  color: #5c6474;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 640px;
+}
+
+/* ── Barra de acciones ── */
+.vbog-acciones {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+}
+.vbog-btn-repartir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.92rem;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.vbog-btn-repartir:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.45);
+}
+.vbog-btn-repartir:disabled {
+  background: #cbd5e1;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+/* Contenedor del botón Repartir (ancla del tooltip). */
+.vbog-repartir-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+/* ── Tooltip elegante del botón "Repartir" (CSS puro, sin title nativo) ── */
+.vbog-tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 260px;
+  padding: 0.6rem 0.75rem;
+  background: #1e293b;
+  color: #f1f5f9;
+  font-size: 0.76rem;
+  font-weight: 500;
+  line-height: 1.45;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.28);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  z-index: 50;
+  pointer-events: none;
+}
+/* Flechita superior del tooltip. */
+.vbog-tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 1.4rem;
+  border: 6px solid transparent;
+  border-bottom-color: #1e293b;
+}
+.vbog-repartir-wrap:hover .vbog-tooltip,
+.vbog-repartir-wrap:focus-within .vbog-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ── Mini-cards de stats (pendientes / motos / carros), clicables ── */
+.vbog-stats {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+.vbog-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  min-width: 86px;
+  padding: 0.5rem 0.75rem;
+  background: #ffffff;
+  border: 1px solid #d7e3ea;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+.vbog-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+}
+.vbog-stat-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vbog-stat-card__num {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #303d50;
+}
+.vbog-stat-card__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.vbog-stat-card--pendientes { border-color: #fcd9b0; }
+.vbog-stat-card--pendientes .vbog-stat-card__icon { color: #d97706; }
+.vbog-stat-card--pendientes:hover { border-color: #d97706; }
+.vbog-stat-card--motos { border-color: #bfd9f8; }
+.vbog-stat-card--motos .vbog-stat-card__icon { color: #1565c0; }
+.vbog-stat-card--motos:hover { border-color: #1565c0; }
+.vbog-stat-card--carros { border-color: #bbf7d0; }
+.vbog-stat-card--carros .vbog-stat-card__icon { color: #15803d; }
+.vbog-stat-card--carros:hover { border-color: #15803d; }
+
+/* Mini-card en modo skeleton (durante la carga): sin interacción. */
+.vbog-stat-card--skeleton {
+  cursor: default;
+  pointer-events: none;
+  gap: 0.4rem;
+  justify-content: center;
+}
+.vbog-stat-card--skeleton:hover {
+  transform: none;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+/* ── Barra de stats en estado de carga (spinner + skeleton) ── */
+.vbog-stats-cargando {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+.vbog-stats-cargando__texto {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* ── Grid de tarjetas de inventariador ── */
+.vbog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1rem;
+  align-content: start;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+
+/* ── Estado vacío ── */
+.vbog-vacio {
+  margin-top: 0.5rem;
+  padding: 2.5rem 1.5rem;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  text-align: center;
+  background: #f8fafc;
+}
+
+/* Botón para abrir el catálogo (queda arriba-derecha del central) */
+.vbog-abrir-catalogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  background: #303d50;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+.vbog-abrir-catalogo:hover { background: #26313f; }
+
+
+
+
+/* ============================================================
+   Panel lateral derecho REDIMENSIONABLE (compartido por
+   Servicios habilitados y Vehículos Bogotá en GestionUnp).
+   El ancho lo controla un style inline; aquí solo la manija
+   y los overrides para que el panel interno llene ese ancho.
+   ============================================================ */
+
+/* Cuando el panel derecho es redimensionable, su ancho manda por inline-style;
+   el panel interno absoluto debe llenar el 100% del contenedor. */
+.consulta-lateral--der.is-resizable:not(.is-collapsed) .consulta-lateral__panel {
+  width: 100%;
+}
+/* Sin transición de width mientras se arrastra (evita lag); solo anima al
+   colapsar/expandir, no al redimensionar en vivo. */
+.consulta-lateral--der.is-resizable:not(.is-collapsed) {
+  transition: none;
+}
+
+/* Manija de arrastre en la orilla izquierda del panel derecho. */
+.pnl-resize-handle {
+  position: absolute;
+  left: -4px;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  cursor: col-resize;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Evita que el navegador interprete el arrastre del dedo como scroll/zoom. */
+  touch-action: none;
+}
+.pnl-resize-handle::after {
+  content: '';
+  width: 4px;
+  height: 46px;
+  border-radius: 4px;
+  background: #cbd5e1;
+  transition: background 0.15s, height 0.15s;
+}
+.pnl-resize-handle:hover::after {
+  background: #16a34a;
+  height: 72px;
+}
+
+/* En dispositivos TÁCTILES (tablets): la manija debe ser más fácil de agarrar
+   con el dedo. Se amplía la zona activa y se hace visible el indicador. */
+@media (pointer: coarse) {
+  .pnl-resize-handle { width: 28px; left: -14px; }
+  .pnl-resize-handle::after { width: 6px; height: 64px; background: #94a3b8; }
+}
+
+/* Solo en MÓVIL real (pantalla angosta) el resize se desactiva porque los
+   paneles se apilan. Antes se ocultaba a <=1100px, lo que dejaba sin resize a
+   las tablets; ahora el corte es a 768px para que la tablet SÍ pueda. */
+@media (max-width: 768px) {
+  .pnl-resize-handle { display: none; }
+}
+
+
+/* ============================================================
+   Catálogo: aprovechar TODO el alto del panel.
+   El cuerpo es una columna flex; la lista crece (flex:1) y hace
+   scroll propio, de modo que llena el panel sin tope de 60vh.
+   ============================================================ */
+.vbog-catalogo-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+/* La pestaña activa (vehículos o inventariadores) ocupa el alto restante. */
+.vbog-catalogo-tab {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  padding: 0 1rem 1rem;
+}
+/* La lista crece y hace scroll propio dentro del panel. */
+.vbog-catalogo-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+
+/* ============================================================
+   SOLAPAMIENTO del catálogo de Vehículos Bogotá (is-overlay).
+   Solo este panel se superpone sobre el central: queda anclado a
+   la derecha con position absolute y sombra, sin empujar/encoger
+   el tablero central. Sigue siendo redimensionable (resizeVehiculos)
+   y colapsable. El de Servicios habilitados NO lleva esta clase.
+   ============================================================ */
+/* El contenedor solo ocupa el carril de la pestaña (42px) en el flujo: así el
+   panel central NO se encoge. Mismo patrón que "Acciones masivas" de
+   admin-base-datos. */
+.consulta-lateral--der.vbog-catalogo-der.is-overlay {
+  width: 42px !important;
+  position: relative;
+  align-self: stretch;
+}
+.consulta-lateral--der.vbog-catalogo-der.is-overlay.is-collapsed { width: 42px !important; }
+
+/* El panel expandido flota sobre el central, alto completo, ancho dinámico
+   (lo controla el inline-style del resize). */
+.consulta-lateral--der.vbog-catalogo-der.is-overlay:not(.is-collapsed) > .consulta-lateral__panel {
+  position: absolute !important;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: auto;
+  height: auto;
+  z-index: 40;
+  box-shadow: -8px 0 28px rgba(15, 23, 42, 0.16);
+  border-radius: 12px;
+}
+
+/* En móvil el overlay se desactiva: vuelve a flujo normal (el panel se apila). */
+@media (max-width: 1100px) {
+  .consulta-lateral--der.vbog-catalogo-der.is-overlay { width: 100% !important; }
+  .consulta-lateral--der.vbog-catalogo-der.is-overlay:not(.is-collapsed) > .consulta-lateral__panel {
+    position: static !important;
+    box-shadow: none;
+    width: 100% !important;
+  }
+}
+
+
+/* ── Botones de eliminar: animación dinámica al pasar el mouse ── */
+.vbog-btn-eliminar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  flex-shrink: 0;
+  transition: color 0.15s ease, background 0.15s ease, transform 0.12s ease;
+}
+.vbog-btn-eliminar:hover {
+  color: #dc2626;
+  background: #fee2e2;
+  transform: scale(1.15);
+}
+.vbog-btn-eliminar:active {
+  transform: scale(0.95);
+}
+
+/* ============================================================
+   Mini-placa vehicular colombiana (particular): franja superior
+   con "COLOMBIA" + número de matrícula en fondo amarillo con borde
+   negro. Reemplaza los chips de placa en la tarjeta del inventariador.
+   ============================================================ */
+.vbog-placas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 0.5rem;
+}
+.vbog-placa {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border: 2px solid #111827;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #e3b505;                 /* amarillo placa particular, más opaco */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+  cursor: default;
+  user-select: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.vbog-placa:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+}
+/* Franja superior negra con el país. */
+.vbog-placa__pais {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  background: #111827;
+  color: #ffffff;
+  font-size: 0.46rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 1px 0;
+  text-transform: uppercase;
+}
+/* Número de matrícula: tipografía condensada tipo placa. */
+.vbog-placa__num {
+  font-family: 'Arial Narrow', 'Roboto Condensed', Impact, sans-serif;
+  font-size: 0.98rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #111827;
+  text-align: center;
+  padding: 0.22rem 0.3rem 0.28rem;
+  line-height: 1;
+}
+/* Motos: franja azul para distinguirlas (placas de moto en CO son amarillas
+   igualmente, pero aquí usamos el color solo como pista visual del tipo). */
+.vbog-placa--moto .vbog-placa__pais { background: #1565c0; }
+/* Botón quitar: cubre TODA la placa, centrado; aparece al hover con overlay
+   rojo semitransparente y un icono de equis en el centro. */
+.vbog-placa__quitar {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: rgba(220, 38, 38, 0);
+  color: transparent;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.vbog-placa:hover .vbog-placa__quitar {
+  background: rgba(185, 28, 28, 0.82);
+  color: #ffffff;
+}
+.vbog-placa__quitar:hover { background: rgba(153, 27, 27, 0.9); }
+/* Agranda el icono de la equis en el centro al hover. */
+.vbog-placa__quitar svg { width: 18px; height: 18px; }
+/* Placa ya inventariada: atenuada + sello diagonal. */
+.vbog-placa--inventariada { filter: grayscale(0.4); opacity: 0.72; }
+.vbog-placa__sello {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-6deg);
+  font-size: 0.42rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #15803d;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #15803d;
+  border-radius: 3px;
+  padding: 0 2px;
+  pointer-events: none;
+}
+/* Resaltado temporal al llegar desde el catálogo (clic en placa asignada). */
+.vbog-placa--resaltada {
+  animation: vbog-placa-pulse 2.4s ease;
+}
+@keyframes vbog-placa-pulse {
+  0%, 100% { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18); }
+  20%, 60% { box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.55), 0 4px 12px rgba(0, 0, 0, 0.25); }
+}
+/* Resaltado de la tarjeta del inventariador que recibe el foco. */
+.vbog-tarjeta.vbog-tarjeta--resaltada {
+  animation: vbog-tarjeta-pulse 2.4s ease;
+}
+@keyframes vbog-tarjeta-pulse {
+  0%, 100% { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); }
+  25%, 65% { box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.45), 0 6px 18px rgba(0, 0, 0, 0.15); }
+}
+
+/* ============================================================
+   Badge "Asignada" del catálogo + tooltip propio (reemplaza el
+   title nativo del navegador por un popover elegante que muestra
+   a quién se le asignó la placa). Al hacer clic ubica la placa.
+   ============================================================ */
+.vbog-asignada-wrap {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+}
+.vbog-asignada-badge {
+  font-size: 0.64rem;
+  font-weight: 800;
+  color: #1565c0;
+  background: #e3f0ff;
+  border: 1px solid #c7dbff;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.vbog-asignada-badge:hover {
+  background: #d4e6ff;
+  border-color: #93c5fd;
+}
+/* Popover: aparece encima del badge al hacer hover sobre el wrapper. */
+.vbog-asignada-pop {
+  position: absolute;
+  /* Sale hacia la IZQUIERDA del badge (horizontal), no hacia arriba: así el
+     overflow-y: auto de .vbog-catalogo-lista no lo recorta en la primera fila. */
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) translateX(4px);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 150px;
+  max-width: 240px;
+  padding: 0.5rem 0.65rem;
+  background: #1e293b;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.14s ease, transform 0.14s ease;
+}
+.vbog-asignada-wrap:hover .vbog-asignada-pop {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+/* Flechita del popover apuntando al badge (a la derecha del tooltip). */
+.vbog-asignada-pop::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #1e293b;
+}
+.vbog-asignada-pop__nombre {
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.vbog-asignada-pop__user {
+  font-size: 0.68rem;
+  color: #93c5fd;
+  font-weight: 600;
+}
+.vbog-asignada-pop__hint {
+  margin-top: 3px;
+  font-size: 0.62rem;
+  color: #cbd5e1;
+}
+
+/* ============================================================
+   Responsive móvil del panel de contadores (overlay vbog).
+   En pantallas angostas el overlay flotante se "estalla": las cards se
+   salen del contenedor. Forzamos el panel a flujo normal, ancho completo,
+   y que las mini-cards no desborden. Vence el ancho inline del resize.
+   ============================================================ */
+@media (max-width: 768px) {
+  .consulta-lateral--der.vbog-catalogo-der.is-overlay,
+  .consulta-lateral--der.vbog-catalogo-der.is-overlay.is-collapsed {
+    width: 100% !important;
+    position: static !important;
+    align-self: auto;
+  }
+  .consulta-lateral--der.vbog-catalogo-der.is-overlay > .consulta-lateral__panel,
+  .consulta-lateral--der.vbog-catalogo-der.is-overlay:not(.is-collapsed) > .consulta-lateral__panel {
+    position: static !important;
+    top: auto;
+    right: auto;
+    left: auto;
+    bottom: auto;
+    width: 100% !important;
+    height: auto !important;
+    box-shadow: none !important;
+    border-radius: 12px;
+  }
+  /* La manija de redimensionado no aplica en móvil. */
+  .consulta-lateral--der.vbog-catalogo-der.is-overlay .pnl-resize-handle {
+    display: none !important;
+  }
+  /* El cuerpo del panel y las cards ocupan el ancho disponible sin desbordar. */
+  #gi-panel-contadores {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+  #gi-panel-contadores .gi-stat-cards {
+    width: 100%;
+  }
+  #gi-panel-contadores .gi-stat-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}

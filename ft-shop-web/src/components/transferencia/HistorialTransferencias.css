@@ -1,0 +1,641 @@
+.historial {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.historial__titulo {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.historial__vacio {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Tabla simple (p. ej. listado admin) — misma alineación vertical que .bienes-table */
+.historial__scroll {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.historial__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.historial__table th,
+.historial__table td {
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.historial__table thead th {
+  background: var(--color-table-head);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.historial__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.historial__code {
+  font-size: 0.78rem;
+  background: var(--color-code-bg);
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+}
+
+/* Requiere .bienes-table-wrap para que existan las variables CSS del encabezado (BienesTable.css). */
+.historial__bienes-wrap {
+  margin-top: 0.35rem;
+}
+
+.historial__tabla-envoltorio {
+  margin-top: 0;
+}
+
+.historial-modal__bienes-wrap {
+  margin-top: 0;
+}
+
+/* Mayor especificidad que `.bienes-table td` (vertical-align: top) */
+.historial .bienes-table th.historial__th--persona,
+.historial .bienes-table td.historial__td--persona {
+  min-width: 10.5rem;
+  max-width: 20rem;
+  white-space: normal;
+  line-height: 1.35;
+}
+
+.historial .bienes-table th.historial__th--estado,
+.historial .bienes-table td.historial__td--estado {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Sin depender de `.historial` (también tabla de solicitudes en admin). */
+.bienes-table th.historial__th--detalle,
+.bienes-table td.historial__td--detalle {
+  text-align: center;
+  vertical-align: middle;
+  min-width: 4.5rem;
+  width: 4.5rem;
+  padding: 0.5rem 0.5rem;
+  white-space: nowrap;
+}
+
+.historial__estado {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.historial__estado--pendiente {
+  background: #fff8e6;
+  color: #8a6d1b;
+}
+
+.historial__estado--aceptada {
+  background: #e8f7ee;
+  color: #1f6b3d;
+}
+
+.historial__estado--rechazada {
+  background: #fdecea;
+  color: #a32014;
+}
+
+.historial__btn-icono-detalle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  color: #303d50;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.historial__btn-icono-detalle:hover {
+  background: rgb(48 61 80 / 0.1);
+  color: #d13c47;
+}
+
+@keyframes historial-modal-backdrop-dim-in {
+  from {
+    background-color: rgb(26 29 33 / 0);
+  }
+
+  to {
+    background-color: rgb(26 29 33 / 0.45);
+  }
+}
+
+@keyframes historial-modal-backdrop-dim-out {
+  from {
+    background-color: rgb(26 29 33 / 0.45);
+  }
+
+  to {
+    background-color: rgb(26 29 33 / 0);
+  }
+}
+
+@keyframes historial-modal-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes historial-modal-dialog-out {
+  to {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+}
+
+.historial-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 11000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5rem 1rem 2rem;
+  overflow-y: auto;
+  background-color: rgb(26 29 33 / 0);
+  animation: historial-modal-backdrop-dim-in 0.3s ease forwards;
+  will-change: background-color;
+}
+
+.historial-modal-backdrop--saliendo {
+  animation: historial-modal-backdrop-dim-out 0.32s ease forwards;
+  will-change: background-color;
+}
+
+/* Tras aceptar / rechazar: cierre más pausado para que se perciba la salida. */
+.historial-modal-backdrop--saliendo.historial-modal-backdrop--saliendo--lento {
+  animation: historial-modal-backdrop-dim-out 0.55s ease forwards;
+}
+
+.historial-modal {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 0.5rem;
+  margin-bottom: auto;
+  padding: 1rem 1.15rem 1.25rem;
+  border-radius: 12px;
+  background: var(--color-surface);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
+  border: 1px solid var(--color-border);
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  animation: historial-modal-dialog-in 0.34s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  will-change: opacity, transform;
+}
+
+.historial-modal-backdrop--saliendo .historial-modal {
+  animation: historial-modal-dialog-out 0.32s ease forwards;
+  will-change: opacity, transform;
+}
+
+.historial-modal-backdrop--saliendo.historial-modal-backdrop--saliendo--lento .historial-modal {
+  animation: historial-modal-dialog-out 0.52s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .historial-modal-backdrop {
+    animation-duration: 0.01ms;
+  }
+
+  .historial-modal-backdrop--saliendo {
+    animation-duration: 0.01ms;
+  }
+
+  .historial-modal-backdrop--saliendo.historial-modal-backdrop--saliendo--lento {
+    animation-duration: 0.01ms;
+  }
+
+  .historial-modal {
+    animation-duration: 0.01ms;
+  }
+
+  .historial-modal-backdrop--saliendo .historial-modal {
+    animation-duration: 0.01ms;
+  }
+
+  .historial-modal-backdrop--saliendo.historial-modal-backdrop--saliendo--lento .historial-modal {
+    animation-duration: 0.01ms;
+  }
+}
+
+.historial-modal__cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  padding: 0.5rem 0.35rem 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.historial-modal__titulo {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-text);
+}
+
+.historial-modal__titulo-codigo {
+  font-weight: 700;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+  font-size: 1em;
+  letter-spacing: 0.02em;
+  color: #303d50;
+}
+
+.historial-modal__rotulo-dato {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.historial-modal__cerrar {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.historial-modal__cerrar:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.historial-modal__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.5rem 1rem;
+  margin: 0 0 1rem;
+}
+
+.historial-modal__meta div {
+  margin: 0;
+}
+
+.historial-modal__meta dt {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+}
+
+.historial-modal__meta dd {
+  margin: 0.15rem 0 0;
+  font-size: 0.88rem;
+  color: var(--color-text);
+}
+
+.historial-modal__seccion {
+  margin-bottom: 1rem;
+}
+
+.historial-modal__seccion--alerta {
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: #fef2f2;
+  border: 1px solid #fecdca;
+}
+
+.historial-modal__subtitulo {
+  margin: 0 0 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #303d50;
+}
+
+.historial-modal__texto {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.historial-modal__muted {
+  color: var(--color-text-soft);
+  font-size: 0.85rem;
+}
+
+.historial-modal__obs-rechazo {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #7f1d1d;
+}
+
+.historial-modal__tabla-wrap {
+  margin-top: 0.25rem;
+}
+
+.historial-modal__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.historial-modal__gestion {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/*
+ * Decisión aceptar / rechazar (misma línea visual que ft-sesp-graerr-analista-riesgo
+ * AceptarRechazarInactivacion: outline success/danger, selección con sombra y escala).
+ */
+.historial-modal__gestion-fila {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.historial-modal__btn-decision {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border-radius: 8px;
+  border-style: solid;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease,
+    opacity 0.3s ease,
+    font-weight 0.3s ease;
+}
+
+.historial-modal__btn-decision:disabled {
+  cursor: not-allowed;
+}
+
+.historial-modal__btn-decision__ico {
+  flex-shrink: 0;
+  font-size: 1.15em;
+}
+
+.historial-modal__btn-decision__ico--fade {
+  animation: historial-modal-fade-in-ico 0.3s ease;
+}
+
+@keyframes historial-modal-fade-in-ico {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Outline success (Bootstrap #28a745) */
+.historial-modal__btn-decision--aceptar {
+  color: #28a745;
+  background: #fff;
+  border-width: 1px;
+  border-color: #28a745;
+}
+
+.historial-modal__btn-decision--aceptar:hover:not(:disabled) {
+  font-weight: 600;
+  background: rgb(40 167 69 / 0.08);
+}
+
+.historial-modal__gestion-fila--rechazo-abierto .historial-modal__btn-decision--aceptar:not(:disabled) {
+  opacity: 0.4;
+}
+
+/* Outline danger (#dc3545) */
+.historial-modal__btn-decision--rechazar {
+  color: #dc3545;
+  background: #fff;
+  border-width: 1px;
+  border-color: #dc3545;
+}
+
+.historial-modal__btn-decision--rechazar:hover:not(:disabled):not(.historial-modal__btn-decision--rechazar-activo) {
+  font-weight: 600;
+  background: rgb(220 53 69 / 0.08);
+}
+
+/* Estado “seleccionado” al abrir flujo de rechazo (equivalente a variant danger sólido) */
+.historial-modal__btn-decision--rechazar-activo {
+  opacity: 1 !important;
+  font-weight: 600;
+  color: #fff !important;
+  background: #dc3545 !important;
+  border-width: 2px !important;
+  border-color: #dc3545 !important;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgb(220 53 69 / 0.4);
+}
+
+@media (min-width: 30rem) {
+  .historial-modal__gestion-fila {
+    flex-direction: row;
+  }
+
+  .historial-modal__btn-decision {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+  }
+}
+
+/* Colapsar / expandir bloque de observaciones (animación suave) */
+.historial-modal__rechazo-collapsible {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.38s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.historial-modal__rechazo-collapsible--open {
+  grid-template-rows: 1fr;
+}
+
+.historial-modal__rechazo-collapsible-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.historial-modal__rechazo-collapsible:not(.historial-modal__rechazo-collapsible--open) .historial-modal__rechazo-form {
+  pointer-events: none;
+}
+
+.historial-modal__rechazo-form {
+  width: 100%;
+  min-width: 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.32s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.historial-modal__rechazo-collapsible--open .historial-modal__rechazo-form {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Anula max-width: 480px de .page__textarea y ocupa todo el ancho del modal */
+.page__textarea.historial-modal__textarea-rechazo {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+}
+
+.historial-modal__acciones--rechazo-footer {
+  justify-content: flex-end;
+  margin-top: 0.85rem;
+}
+
+.historial-modal__conteo-obs {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.historial-modal__conteo-obs--aviso {
+  color: #b45309;
+  font-weight: 600;
+}
+
+
+/* Cancelar transferencia (vista usuario) */
+.historial-modal__cancelar-confirmar {
+  background: rgb(209 60 71 / 0.06);
+  border: 1px solid rgb(209 60 71 / 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+.historial-modal__cancelar-aviso {
+  font-size: 0.88rem;
+  color: #333;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+
+/* Admin tabla - Tipo badge */
+.admin-tabla__tipo {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.admin-tabla__tipo--normal {
+  color: #303d50;
+  background: rgb(48 61 80 / 0.1);
+}
+
+.admin-tabla__tipo--floresta {
+  color: #1a7a3a;
+  background: rgb(26 122 58 / 0.1);
+}
+
+/* Fila Floresta con borde izquierdo verde para diferenciar */
+.admin-tabla__fila--floresta {
+  box-shadow: inset 3px 0 0 0 #1a7a3a;
+}
+
+/* Estado "Revisando..." animado tipo WhatsApp */
+.historial__estado--revisando {
+  background: #e3f2fd;
+  color: #1565c0;
+  font-weight: 600;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.historial__typing-dots {
+  display: inline-flex;
+  gap: 1px;
+  margin-left: 2px;
+}
+
+.historial__typing-dots span {
+  animation: typingBounce 1.4s infinite ease-in-out;
+  font-weight: 900;
+}
+
+.historial__typing-dots span:nth-child(1) { animation-delay: 0s; }
+.historial__typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.historial__typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}

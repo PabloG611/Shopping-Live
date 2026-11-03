@@ -1,0 +1,1456 @@
+/* ═══════════════════════════════════════════════════════════
+   Dashboard de Inventario — Estilos
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --dash-color-completo: #22c55e;
+  --dash-color-progreso: #f59e0b;
+  --dash-color-critico: #ef4444;
+  --dash-color-sin-iniciar: #cbd5e1;
+  --dash-radius: 14px;
+  --dash-shadow: 0 2px 8px rgba(48, 61, 80, 0.06);
+  --dash-shadow-hover: 0 8px 24px rgba(48, 61, 80, 0.12);
+  --dash-border: 1px solid #e8ecf2;
+}
+
+.dashboard-inv {
+  padding: 0.5rem 0;
+}
+
+/* El panel lateral se monta (portal) dentro de .consulta-central para que
+   ocupe EXACTAMENTE el alto del panel central y no genere una cortina sobre
+   toda la pantalla. Mientras está abierto, el contenedor central es el
+   contexto de posicionamiento. */
+.consulta-central.dashboard-inv__drawer-host {
+  position: relative;
+}
+
+/* ─── Loading ─────────────────────────────────────────────── */
+.dashboard-inv__loading {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.dashboard-inv__loading-spinner {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  animation: dash-spin 1.5s linear infinite;
+  display: inline-block;
+}
+
+@keyframes dash-spin {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.dashboard-inv__loading-text {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* ─── Cards superiores ────────────────────────────────────── */
+.dashboard-inv__cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-inv__cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-inv__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1.25rem;
+  background: #ffffff;
+  border-radius: var(--dash-radius);
+  border: var(--dash-border);
+  box-shadow: var(--dash-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-inv__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px 4px 0 0;
+}
+
+.dashboard-inv__card--avance::before {
+  background: linear-gradient(90deg, #303d50, #5a7394);
+}
+
+.dashboard-inv__card--inventariados::before {
+  background: linear-gradient(90deg, #16a34a, #4ade80);
+}
+
+.dashboard-inv__card--pendientes::before {
+  background: linear-gradient(90deg, #ea580c, #fb923c);
+}
+
+.dashboard-inv__card--vehiculos::before {
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+}
+
+.dashboard-inv__card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--dash-shadow-hover);
+}
+
+.dashboard-inv__card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.dashboard-inv__card-icon--avance {
+  background: linear-gradient(135deg, #303d50, #455a73);
+  color: white;
+}
+
+.dashboard-inv__card-icon--inventariados {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: white;
+}
+
+.dashboard-inv__card-icon--pendientes {
+  background: linear-gradient(135deg, #ea580c, #f97316);
+  color: white;
+}
+
+.dashboard-inv__card-icon--vehiculos {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: white;
+}
+
+.dashboard-inv__card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.dashboard-inv__card-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.dashboard-inv__card-valor {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-inv__card-valor--avance {
+  color: #303d50;
+}
+
+.dashboard-inv__card-valor--inventariados {
+  color: #16a34a;
+}
+
+.dashboard-inv__card-valor--pendientes {
+  color: #ea580c;
+}
+
+.dashboard-inv__card-valor--vehiculos {
+  color: #7c3aed;
+}
+
+.dashboard-inv__card-barra {
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.dashboard-inv__card-barra-relleno {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-inv__card-barra-relleno--avance {
+  background: linear-gradient(90deg, #303d50, #5a7394);
+}
+
+.dashboard-inv__card-barra-relleno--inventariados {
+  background: linear-gradient(90deg, #16a34a, #4ade80);
+}
+
+.dashboard-inv__card-barra-relleno--pendientes {
+  background: linear-gradient(90deg, #ea580c, #fb923c);
+}
+
+.dashboard-inv__card-barra-relleno--vehiculos {
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+}
+
+.dashboard-inv__card-sub {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+/* ─── Distribución (barra apilada) ────────────────────────── */
+.dashboard-inv__distribucion {
+  margin-bottom: 1.75rem;
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+  border-radius: var(--dash-radius);
+  border: var(--dash-border);
+  box-shadow: var(--dash-shadow);
+}
+
+.dashboard-inv__distribucion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+}
+
+.dashboard-inv__distribucion-titulo {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #303d50;
+}
+
+.dashboard-inv__distribucion-meta {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.dashboard-inv__distribucion-barra {
+  display: flex;
+  height: 32px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.dashboard-inv__distribucion-segmento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  min-width: 32px;
+  transition: width 0.4s ease;
+}
+
+.dashboard-inv__distribucion-segmento--completo {
+  background: var(--dash-color-completo);
+}
+
+.dashboard-inv__distribucion-segmento--progreso {
+  background: var(--dash-color-progreso);
+}
+
+.dashboard-inv__distribucion-segmento--sin-iniciar {
+  background: var(--dash-color-sin-iniciar);
+}
+
+.dashboard-inv__distribucion-leyenda {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.65rem;
+  font-size: 0.75rem;
+  color: #5c6474;
+}
+
+.dashboard-inv__leyenda-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.dashboard-inv__leyenda-dot--completo {
+  background: var(--dash-color-completo);
+}
+
+.dashboard-inv__leyenda-dot--progreso {
+  background: var(--dash-color-progreso);
+}
+
+.dashboard-inv__leyenda-dot--sin-iniciar {
+  background: var(--dash-color-sin-iniciar);
+}
+
+/* ─── Avance por servicio ─────────────────────────────────── */
+.dashboard-inv__servicios {
+  /* Sin caja propia: "Avance por servicio" vive directamente sobre el panel
+     central, no en un sub-panel con fondo/borde/sombra. */
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.dashboard-inv__servicios-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dashboard-inv__servicios-titulo-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.dashboard-inv__servicios-titulo {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.dashboard-inv__servicios-subtitulo {
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+
+.dashboard-inv__servicios-ordenar {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.dashboard-inv__orden-btn {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  background: #fff;
+  color: #5c6474;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dashboard-inv__orden-btn:hover {
+  background: #f8fafc;
+  border-color: #adb5bd;
+}
+
+.dashboard-inv__orden-btn--activo {
+  background: #303d50;
+  color: #fff;
+  border-color: #303d50;
+}
+
+.dashboard-inv__orden-btn--activo:hover {
+  background: #455a73;
+  border-color: #455a73;
+}
+
+.dashboard-inv__servicios-lista {
+  /* Grid responsive de tarjetas de servicio (amplias, no apretadas) */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.1rem;
+}
+
+/* Indicador discreto de actualización en segundo plano (sin franja ni mascota) */
+.dashboard-inv__cargando-inline {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.dashboard-inv__cargando-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+
+.dashboard-inv__cargando-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #94a3b8;
+  animation: dashDotPulse 1.2s ease-in-out infinite;
+}
+
+.dashboard-inv__cargando-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dashboard-inv__cargando-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dashDotPulse {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Tarjeta de servicio ─────────────────────────────────── */
+.dashboard-inv__servicio {
+  border: 1px solid #e9eef5;
+  border-radius: 16px;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(48, 61, 80, 0.04);
+}
+
+.dashboard-inv__servicio:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 24px rgba(48, 61, 80, 0.10);
+  transform: translateY(-2px);
+}
+
+.dashboard-inv__servicio--activo {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15), 0 8px 24px rgba(48, 61, 80, 0.10);
+}
+
+.dashboard-inv__servicio-cabecera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  padding: 1.3rem 1.1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s;
+}
+
+.dashboard-inv__servicio-cabecera:hover {
+  background: #f9fbfd;
+}
+
+/* Título del servicio */
+.dashboard-inv__servicio-titulo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.dashboard-inv__servicio-nombre {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.3;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-inv__servicio-chip {
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  letter-spacing: 0.03em;
+}
+
+/* Donut centrado */
+.dashboard-inv__servicio-donut {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+}
+
+.dashboard-inv__servicio-donut-pct {
+  position: absolute;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+/* Métricas con títulos */
+.dashboard-inv__servicio-metricas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  width: 100%;
+  padding-top: 0.9rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.dashboard-inv__metrica {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dashboard-inv__metrica-titulo {
+  font-size: 0.64rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dashboard-inv__metrica-valor {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #334155;
+  line-height: 1;
+}
+
+.dashboard-inv__metrica-valor--ok { color: #16a34a; }
+.dashboard-inv__metrica-valor--pend { color: #ea580c; }
+
+/* Métrica "Pendientes" clickeable → abre el detalle. */
+.dashboard-inv__metrica--clic {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 0.2rem 0.4rem;
+  transition: background 0.15s ease;
+}
+.dashboard-inv__metrica--clic:hover {
+  background: #fff7ed;
+}
+.dashboard-inv__metrica--clic:hover .dashboard-inv__metrica-titulo {
+  color: #ea580c;
+  text-decoration: underline;
+}
+
+/* Skeleton mientras carga el total */
+.dashboard-inv__skeleton {
+  display: inline-block;
+  width: 28px;
+  height: 1.1rem;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #eef2f7 25%, #e2e8f0 50%, #eef2f7 75%);
+  background-size: 200% 100%;
+  animation: dashSkeleton 1.2s ease-in-out infinite;
+}
+
+@keyframes dashSkeleton {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Estado + expandir */
+.dashboard-inv__servicio-estado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding-top: 0.5rem;
+}
+
+.dashboard-inv__servicio-ok-chip {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #15803d;
+  background: #dcfce7;
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+}
+
+.dashboard-inv__servicio-ver {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.dashboard-inv__servicio-calc {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.dashboard-inv__servicio-expand-icon {
+  color: #cbd5e1;
+  font-size: 0.72rem;
+  transition: transform 0.2s;
+}
+
+/* ─── Panel expandido (detalle pendientes) ────────────────── */
+.dashboard-inv__servicio-detalle {
+  padding: 1rem 1rem 1rem;
+  border-top: 1px solid #e8ecf2;
+  background: #fafcff;
+}
+
+.dashboard-inv__servicio-detalle-loading {
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #6c757d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dashboard-inv__servicio-detalle-loading-spinner {
+  font-size: 1.3rem;
+  display: inline-block;
+  animation: dash-spin 1.5s linear infinite;
+}
+
+.dashboard-inv__servicio-detalle-vacio {
+  padding: 1.25rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #16a34a;
+  font-weight: 500;
+}
+
+.dashboard-inv__servicio-detalle-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 0;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dashboard-inv__servicio-buscar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  flex: 1;
+  max-width: 360px;
+  transition: border-color 0.2s;
+}
+
+.dashboard-inv__servicio-buscar:focus-within {
+  border-color: #303d50;
+}
+
+.dashboard-inv__servicio-buscar-icon {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.dashboard-inv__servicio-buscar-input {
+  border: none;
+  outline: none;
+  font-size: 0.78rem;
+  color: #1e293b;
+  background: transparent;
+  width: 100%;
+}
+
+.dashboard-inv__servicio-buscar-input::placeholder {
+  color: #94a3b8;
+}
+
+.dashboard-inv__servicio-detalle-count {
+  font-size: 0.72rem;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.dashboard-inv__servicio-detalle-tabla-wrap {
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid #e8ecf2;
+  border-radius: 8px;
+  min-height: 100px;
+}
+
+.dashboard-inv__servicio-detalle-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  table-layout: auto;
+}
+
+.dashboard-inv__servicio-detalle-tabla thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.dashboard-inv__servicio-detalle-tabla th {
+  background: #f1f5f9;
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  font-weight: 700;
+  color: #475569;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboard-inv__servicio-detalle-tabla td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  word-break: break-word;
+}
+
+.dashboard-inv__td-num {
+  color: #94a3b8;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+  width: 36px;
+  min-width: 36px;
+  white-space: nowrap;
+}
+
+.dashboard-inv__servicio-detalle-tabla tbody tr {
+  display: table-row;
+}
+
+.dashboard-inv__servicio-detalle-tabla tbody tr:hover {
+  background: #f0f4ff;
+}
+
+.dashboard-inv__placa {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.73rem;
+  background: #eef2ff;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  color: #3730a3;
+}
+
+.dashboard-inv__servicio-detalle-mas {
+  padding: 0.6rem 1rem;
+  text-align: center;
+  font-size: 0.72rem;
+  color: #6c757d;
+  border-top: 1px solid #e8ecf2;
+  margin: 0;
+}
+
+/* ─── Cargar más (paginación) ─────────────────────────────── */
+.dashboard-inv__servicio-cargar-mas {
+  padding: 0.85rem 1rem;
+  text-align: center;
+  border-top: 1px solid #e8ecf2;
+}
+
+.dashboard-inv__servicio-cargar-mas-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #303d50, #455a73);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(48, 61, 80, 0.2);
+}
+
+.dashboard-inv__servicio-cargar-mas-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(48, 61, 80, 0.3);
+  background: linear-gradient(135deg, #3d4d63, #5a7394);
+}
+
+.dashboard-inv__servicio-cargar-mas-btn:active {
+  transform: translateY(0);
+}
+
+.dashboard-inv__servicio-cargar-mas-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: #6c757d;
+}
+
+.dashboard-inv__servicio-todos-cargados {
+  padding: 0.6rem 1rem;
+  text-align: center;
+  font-size: 0.72rem;
+  color: #16a34a;
+  font-weight: 500;
+  border-top: 1px solid #e8ecf2;
+  background: #f0fdf4;
+  border-radius: 0 0 10px 10px;
+}
+
+
+/* ─── Detalle Vehículos Dashboard ─────────────────────────── */
+
+.dashboard-inv__vehiculos-detalle {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-inv__vehiculos-detalle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dashboard-inv__vehiculos-grupos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-inv__vehiculos-grupo-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  background: #f3f0ff;
+  border: 1px solid #ddd6fe;
+  border-radius: 20px;
+  font-size: 0.72rem;
+}
+
+.dashboard-inv__vehiculos-grupo-nombre {
+  color: #5b21b6;
+  font-weight: 600;
+}
+
+.dashboard-inv__vehiculos-grupo-count {
+  background: #7c3aed;
+  color: white;
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.dashboard-inv__vehiculos-filtros {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.2rem;
+  align-items: stretch;
+}
+
+.dashboard-inv__vehiculos-filtro-grupo {
+  flex: 0 0 280px;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .dashboard-inv__vehiculos-filtros {
+    flex-direction: column;
+  }
+  .dashboard-inv__vehiculos-filtro-grupo {
+    flex: 1;
+  }
+}
+
+.dashboard-inv__vehiculos-select {
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #1e293b;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: border-color 0.15s;
+  height: 100%;
+  box-sizing: border-box;
+}
+.dashboard-inv__vehiculos-select:focus,
+.dashboard-inv__vehiculos-select:hover {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1);
+}
+
+.dashboard-inv__vehiculos-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 340px;
+  z-index: 50;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 0.4rem 0;
+}
+
+.dashboard-inv__vehiculos-dropdown-acciones {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+  background: #fafbfc;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.dashboard-inv__vehiculos-dropdown-acciones button {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  border-radius: 5px;
+  background: white;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.dashboard-inv__vehiculos-dropdown-acciones button:hover {
+  background: #7c3aed;
+  color: white;
+  border-color: #7c3aed;
+}
+
+.dashboard-inv__vehiculos-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.76rem;
+  transition: background 0.1s;
+  border-bottom: 1px solid #f8fafc;
+}
+.dashboard-inv__vehiculos-dropdown-item:last-child {
+  border-bottom: none;
+}
+.dashboard-inv__vehiculos-dropdown-item:hover {
+  background: #f3f0ff;
+}
+.dashboard-inv__vehiculos-dropdown-item input[type="checkbox"] {
+  accent-color: #7c3aed;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.dashboard-inv__vehiculos-dropdown-label {
+  flex: 1;
+  color: #334155;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dashboard-inv__vehiculos-dropdown-count {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #7c3aed;
+  background: #f3f0ff;
+  padding: 0.15rem 0.45rem;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.dashboard-inv__vehiculos-filtro-busqueda {
+  flex: 1;
+  position: relative;
+}
+
+.dashboard-inv__vehiculos-input {
+  width: 100%;
+  padding: 0.55rem 0.85rem 0.55rem 2.1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: #1e293b;
+  background: white;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.dashboard-inv__vehiculos-input:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1);
+}
+.dashboard-inv__vehiculos-input::placeholder {
+  color: #94a3b8;
+}
+
+.dashboard-inv__vehiculos-tabla-wrap {
+  max-height: 420px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-top: 0.5rem;
+}
+
+.dashboard-inv__vehiculos-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.dashboard-inv__vehiculos-tabla th {
+  position: sticky;
+  top: 0;
+  background: #f8fafc;
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboard-inv__vehiculos-tabla td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dashboard-inv__vehiculos-tabla tbody tr:hover {
+  background: #f8fafc;
+}
+
+.dashboard-inv__vehiculos-row--ok {
+  background: #f0fdf4;
+}
+
+
+
+/* ─── Panel lateral (drawer) de detalle de servicio ──────────── */
+.dashboard-inv__drawer-overlay {
+  /* Zona sensible al clic para cerrar (sin oscurecer el panel central):
+     transparente, confinada al panel central. */
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 1000;
+}
+
+@keyframes dashOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.dashboard-inv__drawer {
+  /* Panel anclado al panel central (portal a .consulta-central): ocupa
+     exactamente su alto y queda pegado al borde derecho. */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  /* Ancho adaptable al contenido: crece hasta 780px pero nunca
+     tapa todo el panel, y respeta el ancho que requiera la tabla. */
+  width: max-content;
+  min-width: 420px;
+  max-width: min(780px, 94%);
+  background: #ffffff;
+  border-left: 1px solid #e8ecf2;
+  border-radius: 14px 0 0 14px;
+  box-shadow: -8px 0 32px rgba(15, 23, 42, 0.16);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: dashDrawerIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dashDrawerIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.dashboard-inv__drawer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.35rem 1.5rem;
+  border-bottom: 1px solid #eef2f7;
+  background: linear-gradient(180deg, #f8fafc, #ffffff);
+  /* El header queda fijo arriba del panel; el body es el que scrollea.
+     Así el botón de cerrar nunca se solapa con el contenido al hacer scroll. */
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.dashboard-inv__drawer-header-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.dashboard-inv__drawer-chip {
+  display: inline-block;
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: #64748b;
+  background: #eef2f7;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.4rem;
+}
+
+.dashboard-inv__drawer-titulo {
+  margin: 0 0 0.3rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.25;
+}
+
+.dashboard-inv__drawer-sub {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.dashboard-inv__drawer-cerrar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.dashboard-inv__drawer-cerrar:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.dashboard-inv__drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.dashboard-inv__drawer-tabla-wrap {
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+  overflow: auto;
+  flex: 1;
+  min-height: 120px;
+}
+
+/* Dentro del drawer la tabla se ajusta al ancho disponible y evita que la
+   columna de placa se parta en dos líneas. */
+.dashboard-inv__drawer .dashboard-inv__servicio-detalle-tabla {
+  width: 100%;
+  min-width: 520px;
+}
+
+.dashboard-inv__drawer .dashboard-inv__placa {
+  white-space: nowrap;
+}
+
+/* Barra de búsqueda del drawer: fija arriba del body, no se encoge. */
+.dashboard-inv__drawer .dashboard-inv__servicio-detalle-toolbar {
+  flex-shrink: 0;
+  padding-top: 0;
+}
+
+@media (max-width: 640px) {
+  .dashboard-inv__drawer {
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+  }
+}
+
+/* Contenedor de controles del header de "Avance por servicio" (sede + orden) */
+.dashboard-inv__servicios-controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.dashboard-inv__servicios-sede {
+  border-right: 1px solid #e2e8f0;
+  padding-right: 0.5rem;
+  margin-right: 0.25rem;
+}
+
+/* ── Presencia en vivo (quién trabaja en qué servicio) ── */
+.dashboard-inv__vivo-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+  animation: dash-vivo-pulse 1.8s infinite;
+  flex-shrink: 0;
+}
+@keyframes dash-vivo-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+  50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
+}
+
+.dashboard-inv__orden-btn--vivo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.dashboard-inv__vivo-count {
+  background: #16a34a;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.05rem 0.35rem;
+  min-width: 16px;
+  text-align: center;
+}
+
+.dashboard-inv__servicio-vivo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  margin-left: 0.4rem;
+  white-space: nowrap;
+}
+
+/* Chip "fuera de lista": bienes inventariados que NO pertenecen al servicio. */
+.dashboard-inv__servicio-fuera-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #b45309;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  white-space: nowrap;
+}
+
+/* ─── Cards en el panel lateral (apiladas en vertical) ─────────────── */
+.dashboard-inv__cards--panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+}
+.dashboard-inv__cards--panel .dashboard-inv__card {
+  width: 100%;
+}
+
+/* Card de vehículos en el centro: ocupa el ancho disponible pero acotada. */
+.dashboard-inv__cards--centro {
+  display: block;
+  margin-bottom: 1.25rem;
+}
+.dashboard-inv__cards--centro .dashboard-inv__card--vehiculos {
+  max-width: 420px;
+}
+
+/* ═══ Panel lateral unificado del Dashboard (niveles) ═══ */
+
+/* Tarjetas de servicio (niveles avance/inventariados/pendientes) */
+.gi-dash-srv-cards { display: flex; flex-direction: column; gap: 0.6rem; }
+.gi-dash-srv-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  background: #fff;
+  border: 1px solid #e8edf3;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.05);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+.gi-dash-srv-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(15,23,42,0.1); border-color: #cbd5e1; }
+.gi-dash-srv-card__head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+.gi-dash-srv-card__nombre { font-size: 0.84rem; font-weight: 700; color: #1e3a5f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gi-dash-srv-card__pct { font-size: 1.1rem; font-weight: 800; flex-shrink: 0; }
+.gi-dash-srv-card__barra { height: 8px; border-radius: 999px; background: #eef2f7; overflow: hidden; }
+.gi-dash-srv-card__barra-fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+.gi-dash-srv-card__nums { display: flex; gap: 0.75rem; font-size: 0.7rem; color: #64748b; }
+.gi-dash-srv-card__num b { font-size: 0.82rem; color: #1e293b; }
+.gi-dash-srv-card__num--ok b { color: #15803d; }
+.gi-dash-srv-card__num--pend { margin-left: auto; }
+.gi-dash-srv-card__num--pend b { color: #ea580c; }
+.gi-dash-srv-sub { margin: 0 0 0.6rem; font-size: 0.72rem; color: #64748b; }
+
+/* Lista de bienes (detalle de servicio) tipo tarjeta + su contador. */
+.gi-dash-lista { display: flex; flex-direction: column; gap: 0.5rem; }
+.gi-dash-lista__count { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #94a3b8; margin-bottom: 0.1rem; }
+.gi-dash-veh-item.is-pend-left { border-left-color: #d97706; }
+
+/* Botones del panel */
+.gi-dash-btn { padding: 0.3rem 0.7rem; font-size: 0.72rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; color: #fff; }
+.gi-dash-btn--verde { background: #16a34a; }
+.gi-dash-btn--morado { background: #7c3aed; }
+
+/* Desglose de vehículos */
+.gi-dash-veh-filtros { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.6rem; }
+.gi-dash-veh-select {
+  display: flex; align-items: center; width: 100%;
+  padding: 0.45rem 0.7rem; font-size: 0.76rem; font-weight: 600;
+  background: #fff; border: 1.5px solid #cbd5e1; border-radius: 8px; cursor: pointer; color: #334155;
+}
+.gi-dash-veh-dropdown {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 20;
+  max-height: 260px; overflow-y: auto;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(15,23,42,0.14); padding: 0.4rem;
+}
+.gi-dash-veh-dropdown-acciones { display: flex; gap: 4px; margin-bottom: 6px; }
+.gi-dash-veh-dropdown-acciones button {
+  flex: 1; padding: 0.3rem; font-size: 0.66rem; font-weight: 700; cursor: pointer;
+  border: 1px solid #e2e8f0; border-radius: 6px; background: #f8fafc; color: #475569;
+}
+.gi-dash-veh-dropdown-item { display: flex; align-items: center; gap: 6px; padding: 0.35rem 0.4rem; border-radius: 6px; cursor: pointer; font-size: 0.72rem; }
+.gi-dash-veh-dropdown-item:hover { background: #f8fafc; }
+.gi-dash-veh-dropdown-label { flex: 1; color: #334155; }
+.gi-dash-veh-dropdown-count { font-size: 0.66rem; font-weight: 700; color: #1565c0; background: #e3f0ff; padding: 0.1rem 0.45rem; border-radius: 10px; }
+.gi-dash-veh-buscar { position: relative; display: flex; align-items: center; }
+.gi-dash-veh-buscar-icon { position: absolute; left: 9px; color: #94a3b8; }
+.gi-dash-veh-input { width: 100%; padding: 0.45rem 0.6rem 0.45rem 1.8rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.76rem; outline: none; box-sizing: border-box; }
+.gi-dash-veh-resumen { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+
+.gi-dash-veh-item {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 0.55rem 0.7rem; margin-bottom: 6px;
+  background: #fff; border: 1px solid #eef2f7; border-left: 3px solid #cbd5e1; border-radius: 9px;
+}
+.gi-dash-veh-item.is-ok { border-left-color: #16a34a; background: #f0fdf4; }
+.gi-dash-veh-item__top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.gi-dash-veh-item__placa { font-size: 0.78rem; font-weight: 800; color: #1e3a5f; }
+/* Píldora de estado del vehículo: bien visible, no un textito perdido. */
+.gi-dash-veh-pill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+}
+.gi-dash-veh-pill.is-ok { background: #dcfce7; color: #15803d; border-color: #86efac; }
+.gi-dash-veh-pill.is-pend { background: #fef3c7; color: #b45309; border-color: #fcd9b0; }
+.gi-dash-veh-item__desc { font-size: 0.72rem; color: #334155; }
+.gi-dash-veh-item__resp { font-size: 0.66rem; color: #64748b; }
+.gi-dash-veh-item__ubic { font-size: 0.63rem; color: #94a3b8; }
+
+/* Tab por estado (Todos / Pendientes / Realizados) en el detalle de vehículos */
+.gi-dash-veh-tabs {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  margin-bottom: 0.6rem;
+  background: #eef2f7;
+  border-radius: 10px;
+}
+.gi-dash-veh-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0.4rem 0.5rem;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.gi-dash-veh-tab:hover:not(.is-active) { color: #334155; }
+.gi-dash-veh-tab.is-active {
+  background: #fff;
+  color: #1e3a5f;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
+}
+.gi-dash-veh-tab--pend.is-active { color: #c2410c; }
+.gi-dash-veh-tab--ok.is-active { color: #15803d; }
+.gi-dash-veh-tab__n {
+  font-size: 0.64rem;
+  font-weight: 800;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #475569;
+}
+.gi-dash-veh-tab.is-active .gi-dash-veh-tab__n { background: #e0edff; color: #1565c0; }
+.gi-dash-veh-tab--pend.is-active .gi-dash-veh-tab__n { background: #fef3c7; color: #c2410c; }
+.gi-dash-veh-tab--ok.is-active .gi-dash-veh-tab__n { background: #dcfce7; color: #15803d; }

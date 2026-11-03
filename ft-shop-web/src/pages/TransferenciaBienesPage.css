@@ -1,0 +1,2012 @@
+/* ============================================================
+   Transferencia Bienes — Layout 3 Paneles + Stepper
+   ============================================================ */
+
+.transferencia-shell {
+  --tb-surface: #ffffff;
+  --tb-surface-alt: #f4f6f9;
+  --tb-surface-hover: rgba(15, 23, 42, 0.03);
+  --tb-border: rgba(15, 23, 42, 0.1);
+  --tb-border-soft: rgba(15, 23, 42, 0.06);
+  --tb-border-strong: rgba(15, 23, 42, 0.16);
+  --tb-text-1: #18253a;
+  --tb-text-2: #445568;
+  --tb-text-3: #667d96;
+  --tb-brand: #074470;
+  --tb-brand-strong: #0F2D5C;
+  --tb-accent: #d13c47;
+  --tb-success: #15803d;
+  --tb-success-bg: rgba(21, 128, 61, 0.07);
+  --tb-success-border: rgba(21, 128, 61, 0.18);
+  --tb-warning: #92400e;
+  --tb-warning-bg: rgba(146, 64, 14, 0.06);
+  --tb-warning-border: rgba(146, 64, 14, 0.18);
+  --tb-danger: #b91c1c;
+  --tb-danger-bg: rgba(185, 28, 28, 0.06);
+  --tb-danger-border: rgba(185, 28, 28, 0.18);
+  --tb-radius-sm: 4px;
+  --tb-radius-md: 7px;
+  --tb-radius-lg: 10px;
+  --tb-radius-xl: 12px;
+  --tb-radius-pill: 9999px;
+  --tb-shadow-1: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+  --tb-shadow-focus: 0 0 0 3px rgba(63, 84, 110, 0.14);
+  --tb-gap: 12px;
+
+  display: flex;
+  flex-direction: column;
+  background: var(--tb-surface);
+  padding: 8px 14px 10px;
+}
+
+/* Quitar padding extra del contenedor padre (VentanaLienzo) */
+.ventana-lienzo-container:has(.transferencia-shell) {
+  padding: 0 !important;
+  background: #ffffff !important;
+}
+
+/* VentanaLienzo scrollea la página */
+.ventana-lienzo-body:has(.transferencia-shell) {
+  flex: 1;
+}
+
+/* Reducir altura del footer de VentanaLienzo en esta página */
+.ventana-lienzo-container:has(.transferencia-shell) .eco-footer,
+.ventana-lienzo-container:has(.transferencia-shell) footer {
+  padding: 2px 10px !important;
+  font-size: 0.6rem !important;
+  min-height: 0 !important;
+  gap: 0.2rem !important;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+
+.transferencia-shell__header {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.transferencia-shell__header > header[role="banner"] {
+  grid-area: 1 / 1;
+  width: 100%;
+}
+
+.transferencia-shell__avatar {
+  grid-area: 1 / 1;
+  align-self: center;
+  justify-self: end;
+  z-index: 9999;
+  padding-right: 1.25rem;
+  transform: scale(1.15);
+  transform-origin: right center;
+  position: relative;
+}
+
+/* ── Stepper Area ────────────────────────────────────────── */
+
+.transferencia-shell__stepper-area {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Layout 3 Paneles ────────────────────────────────────── */
+
+.transferencia-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 340px) 1fr;
+  grid-auto-rows: auto;
+  gap: var(--tb-gap);
+  width: 100%;
+}
+
+.transferencia-layout > * {
+  min-width: 0;
+}
+
+/* Panel lateral: misma altura que la fila (central), scroll interno si excede */
+.transferencia-layout > .tb-sidebar {
+  height: 0;
+  min-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(63, 84, 110, 0.12) transparent;
+}
+
+/* Paneles laterales: contenido fluye normalmente */
+.tb-sidebar .tb-sidebar__list {
+  flex: 1;
+}
+
+/* ── Layout Admin (2 paneles) ────────────────────────────── */
+.transferencia-layout--admin {
+  grid-template-columns: minmax(200px, 320px) 1fr;
+}
+
+.transferencia-layout--admin .tb-card__desc {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.transferencia-layout--admin > .tb-sidebar {
+  height: 0;
+  min-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(63, 84, 110, 0.12) transparent;
+}
+
+@media (max-width: 900px) {
+  .transferencia-layout--admin {
+    grid-template-columns: 1fr;
+  }
+  .transferencia-layout--admin > .tb-sidebar {
+    height: auto;
+    min-height: auto;
+    max-height: 250px;
+  }
+}
+
+/* Las cards de "en proceso" (pendiente) también tienen línea de color */
+.tb-timeline__item--pendiente,
+.tb-timeline__item--clickable:not(.tb-timeline__item--rechazada):not(.tb-timeline__item--aceptada) {
+  border-left: 2px solid #f59e0b;
+  margin-left: -2px;
+  padding-left: 16px;
+}
+
+/* ── Panel base ─────────────────────────────────────────── */
+
+.transferencia-panel {
+  background: var(--tb-surface);
+  border: 1px solid var(--tb-border);
+  border-radius: var(--tb-radius-xl);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Panel Izquierdo: Sidebar Bienes (estilo MisBienes) ─── */
+
+.tb-sidebar {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.tb-sidebar__top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 14px 0;
+  flex-shrink: 0;
+}
+
+.tb-sidebar__heading {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--tb-brand-strong);
+  letter-spacing: -0.01em;
+}
+
+.tb-sidebar__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: var(--tb-radius-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(7, 68, 112, 0.08);
+  color: var(--tb-brand);
+}
+
+.tb-sidebar__search {
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+
+.tb-sidebar__search-control {
+  position: relative;
+}
+
+.tb-sidebar__search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tb-text-3);
+  pointer-events: none;
+  font-size: 12px;
+  z-index: 1;
+}
+
+.tb-sidebar__search-input {
+  width: 100%;
+  padding: 7px 10px 7px 30px;
+  border: 1px solid var(--tb-border-strong);
+  border-radius: var(--tb-radius-md);
+  background: var(--tb-surface-alt);
+  color: var(--tb-text-1);
+  font-size: 0.8rem;
+  line-height: 1.3;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.tb-sidebar__search-input::placeholder {
+  color: var(--tb-text-3);
+}
+
+.tb-sidebar__search-input:focus {
+  outline: none;
+  border-color: var(--tb-brand);
+  background: var(--tb-surface);
+  box-shadow: var(--tb-shadow-focus);
+}
+
+/* Lista de cards */
+.tb-sidebar__list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 6px 14px;
+}
+
+.tb-sidebar__list::-webkit-scrollbar { width: 4px; }
+.tb-sidebar__list::-webkit-scrollbar-track { background: transparent; }
+.tb-sidebar__list::-webkit-scrollbar-thumb {
+  background: rgba(63, 84, 110, 0.12);
+  border-radius: 99px;
+}
+
+/* ── Bien Card ──────────────────────────────────────────── */
+
+.tb-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 10px;
+  border-radius: var(--tb-radius-lg);
+  background: var(--tb-surface);
+  border: 1px solid var(--tb-border);
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease, transform 0.1s ease;
+}
+
+.tb-card:hover {
+  border-color: var(--tb-border-strong);
+  background: var(--tb-surface-alt);
+}
+
+.tb-card.is-selected {
+  border-color: var(--tb-brand);
+  background: rgba(7, 68, 112, 0.04);
+}
+
+.tb-card.is-checked {
+  border-color: var(--tb-success);
+  background: var(--tb-success-bg);
+}
+
+.tb-card:focus-visible {
+  outline: 2px solid var(--tb-brand);
+  outline-offset: 2px;
+}
+
+.tb-card__data {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tb-card__placa {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--tb-brand-strong);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.tb-card__desc {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--tb-text-1);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tb-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  color: var(--tb-text-3);
+  margin-top: 1px;
+}
+
+.tb-card__meta-sep {
+  opacity: 0.4;
+}
+
+.tb-card__estado {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: var(--tb-radius-sm);
+  flex-shrink: 0;
+  line-height: 1.3;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tb-card__estado--ok {
+  background: var(--tb-success-bg);
+  color: var(--tb-success);
+  border: 1px solid var(--tb-success-border);
+}
+
+.tb-card__estado--faltante {
+  background: var(--tb-danger-bg);
+  color: var(--tb-danger);
+  border: 1px solid var(--tb-danger-border);
+}
+
+.tb-card__estado--baja {
+  background: var(--tb-danger-bg);
+  color: var(--tb-danger);
+  border: 1px solid var(--tb-danger-border);
+}
+
+.tb-card__estado--proceso {
+  background: var(--tb-warning-bg);
+  color: var(--tb-warning);
+  border: 1px solid var(--tb-warning-border);
+}
+
+.tb-card__check {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid var(--tb-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.tb-card__check.is-checked {
+  background: var(--tb-brand);
+  border-color: var(--tb-brand);
+  color: #fff;
+}
+
+/* ── Panel Central ──────────────────────────────────────── */
+
+.tb-central {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 200px);
+  container-type: inline-size;
+  container-name: central;
+}
+
+.tb-central__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--tb-border-soft);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.tb-central__header--solicitud {
+  justify-content: space-between;
+  text-align: left;
+  gap: 16px;
+}
+
+.tb-central__solicitud-info {
+  min-width: 0;
+  text-align: left;
+}
+
+.tb-central__header--solicitud > .tb-btn {
+  margin-left: auto;
+}
+
+.tb-central__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--tb-brand-strong);
+  margin: 0;
+}
+
+.tb-central__subtitle {
+  font-size: 0.8rem;
+  color: var(--tb-text-3);
+  margin: 0;
+}
+
+.tb-central__body {
+  flex: 1;
+  padding: 16px 18px;
+}
+
+.tb-central__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--tb-border-soft);
+  flex-shrink: 0;
+}
+
+/* ── Timeline de "Mis transferencias" (en el sidebar) ───── */
+
+/* Timeline item */
+.tb-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-left: 16px;
+  border-left: 2px solid var(--tb-border);
+}
+
+.tb-timeline__item {
+  position: relative;
+  padding: 10px 80px 10px 14px;
+  border-bottom: 1px solid var(--tb-border-soft);
+}
+
+.tb-timeline__item:last-child {
+  border-bottom: none;
+}
+
+.tb-timeline__dot {
+  position: absolute;
+  left: -23px;
+  top: 14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--tb-brand);
+  border: 2px solid var(--tb-surface);
+  box-shadow: 0 0 0 2px var(--tb-brand);
+}
+
+.tb-timeline__dot--pendiente {
+  background: #f59e0b;
+  box-shadow: 0 0 0 2px #f59e0b;
+}
+
+.tb-timeline__dot--aceptada {
+  background: var(--tb-success);
+  box-shadow: 0 0 0 2px var(--tb-success);
+}
+
+.tb-timeline__dot--rechazada {
+  background: var(--tb-danger);
+  box-shadow: 0 0 0 2px var(--tb-danger);
+}
+
+.tb-timeline__codigo {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--tb-brand-strong);
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+.tb-timeline__fecha {
+  font-size: 0.65rem;
+  color: var(--tb-text-3);
+  margin-top: 2px;
+}
+
+.tb-timeline__estado {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: var(--tb-radius-sm);
+  margin-top: 4px;
+}
+
+.tb-timeline__estado--pendiente {
+  background: var(--tb-warning-bg);
+  color: var(--tb-warning);
+  border: 1px solid var(--tb-warning-border);
+}
+
+.tb-timeline__estado--aceptada {
+  background: var(--tb-success-bg);
+  color: var(--tb-success);
+  border: 1px solid var(--tb-success-border);
+}
+
+.tb-timeline__estado--rechazada {
+  background: var(--tb-danger-bg);
+  color: var(--tb-danger);
+  border: 1px solid var(--tb-danger-border);
+}
+
+.tb-timeline__receptor {
+  font-size: 0.7rem;
+  color: var(--tb-text-2);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ── Paso 2: Grid de bienes seleccionables (moderno) ────── */
+
+.tb-seleccion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 240px));
+  gap: 12px;
+  justify-content: center;
+}
+
+.tb-seleccion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--tb-radius-xl);
+  border: 1.5px solid var(--tb-border);
+  background: linear-gradient(135deg, var(--tb-surface) 0%, var(--tb-surface-alt) 100%);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.tb-seleccion-item:hover {
+  border-color: var(--tb-brand);
+  background: linear-gradient(135deg, rgba(7, 68, 112, 0.02) 0%, rgba(7, 68, 112, 0.06) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(7, 68, 112, 0.1);
+}
+
+.tb-seleccion-item.is-selected {
+  border-color: var(--tb-brand);
+  background: linear-gradient(135deg, rgba(7, 68, 112, 0.04) 0%, rgba(7, 68, 112, 0.08) 100%);
+  box-shadow: 0 0 0 2px rgba(7, 68, 112, 0.12), 0 4px 12px rgba(7, 68, 112, 0.08);
+}
+
+.tb-seleccion-item.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.tb-seleccion-item__check {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--tb-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.15s ease;
+  background: var(--tb-surface);
+}
+
+.tb-seleccion-item.is-selected .tb-seleccion-item__check {
+  background: var(--tb-brand);
+  border-color: var(--tb-brand);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(7, 68, 112, 0.3);
+}
+
+.tb-seleccion-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.tb-seleccion-item__placa {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--tb-brand-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+.tb-seleccion-item__desc {
+  font-size: 0.78rem;
+  color: var(--tb-text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tb-seleccion-item__meta {
+  font-size: 0.68rem;
+  color: var(--tb-text-3);
+}
+
+/* ── Paso 3: Resumen visual de confirmación ─────────────── */
+
+.tb-resumen {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tb-resumen__personas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.tb-resumen__persona-card {
+  padding: 16px;
+  border-radius: var(--tb-radius-xl);
+  border: 1px solid var(--tb-border);
+  background: var(--tb-surface-alt);
+}
+
+.tb-resumen__persona-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--tb-text-3);
+  margin-bottom: 8px;
+}
+
+.tb-resumen__persona-nombre {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tb-brand-strong);
+  margin-bottom: 4px;
+}
+
+.tb-resumen__persona-detalle {
+  font-size: 0.78rem;
+  color: var(--tb-text-2);
+  line-height: 1.5;
+}
+
+.tb-resumen__bienes-titulo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tb-text-1);
+  margin-bottom: 10px;
+}
+
+.tb-resumen__bienes-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tb-resumen__bien-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px;
+  border-radius: var(--tb-radius-md);
+  border: 1px solid var(--tb-border);
+  background: var(--tb-surface);
+  min-width: 160px;
+}
+
+.tb-resumen__bien-chip-placa {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--tb-brand);
+}
+
+.tb-resumen__bien-chip-desc {
+  font-size: 0.72rem;
+  color: var(--tb-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* ── Paso 4: PDF preview ────────────────────────────────── */
+
+.tb-pdf-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.tb-pdf-preview__frame {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  border: 1px solid var(--tb-border);
+  border-radius: var(--tb-radius-xl);
+  overflow: hidden;
+}
+
+.tb-pdf-preview__frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.tb-pdf-preview__actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ── Botones ────────────────────────────────────────────── */
+
+.tb-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  min-height: 34px;
+  border-radius: var(--tb-radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, transform 0.1s ease;
+}
+
+.tb-btn--primary {
+  background: linear-gradient(135deg, #0F2D5C 0%, #1a4a8a 100%);
+  border-color: #0F2D5C;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 45, 92, 0.2);
+}
+
+.tb-btn--primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #162a40 0%, #2563eb 100%);
+  box-shadow: 0 4px 16px rgba(15, 45, 92, 0.3);
+  transform: translateY(-1px);
+}
+
+.tb-btn--secondary {
+  background: var(--tb-surface);
+  border-color: var(--tb-border-strong);
+  color: var(--tb-brand-strong);
+}
+
+.tb-btn--secondary:hover:not(:disabled) {
+  background: var(--tb-surface-alt);
+  border-color: rgba(63, 84, 110, 0.3);
+}
+
+.tb-btn--danger {
+  background: var(--tb-accent);
+  border-color: var(--tb-accent);
+  color: #fff;
+}
+
+.tb-btn--danger:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.tb-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Empty States ───────────────────────────────────────── */
+
+.tb-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--tb-text-3);
+  height: 100%;
+}
+
+.tb-empty__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--tb-surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tb-text-3);
+  font-size: 1.1rem;
+}
+
+.tb-empty__title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tb-text-2);
+}
+
+.tb-empty__desc {
+  margin: 0;
+  font-size: 0.78rem;
+  max-width: 220px;
+  line-height: 1.4;
+}
+
+/* ── Loading ────────────────────────────────────────────── */
+
+.tb-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex: 1;
+  height: 100%;
+  min-height: 60vh;
+}
+
+.tb-loading__text {
+  font-size: 0.875rem;
+  color: var(--tb-text-3);
+}
+
+/* ── Stats compacta ─────────────────────────────────────── */
+
+.tb-stats {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 5px 12px;
+  border-radius: var(--tb-radius-xl);
+  background: var(--tb-surface);
+  border: 1px solid var(--tb-border);
+  margin-bottom: 4px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.tb-stats__item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: var(--tb-text-2);
+}
+
+.tb-stats__item strong {
+  font-weight: 700;
+  color: var(--tb-brand-strong);
+}
+
+.tb-stats__sep {
+  width: 1px;
+  height: 16px;
+  background: var(--tb-border);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+/* Fix: textos que se desbordan de sus cards */
+.tb-timeline__receptor,
+.tb-timeline__codigo,
+.tb-timeline__bienes-count {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Fix: panel central — scroll cuando la pantalla es pequeña */
+
+/* Fix: stepper responsivo (overrides locales sin tocar librería) */
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 1280px) {
+  .transferencia-layout {
+    grid-template-columns: minmax(260px, 300px) 1fr;
+  }
+  .tb-central {
+    min-height: calc(100vh - 250px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .transferencia-layout {
+    grid-template-columns: minmax(240px, 280px) 1fr;
+  }
+  .tb-central {
+    min-height: calc(100vh - 300px);
+  }
+}
+
+@media (max-width: 900px) {
+  .transferencia-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .tb-central {
+    min-height: auto;
+  }
+  .transferencia-layout > .tb-sidebar {
+    height: auto;
+    min-height: auto;
+    max-height: 340px;
+  }
+}
+
+@media (max-width: 768px) {
+  .transferencia-shell {
+    padding: 8px 10px 12px;
+  }
+  .transferencia-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .tb-central {
+    min-height: auto;
+  }
+  .transferencia-shell__avatar {
+    grid-area: auto;
+    justify-self: center;
+    padding-right: 0;
+    transform: scale(0.9);
+    margin-top: 6px;
+  }
+  .transferencia-shell__avatar .user-avatar-popup {
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    transform-origin: top center !important;
+  }
+  /* Header apilado en mobile */
+  .transferencia-shell__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    overflow: visible;
+  }
+  .transferencia-shell__header > header[role="banner"] {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .tb-resumen__personas {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Estilos para el empty state (sin bienes) ───────────── */
+
+.tb-empty-state-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100dvh - 120px);
+  padding: 2rem 1.25rem;
+}
+
+.tb-empty-state-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px -5px rgba(48, 61, 80, 0.08);
+  max-width: 520px;
+  width: 100%;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ── Sidebar Tabs UNP/Floresta ──────────────────────────── */
+
+.tb-sidebar__tabs {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+  border-bottom: 1px solid var(--tb-border);
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+
+.tb-sidebar__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 14px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: transparent;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--tb-text-3);
+  cursor: pointer;
+  transition: color 0.12s ease, border-bottom-color 0.12s ease;
+}
+
+.tb-sidebar__tab.is-active {
+  color: var(--tb-brand-strong);
+  font-weight: 700;
+  border-bottom-color: var(--tb-brand-strong);
+}
+
+.tb-sidebar__tab:hover:not(.is-active) {
+  color: var(--tb-text-2);
+}
+
+.tb-sidebar__tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--tb-radius-pill);
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--tb-surface-alt);
+  color: var(--tb-text-3);
+}
+
+.tb-sidebar__tab.is-active .tb-sidebar__tab-count {
+  background: rgba(7, 68, 112, 0.1);
+  color: var(--tb-brand-strong);
+}
+
+/* ── Card disabled ───────────────────────────────────────── */
+
+.tb-card.is-disabled {
+  opacity: 0.55;
+  cursor: default;
+  position: relative;
+}
+
+/* ── Historial timeline mejorado ────────────────────────── */
+
+.tb-timeline__item--rechazada {
+  border-left: 2px solid var(--tb-danger);
+  margin-left: -2px;
+  padding-left: 16px;
+}
+
+.tb-timeline__item--aceptada {
+  border-left: 2px solid var(--tb-success);
+  margin-left: -2px;
+  padding-left: 16px;
+}
+
+.tb-timeline__dot--revisando {
+  background: #1565c0;
+  box-shadow: 0 0 0 2px #1565c0;
+  animation: pulseRevisando 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseRevisando {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.tb-timeline__estado--revisando {
+  background: #e3f2fd;
+  color: #1565c0;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tb-timeline__typing-dots {
+  display: inline-flex;
+  gap: 1px;
+  margin-left: 2px;
+}
+
+.tb-timeline__typing-dots span {
+  animation: typingBounce 1.4s infinite ease-in-out;
+  font-weight: 900;
+}
+
+.tb-timeline__typing-dots span:nth-child(1) { animation-delay: 0s; }
+.tb-timeline__typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.tb-timeline__typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+.tb-timeline__bienes-count {
+  font-size: 0.62rem;
+  color: var(--tb-text-3);
+  margin-top: 3px;
+  font-style: italic;
+}
+
+.tb-timeline__obs-rechazo {
+  font-size: 0.62rem;
+  color: var(--tb-danger);
+  margin-top: 4px;
+  padding: 3px 6px;
+  background: var(--tb-danger-bg);
+  border-radius: var(--tb-radius-sm);
+  border: 1px solid var(--tb-danger-border);
+  word-break: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+
+/* ── Paso Confirmar (estilo modal) ──────────────────────── */
+
+.tb-confirmar__meta {
+  display: none;
+}
+
+/* ── Stats cards (tipo + cantidad) ──────────────────────── */
+
+.tb-confirmar__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tb-confirmar__stat-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--tb-radius-xl);
+  border: 1px solid var(--tb-border);
+  background: var(--tb-surface);
+  text-align: center;
+}
+
+.tb-confirmar__stat-card--tipo {
+  background: linear-gradient(135deg, rgba(15, 45, 92, 0.04) 0%, rgba(15, 45, 92, 0.08) 100%);
+  border-color: rgba(15, 45, 92, 0.15);
+}
+
+.tb-confirmar__stat-card--cantidad {
+  background: linear-gradient(135deg, rgba(21, 128, 61, 0.04) 0%, rgba(21, 128, 61, 0.08) 100%);
+  border-color: rgba(21, 128, 61, 0.15);
+}
+
+.tb-confirmar__stat-card--unp {
+  background: rgba(15, 45, 92, 0.03);
+  border-color: rgba(15, 45, 92, 0.12);
+}
+
+.tb-confirmar__stat-card--floresta {
+  background: rgba(21, 128, 61, 0.03);
+  border-color: rgba(21, 128, 61, 0.12);
+}
+
+.tb-confirmar__stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tb-surface);
+  color: var(--tb-brand);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+  flex-shrink: 0;
+}
+
+.tb-confirmar__stat-card--cantidad .tb-confirmar__stat-icon {
+  color: var(--tb-success);
+}
+
+.tb-confirmar__stat-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.tb-confirmar__stat-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tb-text-1);
+  line-height: 1.2;
+}
+
+.tb-confirmar__stat-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--tb-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tb-confirmar__meta-item {
+  display: none;
+}
+
+.tb-confirmar__meta-label {
+  display: none;
+}
+
+.tb-confirmar__meta-value {
+  display: none;
+}
+
+.tb-confirmar__personas {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: stretch;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--tb-border-soft);
+}
+
+.tb-confirmar__persona {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-radius: var(--tb-radius-xl);
+  border: 1px solid var(--tb-border);
+  background: var(--tb-surface);
+  position: relative;
+}
+
+.tb-confirmar__persona--emisor {
+  border-left: 3px solid var(--tb-brand);
+}
+
+.tb-confirmar__persona--receptor {
+  border-left: 3px solid var(--tb-success);
+}
+
+.tb-confirmar__persona-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tb-surface-alt);
+  color: var(--tb-brand);
+  margin-bottom: 4px;
+}
+
+.tb-confirmar__persona--receptor .tb-confirmar__persona-badge {
+  color: var(--tb-success);
+}
+
+.tb-confirmar__persona-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--tb-text-3);
+  font-weight: 300;
+}
+
+.tb-confirmar__persona-titulo {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tb-text-3);
+}
+
+.tb-confirmar__persona-nombre {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tb-brand-strong);
+}
+
+.tb-confirmar__persona-doc {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--tb-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.tb-confirmar__persona-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--tb-border-soft);
+}
+
+.tb-confirmar__persona-datos span {
+  font-size: 0.72rem;
+  color: var(--tb-text-2);
+  line-height: 1.4;
+}
+
+.tb-confirmar__persona-datos strong {
+  font-weight: 600;
+  color: var(--tb-text-1);
+}
+
+.tb-confirmar__persona-dato {
+  display: none;
+}
+
+.tb-confirmar__bienes {
+  margin-top: 4px;
+}
+
+.tb-confirmar__bienes-titulo {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--tb-text-2);
+  text-align: center;
+}
+
+.tb-confirmar__bienes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tb-confirmar__bien-card {
+  padding: 12px 14px;
+  border: 1px solid var(--tb-border);
+  border-radius: var(--tb-radius-lg);
+  background: var(--tb-surface);
+  transition: border-color 0.12s ease;
+  min-width: 0;
+  max-width: 340px;
+  flex: 1 1 200px;
+}
+
+.tb-confirmar__bien-card:hover {
+  border-color: var(--tb-border-strong);
+}
+
+.tb-confirmar__bien-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.tb-confirmar__bien-card-placa {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--tb-brand-strong);
+  background: rgba(7, 68, 112, 0.05);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+.tb-confirmar__bien-card-tipo {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: var(--tb-radius-sm);
+  background: rgba(15, 45, 92, 0.08);
+  color: var(--tb-brand);
+}
+
+.tb-confirmar__bien-card-tipo--floresta {
+  background: rgba(21, 128, 61, 0.08);
+  color: var(--tb-success);
+}
+
+.tb-confirmar__bien-card-desc {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--tb-text-1);
+  line-height: 1.3;
+}
+
+.tb-confirmar__bien-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 6px;
+  font-size: 0.68rem;
+  color: var(--tb-text-3);
+}
+
+.tb-confirmar__bien-card-meta span {
+  padding: 1px 6px;
+  background: var(--tb-surface-alt);
+  border-radius: 3px;
+}
+
+@media (max-width: 640px) {
+  .tb-confirmar__personas {
+    grid-template-columns: 1fr;
+  }
+  .tb-confirmar__persona-arrow {
+    transform: rotate(90deg);
+  }
+  .tb-confirmar__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* ── Paso PDF inline ────────────────────────────────────── */
+
+.tb-pdf-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: auto;
+}
+
+.tb-pdf-inline__frame {
+  position: relative;
+  flex: none;
+  /* El aspect-ratio real se calcula dinámicamente desde el PDF (ver
+     pdfDimensiones.ts) y se aplica como estilo inline. Este valor es solo
+     el fallback (horizontal/landscape) si no se pudo leer el tamaño. */
+  aspect-ratio: 1.4142 / 1;
+  height: auto;
+  border: 1px solid var(--tb-border);
+  border-radius: var(--tb-radius-xl);
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.tb-pdf-inline__frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Capa transparente sobre el visor: impide que la rueda/gestos hagan
+   zoom dentro del PDF nativo, que luego no vuelve a ajustarse al ancho.
+   El PDF queda siempre ajustado al panel; para ver en grande, se descarga. */
+.tb-pdf-inline__frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.tb-pdf-inline__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 8px 0;
+}
+
+/* Panel central sin scroll interno — la página scrollea */
+
+.tb-central__body--pdf {
+  padding: 12px 14px;
+}
+
+/* Botón de confirmar registro (verde, más protagonista) */
+.tb-btn--confirm {
+  background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+  border-color: #15803d;
+  color: #ffffff;
+  box-shadow: 0 3px 12px rgba(21, 128, 61, 0.25);
+  font-size: 0.85rem;
+  padding: 10px 20px;
+  min-height: 38px;
+}
+
+.tb-btn--confirm:hover:not(:disabled) {
+  background: linear-gradient(135deg, #166534 0%, #16a34a 100%);
+  box-shadow: 0 5px 20px rgba(21, 128, 61, 0.35);
+  transform: translateY(-1px);
+}
+
+.tb-btn--confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* ── Deshabilitar navegación mientras se procesa ────────── */
+
+.transferencia-shell__stepper-area.is-processing .tb-stepper-inline,
+.transferencia-shell__stepper-area.is-processing .tb-central__footer {
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+}
+
+
+/* ── Botón acceso rápido Seguimiento ────────────────────── */
+
+.tb-stats__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tb-brand);
+  background: rgba(7, 68, 112, 0.06);
+  border: 1px solid rgba(7, 68, 112, 0.15);
+  border-radius: var(--tb-radius-md);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.tb-stats__link:hover {
+  background: rgba(7, 68, 112, 0.1);
+  border-color: var(--tb-brand);
+}
+
+
+/* ── Timeline items clickeables ─────────────────────────── */
+
+.tb-timeline__item--clickable {
+  cursor: pointer;
+  transition: background 0.12s ease;
+  border-radius: var(--tb-radius-md);
+  padding: 10px 10px 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+}
+
+.tb-timeline__item--clickable:hover {
+  background: var(--tb-surface-alt);
+}
+
+
+.tb-timeline__item--active {
+  background: rgba(7, 68, 112, 0.06);
+  border: 1.5px solid var(--tb-brand);
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(7, 68, 112, 0.12);
+}
+
+
+/* ── Seguimiento: acciones y rechazo ────────────────────── */
+
+.tb-seguimiento-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--tb-border-soft);
+  flex-wrap: wrap;
+}
+
+.tb-seguimiento-rechazo {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--tb-danger-bg);
+  border: 1px solid var(--tb-danger-border);
+  border-radius: var(--tb-radius-md);
+  font-size: 0.78rem;
+  color: var(--tb-danger);
+  line-height: 1.4;
+}
+
+/* Cola stat card */
+.tb-confirmar__stat-card--cola {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(245, 158, 11, 0.1) 100%);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.tb-confirmar__stat-card--cola .tb-confirmar__stat-value {
+  color: #92400e;
+  font-size: 1.1rem;
+}
+
+
+/* ── Botón cancelar en timeline ─────────────────────────── */
+
+.tb-timeline__btn-cancelar {
+  margin-top: 6px;
+  padding: 3px 8px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--tb-radius-sm);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  align-self: flex-start;
+  animation: cancelPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes cancelPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(185, 28, 28, 0); }
+  50% { box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.12); }
+}
+
+.tb-timeline__btn-cancelar:hover {
+  background: #b91c1c;
+  color: #fff;
+  border-color: #b91c1c;
+  animation: none;
+}
+
+
+/* ── Admin Gestión ──────────────────────────────────────── */
+
+.tb-admin-gestion {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--tb-border);
+}
+
+.tb-admin-gestion__titulo {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--tb-text-2);
+  text-align: center;
+}
+
+.tb-admin-gestion__botones {
+  display: flex;
+  gap: 10px;
+}
+
+.tb-admin-gestion__botones--rechazo .tb-btn--confirm {
+  opacity: 0.4;
+}
+
+.tb-admin-gestion__rechazo {
+  margin-top: 14px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1.5px solid var(--tb-border);
+  border-radius: var(--tb-radius-lg);
+  animation: bloqueEntrada 0.3s ease;
+}
+
+.tb-admin-gestion__label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--tb-text-2);
+  margin-bottom: 6px;
+}
+
+.tb-admin-gestion__textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  border: 1.5px solid var(--tb-border-strong);
+  border-radius: var(--tb-radius-md);
+  background: var(--tb-surface-alt);
+  resize: vertical;
+  min-height: 70px;
+  font-family: inherit;
+}
+
+.tb-admin-gestion__textarea:focus {
+  outline: none;
+  border-color: var(--tb-brand);
+  box-shadow: 0 0 0 2px rgba(7, 68, 112, 0.08);
+  background: #fff;
+}
+
+.tb-admin-gestion__conteo {
+  margin: 4px 0 0;
+  font-size: 0.7rem;
+  color: var(--tb-text-3);
+  text-align: right;
+}
+
+.tb-admin-gestion__rechazo-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.tb-btn--danger.is-active {
+  background: var(--tb-danger);
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.2);
+}
+
+
+/* ── Detalle del bien (vista inline) ────────────────────── */
+
+.tb-detalle-bien {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.tb-detalle-bien__hero {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tb-detalle-bien__placa {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tb-brand);
+  font-variant-numeric: tabular-nums;
+  padding: 5px 14px;
+  background: rgba(7, 68, 112, 0.06);
+  border: 1px solid rgba(7, 68, 112, 0.15);
+  border-radius: var(--tb-radius-md);
+}
+
+.tb-detalle-bien__titulo {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--tb-text-3);
+}
+
+.tb-detalle-bien__campos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.tb-detalle-bien__campo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--tb-border-soft);
+  width: 100%;
+}
+
+.tb-detalle-bien__campo:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.tb-detalle-bien__campo-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--tb-text-3);
+}
+
+.tb-detalle-bien__campo-valor {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--tb-text-1);
+}
+
+.tb-detalle-bien__acciones {
+  margin-top: 8px;
+}
+
+
+/* Stepper circles: clickeables con validación */
+
+
+/* ── Card selección: texto de bloqueo ───────────────────── */
+
+.tb-seleccion-item__bloqueado {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--tb-warning);
+  background: var(--tb-warning-bg);
+  border: 1px solid var(--tb-warning-border);
+  padding: 2px 8px;
+  border-radius: var(--tb-radius-sm);
+  margin-top: 2px;
+}
+
+
+/* ── Admin: flujo aceptar con consecutivo TNS ───────────── */
+
+.tb-admin-gestion__aceptar {
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--tb-success-bg);
+  border: 1px solid var(--tb-success-border);
+  border-radius: var(--tb-radius-lg);
+  animation: bloqueEntrada 0.3s ease;
+}
+
+.tb-admin-gestion__tns-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.tb-admin-gestion__tns-select {
+  padding: 8px 12px;
+  border: 1.5px solid var(--tb-success-border);
+  border-radius: var(--tb-radius-md);
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tb-success);
+}
+
+.tb-admin-gestion__tns-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1.5px solid var(--tb-success-border);
+  border-radius: var(--tb-radius-md);
+  background: #fff;
+  font-size: 0.85rem;
+}
+
+.tb-admin-gestion__tns-input:focus,
+.tb-admin-gestion__tns-select:focus {
+  outline: none;
+  border-color: var(--tb-success);
+  box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.1);
+}
+
+.tb-admin-gestion__botones {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+
+/* ── Estado badge en esquina superior derecha ───────────── */
+
+.tb-timeline__estado--corner {
+  position: absolute;
+  top: 10px;
+  right: 6px;
+  font-size: 0.55rem;
+}
+
+.tb-timeline__tns {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--tb-success);
+  background: var(--tb-success-bg);
+  border: 1px solid var(--tb-success-border);
+  padding: 2px 6px;
+  border-radius: var(--tb-radius-sm);
+  margin-top: 3px;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+/* ── Separadores de sección en el sidebar "Bienes" (UNP / Floresta) ── */
+.tb-sidebar__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  margin: 0.35rem 0 0.15rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #1565c0;
+  background: rgba(21, 101, 192, 0.06);
+  border-left: 3px solid #1565c0;
+  border-radius: 4px;
+}
+
+.tb-sidebar__section-header:first-child {
+  margin-top: 0;
+}
+
+.tb-sidebar__section-header--floresta {
+  color: #15803d;
+  background: rgba(21, 128, 61, 0.06);
+  border-left-color: #15803d;
+}
+
+.tb-sidebar__section-count {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.05rem 0.4rem;
+  border-radius: 10px;
+}
+
+/* Sidebar en modo "Mis transferencias": el timeline ocupa el ancho completo */
+.tb-sidebar__list--historial {
+  padding-right: 0;
+  padding-left: 20px;
+}
+
+/* ── Títulos de sección en el paso 2 (Selección) ── */
+.tb-seleccion-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #1565c0;
+}
+
+.tb-seleccion-section-title:first-child {
+  margin-top: 0;
+}
+
+.tb-seleccion-section-title span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #1565c0;
+  background: rgba(21, 101, 192, 0.1);
+  padding: 0.05rem 0.45rem;
+  border-radius: 10px;
+}
+
+.tb-seleccion-section-title--floresta {
+  color: #15803d;
+}
+
+.tb-seleccion-section-title--floresta span {
+  color: #15803d;
+  background: rgba(21, 128, 61, 0.1);
+}

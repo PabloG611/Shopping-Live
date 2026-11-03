@@ -1,0 +1,815 @@
+/* ============================================================
+   TablaInventario — Estilos compartidos
+   ============================================================ */
+
+/* ── Header: título + filtro ──────────────────────────────── */
+
+.bienes-table-wrap__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Variante en fila: título a la izquierda, filtro ocupa el resto a la derecha */
+.bienes-table-wrap__header--fila {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  padding: 0.15rem 0 0.6rem;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 0.85rem;
+}
+
+.bienes-table-wrap__titulo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.bienes-table-wrap__titulo {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #1e293b;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* Filtro que crece para aprovechar el espacio */
+.bienes-table-wrap__filtro--flex {
+  flex: 1;
+  max-width: 520px;
+}
+
+.bienes-table-wrap__filtro--flex .bienes-table-wrap__filtro-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.9rem 0.5rem 2.3rem;
+  font-size: 0.85rem;
+  border-radius: 22px;
+}
+
+.bienes-table-wrap__filtro--flex .bienes-table-wrap__filtro-icon {
+  left: 13px;
+}
+
+@media (max-width: 640px) {
+  .bienes-table-wrap__header--fila {
+    flex-wrap: wrap;
+  }
+  .bienes-table-wrap__filtro--flex {
+    max-width: none;
+    width: 100%;
+  }
+}
+
+.bienes-table-wrap__badge {
+  background: #3b82f6;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 99px;
+  line-height: 1;
+}
+
+.bienes-table-wrap__filtro {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.bienes-table-wrap__filtro-icon {
+  position: absolute;
+  left: 10px;
+  pointer-events: none;
+}
+
+.bienes-table-wrap__filtro-input {
+  padding: 0.38rem 0.75rem 0.38rem 2rem;
+  border-radius: 20px;
+  border: 1px solid #dee2e6;
+  font-size: 0.8rem;
+  width: 260px;
+  outline: none;
+  background: #f8f9fa;
+  color: #1e293b;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.bienes-table-wrap__filtro-input:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+  background: #fff;
+}
+
+/* ── Tabla ─────────────────────────────────────────────────── */
+
+.bienes-table-frame {
+  border: 1px solid rgba(48, 61, 80, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.bienes-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.bienes-table--head thead tr th {
+  background: #f1f4f8;
+  color: #445568;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 9px 8px;
+  border-bottom: 1px solid rgba(48, 61, 80, 0.1);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.bienes-table--body tbody tr td {
+  padding: 7px 8px;
+  border-bottom: 1px solid rgba(48, 61, 80, 0.05);
+  vertical-align: middle;
+  font-size: 0.84rem;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+.bienes-table--body tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.bienes-table--body tbody tr:hover td {
+  background: rgba(48, 61, 80, 0.025);
+}
+
+/* ── Celdas especiales ─────────────────────────────────────── */
+
+.bienes-table__td {
+  padding: 7px 8px;
+  vertical-align: middle;
+}
+
+.bienes-table__td--center {
+  text-align: center;
+}
+
+.bienes-table__td--acciones {
+  padding: 4px 6px;
+}
+
+.bienes-table__sin-placa {
+  font-weight: 700;
+  color: #e65100;
+  font-style: italic;
+  font-size: 0.75rem;
+}
+
+.bienes-table__placa-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 800;
+  color: #303d50;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: #94a3b8;
+  text-underline-offset: 3px;
+  font-family: ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+}
+
+.bienes-table__placa-btn:hover {
+  color: #d13c47;
+  text-decoration-color: #d13c47;
+}
+
+.bienes-table__cell-with-action {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bienes-table__cell-text {
+  flex: 1;
+  word-break: break-word;
+  line-height: 1.3;
+  font-size: 0.84rem;
+}
+
+.bienes-table__cell-text--small {
+  font-size: 0.78rem;
+}
+
+.bienes-table__fecha {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.bienes-table__fecha-hora {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+/* ── Icon buttons ──────────────────────────────────────────── */
+
+/* Botón de edición inline (serial, ubicación) — discreto */
+.bienes-table__icon-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: #64748b;
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.bienes-table__icon-btn:hover {
+  background: #eef2f7;
+  border-color: #cbd5e1;
+  color: #303d50;
+}
+
+.bienes-table__icon-btn--ghost {
+  border-color: transparent;
+}
+
+/* ── Botones de acción por fila ────────────────────────────── */
+
+.bienes-table__acciones-wrap {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.bienes-table__accion-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.bienes-table__accion-btn:hover {
+  background: #eef2f7;
+  border-color: #cbd5e1;
+  color: #303d50;
+}
+
+/* Observación activa: acento ámbar */
+.bienes-table__accion-btn--obs-activa {
+  color: #b45309;
+  background: #fffbeb;
+  border-color: #fcd34d;
+}
+
+.bienes-table__accion-btn--obs-activa:hover {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+/* Custodio asignado: acento de marca slate */
+.bienes-table__accion-btn--custodio-asignado {
+  color: #fff;
+  background: #303d50;
+  border-color: #303d50;
+}
+
+.bienes-table__accion-btn--custodio-asignado:hover {
+  background: #3d4d66;
+  border-color: #3d4d66;
+  color: #fff;
+}
+
+/* Eliminar: neutro por defecto, rojo al hover para evitar ruido visual */
+.bienes-table__accion-btn--eliminar {
+  color: #b91c1c;
+  background: #fff;
+  border-color: #fecaca;
+}
+
+.bienes-table__accion-btn--eliminar:hover {
+  background: #fef2f2;
+  border-color: #f87171;
+  color: #991b1b;
+}
+
+/* ── Row states ────────────────────────────────────────────── */
+
+.bienes-table__row--con-observacion {
+  background: rgba(255, 193, 7, 0.05) !important;
+}
+
+/* Indicador del último bien escaneado — permanente y sutil */
+.inventario-ultimo-bien {
+  background: rgba(100, 116, 139, 0.05) !important;
+  border-left: 2px solid #94a3b8 !important;
+}
+
+.inventario-bien-sin-placa {
+  opacity: 0.8;
+}
+
+/* ============================================================
+   BotonesInventario — Toolbar flotante
+   ============================================================ */
+
+.inv-toolbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 8px 0;
+  margin-top: auto;
+}
+
+.inv-toolbar__alerta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #fffbeb;
+  border: 1px solid #f59e0b;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #92400e;
+  margin-bottom: 8px;
+  animation: pulseAlerta 2s ease-in-out infinite;
+}
+
+@keyframes pulseAlerta {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.inv-toolbar__bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 4px 8px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Botón base */
+.inv-toolbar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.inv-toolbar__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.inv-toolbar__btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.inv-toolbar__btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Principal: Guardar */
+.inv-toolbar__btn--guardar {
+  padding: 7px 14px;
+  font-size: 0.78rem;
+  background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(21, 128, 61, 0.25);
+}
+
+.inv-toolbar__btn--guardar:hover:not(:disabled) {
+  box-shadow: 0 4px 14px rgba(21, 128, 61, 0.35);
+  background: linear-gradient(135deg, #116530 0%, #16a34a 100%);
+}
+
+.inv-toolbar__btn-text {
+  font-size: 0.78rem;
+}
+
+.inv-toolbar__btn-count {
+  background: rgba(255, 255, 255, 0.35);
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Secundario: Excel */
+.inv-toolbar__btn--excel {
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  background: rgba(21, 128, 61, 0.06);
+  color: #15803d;
+  border: none;
+}
+
+.inv-toolbar__btn--excel:hover:not(:disabled) {
+  background: rgba(21, 128, 61, 0.12);
+}
+
+/* Secundario: Limpiar */
+.inv-toolbar__btn--limpiar {
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  background: rgba(185, 28, 28, 0.06);
+  color: #b91c1c;
+  border: none;
+}
+
+.inv-toolbar__btn--limpiar:hover:not(:disabled) {
+  background: rgba(185, 28, 28, 0.12);
+}
+
+.inv-toolbar__btn-label {
+  font-size: 0.72rem;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+.bienes-table-frame {
+  overflow-x: auto;
+}
+
+@media (max-width: 900px) {
+  .bienes-table {
+    font-size: 0.75rem;
+  }
+  .bienes-table th,
+  .bienes-table td {
+    padding: 6px 8px;
+  }
+}
+
+/* ── Mobile: Cards view ──────────────────────────────────── */
+
+@media (max-width: 768px) {
+  /* ─ Eliminar scroll horizontal en todos los contenedores ─ */
+  .bienes-table-wrap,
+  .bienes-table-frame,
+  .bienes-table-scroll,
+  .bienes-table--body,
+  .bienes-table--head {
+    overflow-x: hidden !important;
+    overflow: visible !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Ocultar header de tabla (ahora el thead vive dentro de --body) */
+  .bienes-table--head,
+  .bienes-table--body thead {
+    display: none !important;
+  }
+
+  /* Contenedor general */
+  .bienes-table-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .bienes-table-wrap__header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .bienes-table-wrap__filtro-input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Frame sin bordes ni restricciones */
+  .bienes-table-frame {
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Scroll container: sin scroll, fluye normal */
+  .bienes-table-scroll {
+    max-height: none !important;
+    padding: 0;
+  }
+
+  /* La tabla se convierte en bloque */
+  .bienes-table--body {
+    display: block !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  .bienes-table--body colgroup {
+    display: none;
+  }
+
+  .bienes-table--body tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     CARD: cada TR
+     ════════════════════════════════════════════════════════════ */
+  .bienes-table--body tbody tr {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    border: 1px solid rgba(48, 61, 80, 0.12);
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .bienes-table--body tbody tr:hover {
+    border-color: rgba(48, 61, 80, 0.22);
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.08);
+  }
+
+  .bienes-table--body tbody tr.inventario-ultimo-bien {
+    border-color: #94a3b8 !important;
+    border-left: 2px solid #94a3b8 !important;
+    background: rgba(100, 116, 139, 0.03) !important;
+  }
+
+  .bienes-table--body tbody tr.inventario-bien-sin-placa {
+    border-color: #ff8f00 !important;
+    border-left: 4px solid #ff8f00 !important;
+    background: #fffde7 !important;
+  }
+
+  /* ─── Celdas base ─── */
+  .bienes-table--body tbody tr td {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px !important;
+    border-bottom: none !important;
+    font-size: 0.8rem;
+    color: #1e293b;
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    overflow: hidden;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 32px;
+  }
+
+  /* Labels */
+  .bienes-table--body tbody tr td::before {
+    content: attr(data-label);
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  /* ─── Header: N° + Placa (fondo gris) ─── */
+  .bienes-table--body tbody tr td:nth-child(1) {
+    order: 1;
+    background: #f1f5f9;
+    padding: 10px 16px 4px !important;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #64748b;
+    min-height: 24px;
+  }
+
+  .bienes-table--body tbody tr td:nth-child(1)::before {
+    min-width: auto;
+    margin-right: 2px;
+    color: #64748b;
+  }
+
+  .bienes-table--body tbody tr td:nth-child(2) {
+    order: 2;
+    background: #f1f5f9;
+    padding: 4px 16px 10px !important;
+    min-height: 28px;
+  }
+
+  .bienes-table--body tbody tr td:nth-child(2) .bienes-table__placa-btn {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #0d47a1;
+    letter-spacing: 0.02em;
+  }
+
+  .bienes-table--body tbody tr td:nth-child(2)::before {
+    font-size: 0.62rem;
+    color: #475569;
+    font-weight: 700;
+  }
+
+  /* ─── Descripción (título del bien) ─── */
+  .bienes-table--body tbody tr td:nth-child(3) {
+    order: 3;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #0f172a;
+    padding: 12px 16px !important;
+    border-bottom: 1px solid rgba(48, 61, 80, 0.1) !important;
+    min-height: 36px;
+  }
+
+  .bienes-table--body tbody tr td:nth-child(3)::before {
+    display: none;
+  }
+
+  /* ─── Campos de datos ─── */
+  .bienes-table--body tbody tr td:nth-child(4) { order: 4; }
+  .bienes-table--body tbody tr td:nth-child(5) { order: 5; }
+  .bienes-table--body tbody tr td:nth-child(6) { order: 6; }
+  .bienes-table--body tbody tr td:nth-child(7) { order: 7; }
+  .bienes-table--body tbody tr td:nth-child(8) { order: 8; }
+  .bienes-table--body tbody tr td:nth-child(9) { order: 9; }
+  .bienes-table--body tbody tr td:nth-child(10) { order: 10; }
+
+  /* Separador sutil entre cada campo */
+  .bienes-table--body tbody tr td:nth-child(4),
+  .bienes-table--body tbody tr td:nth-child(5),
+  .bienes-table--body tbody tr td:nth-child(6),
+  .bienes-table--body tbody tr td:nth-child(7),
+  .bienes-table--body tbody tr td:nth-child(8),
+  .bienes-table--body tbody tr td:nth-child(9),
+  .bienes-table--body tbody tr td:nth-child(10) {
+    border-bottom: 1px solid rgba(48, 61, 80, 0.05) !important;
+  }
+
+  /* Fondo alterno sutil para mejor legibilidad */
+  .bienes-table--body tbody tr td:nth-child(5),
+  .bienes-table--body tbody tr td:nth-child(7),
+  .bienes-table--body tbody tr td:nth-child(9) {
+    background: rgba(241, 245, 249, 0.5);
+  }
+
+  /* ─── Acciones: footer de la card ─── */
+  .bienes-table--body tbody tr td:nth-child(11) {
+    order: 11;
+    justify-content: center;
+    padding: 12px 16px !important;
+    background: #f8fafc;
+    border-top: 1px solid rgba(48, 61, 80, 0.1) !important;
+    margin-top: 2px;
+    min-height: 48px;
+  }
+
+  .bienes-table--body tbody tr td:nth-child(11)::before {
+    display: none;
+  }
+
+  .bienes-table--body tbody tr td.bienes-table__td--acciones {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px;
+    min-height: 40px;
+  }
+
+  .bienes-table__acciones-wrap {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .bienes-table__accion-btn {
+    padding: 8px 14px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+
+  /* ─ Overrides de componentes internos ─ */
+  .bienes-table__cell-with-action {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .bienes-table__cell-text,
+  .bienes-table__cell-text--small {
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  .bienes-table__placa-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bienes-table__icon-btn {
+    padding: 5px;
+    font-size: 0.9rem;
+  }
+
+  .bienes-table__fecha {
+    flex-direction: row;
+    gap: 6px;
+    align-items: baseline;
+  }
+
+  .bienes-table__fecha-hora {
+    font-size: 0.68rem;
+    color: #94a3b8;
+  }
+
+  /* ─ Toolbar responsive ─ */
+  .inv-toolbar {
+    position: relative;
+  }
+
+  .inv-toolbar__bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .inv-toolbar__btn--guardar {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.88rem;
+  }
+}
+
+/* Indicador de colaborador centrado en el header de la tabla (entre el
+   título "Bienes escaneados" y el filtro de búsqueda). Está SIEMPRE en el
+   flujo con altura mínima estable, para que la aparición/desaparición del
+   indicador NO reflowee ni "empuje" el header (evita el salto brusco). */
+.bienes-table-wrap__colab-centro {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 0.75rem;
+}

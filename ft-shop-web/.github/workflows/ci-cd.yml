@@ -1,0 +1,19 @@
+# CI y despliegue con el pipeline central (EcosistemaUNP/cicd-workflows).
+name: CI y despliegue
+
+on:
+  push:
+    branches: [dev-server, main]
+  pull_request:
+    branches: [dev-server, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pipeline:
+    uses: EcosistemaUNP/cicd-workflows/.github/workflows/pipeline-front.yml@v1
+    with:
+      rama-desarrollo: dev-server
+      rama-pruebas: main

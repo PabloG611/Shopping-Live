@@ -1,0 +1,31 @@
+name: Despliegue back SGAI
+ 
+on:
+  push:
+    branches: [thais]
+ 
+jobs:
+  deploy-thais:
+    if: github.ref == 'refs/heads/thais'
+    runs-on: thais-runner
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+ 
+      - name: Config SSH para thais
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY_TEST_SERVER }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+ 
+      - name: Despliegue thais
+        run: |
+          sudo -n -u secretaria bash -c "
+            cd /home/secretaria/app/bk-secretaria/bk-sgai/ && \
+            git pull origin thais && \
+            cd ../ && \
+            docker compose down && \
+            docker compose up -d --build
+          "
+

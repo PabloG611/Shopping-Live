@@ -1,0 +1,149 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-text: #1a1d21;
+  --color-text-soft: #3d4349;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-border-strong: #d1d5db;
+  --color-footer-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f3f4f6;
+  --color-surface-card: #f9fafb;
+  --color-surface-hover: #f0f1f3;
+  --color-surface-active: #e8eef6;
+  --color-table-head: #f3f4f6;
+  --color-row-selected: #e8f1fb;
+  --color-code-bg: #eef2f7;
+  --color-input-bg: #ecedef;
+  /* Paleta tipo listado alternativo (ft-ser-ctar-coordinador): pizarra UNP + acento */
+  --color-accent: #303d50;
+  --color-accent-warm: #d13c47;
+  --color-accent-contrast: #ffffff;
+  --color-danger: #b42318;
+  --color-success: #1f6b3d;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 6%);
+
+  /* Barra del main: solo el pulgar visible (carril transparente), azul oscuro */
+  --scrollbar-size: 6px;
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: #243d5c;
+  --scrollbar-thumb-hover: #1a2d45;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    'Noto Sans',
+    sans-serif;
+  color: var(--color-text);
+  background: var(--color-surface);
+  line-height: 1.45;
+}
+
+#root {
+  height: 100%;
+  min-height: 100dvh;
+  max-height: 100dvh;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* En dispositivos táctiles (tablets/móviles) permitir scroll natural */
+@media (pointer: coarse) {
+  body {
+    overflow: auto;
+  }
+  #root {
+    max-height: none;
+    overflow: visible;
+  }
+  .app-shell {
+    overflow: visible;
+  }
+}
+
+.app-root-fill,
+.app-route-mount {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Sileo toasts: forzar z-index máximo */
+[data-sileo-toast],
+[data-sileo-toaster] {
+  z-index: 2147483647 !important;
+}
+
+[data-sileo-toaster] {
+  margin-top: 50px !important;
+}
+
+[data-sileo-toast] {
+  text-align: center !important;
+}
+
+[data-sileo-toast] * {
+  text-align: center !important;
+}
+
+
+/* ── Sileo Toasts: texto oscuro para contraste en fondo claro ─────────────── */
+[data-sileo-toast] [data-title] {
+  color: #1e293b !important;
+}
+
+[data-sileo-toast] [data-description] {
+  color: #334155 !important;
+}
+
+[data-sileo-toast] [data-sileo-header] {
+  color: #1e293b !important;
+}
+
+[data-sileo-toast] p,
+[data-sileo-toast] span,
+[data-sileo-toast] div {
+  color: #334155 !important;
+}
+
+/* ── Sileo Toasts: contraste con la página ─────────────────────────────────
+   El fondo del toast lo dibuja un SVG (data-sileo-svg), no el <li>.
+   Sobre una página blanca, el relleno claro se pierde: le damos una sombra
+   suave al SVG para separarlo visualmente sin resaltar la forma de bocadillo. */
+[data-sileo-toast] [data-sileo-svg],
+[data-sileo-toast] svg {
+  filter: drop-shadow(0 4px 12px rgba(15, 23, 42, 0.12)) !important;
+}
+
+/* Descripción: forzar texto oscuro legible (el theme light de esta versión
+   de Sileo lo pone en blanco semitransparente sobre fondo claro). */
+[data-sileo-viewport][data-theme="light"] [data-sileo-description],
+[data-sileo-toast] [data-sileo-description] {
+  color: #334155 !important;
+}

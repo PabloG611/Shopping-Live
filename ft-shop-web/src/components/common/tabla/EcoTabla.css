@@ -1,0 +1,203 @@
+/* EcoTabla — estética copiada del EcoDataTable del ecosistema (react-ecosistema-unp),
+   adaptada para ser autónoma (sin react-bootstrap). Mismos tokens y clases. */
+.eco-data-table {
+  --eco-table-bg: #f9fafa;
+  --eco-table-surface: #ffffff;
+  --eco-table-text: #303d50;
+  --eco-table-text-muted: #5a6c7d;
+  --eco-table-border: rgba(48, 61, 80, 0.12);
+  --eco-table-header-bg: #ffffff;
+  --eco-table-header-border: #c9daf0;
+  --eco-table-accent: #0a4b93;
+  --eco-table-accent-deep: #003066;
+  --eco-table-accent-soft: #e8f2fc;
+  --eco-table-accent-selected: #dceaf8;
+  --eco-table-cell-interactive-hover: #c5dcf5;
+  --eco-table-row-hover: #f2f7fd;
+  --eco-table-row-border: #edf2f7;
+  --eco-table-scrollbar: #003066;
+  --eco-table-scrollbar-hover: #0a4b93;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--eco-table-surface);
+  border: 1px solid var(--eco-table-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.eco-data-table-body-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--eco-table-scrollbar) transparent;
+}
+
+.eco-data-table-body-content {
+  position: relative;
+  min-height: 100%;
+}
+
+.eco-data-table-body-wrap--sticky thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.eco-data-table-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 220px;
+  padding: 2rem;
+  color: var(--eco-table-text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.eco-tabla-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--eco-table-accent-soft);
+  border-top-color: var(--eco-table-accent);
+  border-radius: 50%;
+  animation: eco-tabla-spin 0.8s linear infinite;
+}
+@keyframes eco-tabla-spin { to { transform: rotate(360deg); } }
+
+.eco-data-table-grid {
+  width: 100%;
+  margin-bottom: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.eco-data-table-grid thead th {
+  background: var(--eco-table-header-bg);
+  color: var(--eco-table-text);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--eco-table-header-border);
+  white-space: nowrap;
+  text-align: center;
+  box-shadow: 0 1px 0 var(--eco-table-row-border);
+}
+
+.eco-data-table-grid tbody td {
+  padding: 10px 16px;
+  color: var(--eco-table-text);
+  font-size: 0.92rem;
+  border-bottom: 1px solid var(--eco-table-row-border);
+  vertical-align: middle;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eco-data-table-grid tbody tr {
+  transition: background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.eco-data-table-grid tbody tr:hover > td {
+  background: var(--eco-table-row-hover);
+}
+
+.eco-data-table-cell--no-padding {
+  padding: 0 !important;
+}
+
+/* Celda interactiva (enlace / abre modal): texto azul + hover propio. */
+.eco-data-table-cell--interactive {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.eco-data-table-cell--interactive .eco-data-table-cell__link-text {
+  color: var(--eco-table-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.eco-data-table-grid tbody tr:hover > td.eco-data-table-cell--interactive:hover,
+.eco-data-table-cell--interactive:hover {
+  background: var(--eco-table-cell-interactive-hover);
+}
+
+.eco-data-table-empty {
+  padding: 2.5rem 1rem !important;
+  color: var(--eco-table-text-muted);
+  text-align: center;
+}
+
+/* Resaltado de fila heredado del inventario (último bien agregado, sin placa,
+   fila con observación). El fondo se pinta en los <td> para que no lo tape el
+   hover de celda; el borde-indicador va en el primer <td> (border-collapse
+   separate ignora el border-left del <tr>). Deja la tabla IGUAL a la anterior. */
+.eco-data-table-grid tbody tr.inventario-ultimo-bien > td {
+  background-color: rgba(100, 116, 139, 0.08) !important;
+}
+.eco-data-table-grid tbody tr.inventario-ultimo-bien > td:first-child {
+  box-shadow: inset 3px 0 0 0 #94a3b8;
+}
+.eco-data-table-grid tbody tr.inventario-bien-sin-placa > td {
+  background-color: #fff8e1 !important;
+}
+.eco-data-table-grid tbody tr.inventario-bien-sin-placa > td:first-child {
+  box-shadow: inset 4px 0 0 0 #ff8f00;
+}
+.eco-data-table-grid tbody tr.bienes-table__row--con-observacion > td:first-child {
+  box-shadow: inset 3px 0 0 0 #f59e0b;
+}
+
+/* Footer de paginación cliente */
+.eco-tabla-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  padding: 0.6rem 1rem;
+  background: var(--eco-table-bg);
+  border-top: 1px solid var(--eco-table-row-border);
+}
+.eco-tabla-pag-info {
+  font-size: 0.78rem;
+  color: var(--eco-table-text-muted);
+  font-weight: 500;
+}
+.eco-tabla-pag-btn {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--eco-table-header-border);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--eco-table-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.eco-tabla-pag-btn:hover:not(:disabled) {
+  background: var(--eco-table-accent-soft);
+  border-color: var(--eco-table-accent);
+}
+.eco-tabla-pag-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Scrollbar delgada azul */
+.eco-data-table-body-wrap::-webkit-scrollbar { width: 6px; height: 6px; }
+.eco-data-table-body-wrap::-webkit-scrollbar-track { background: transparent; }
+.eco-data-table-body-wrap::-webkit-scrollbar-thumb {
+  background-color: var(--eco-table-scrollbar);
+  border-radius: 999px;
+  min-height: 24px;
+}
+.eco-data-table-body-wrap::-webkit-scrollbar-thumb:hover { background-color: var(--eco-table-scrollbar-hover); }

@@ -1,0 +1,155 @@
+/* ============================================================
+   ModalConfirmarAccion — diálogo de confirmación elegante
+   El color (prop) se usa como acento; el resto es neutro/slate.
+   ============================================================ */
+
+.gi-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  animation: giConfirmFade 0.2s ease;
+}
+
+@keyframes giConfirmFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.gi-confirm {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.25);
+  animation: giConfirmIn 0.18s ease-out;
+}
+
+@keyframes giConfirmIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Franja de acento superior (indica alerta con el color recibido) */
+.gi-confirm__accent {
+  height: 4px;
+  width: 100%;
+}
+
+/* Encabezado: ícono en círculo + título */
+.gi-confirm__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.5rem 1.5rem 0.5rem;
+  text-align: center;
+}
+
+.gi-confirm__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.gi-confirm__titulo {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Cuerpo */
+.gi-confirm__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1.75rem 1.5rem;
+  text-align: center;
+}
+
+.gi-confirm__mensaje {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #475569;
+}
+
+.gi-confirm__destacado {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.gi-confirm__advertencia {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+/* Acciones */
+.gi-confirm__footer {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.gi-confirm__btn {
+  flex: 1;
+  max-width: 160px;
+  padding: 0.6rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gi-confirm__btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.gi-confirm__btn--cancelar {
+  background: #fff;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+.gi-confirm__btn--cancelar:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #303d50;
+}
+
+.gi-confirm__btn--confirmar {
+  color: #fff;
+  border: 1px solid;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+}
+
+.gi-confirm__btn--confirmar:hover:not(:disabled) {
+  filter: brightness(0.94);
+}
+
+.gi-confirm__btn--confirmar:active:not(:disabled) {
+  transform: translateY(1px);
+}

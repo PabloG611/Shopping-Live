@@ -1,0 +1,17 @@
+.walking-indicator {
+  position: absolute !important;
+  bottom: 0;
+  left: -40px;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+  animation: walkAcross 8s linear infinite;
+  transform: scaleX(-1);
+}
+
+@keyframes walkAcross {
+  0% { left: -40px; }
+  100% { left: calc(100% + 40px); }
+}

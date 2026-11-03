@@ -1,0 +1,45 @@
+.persona-card {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, var(--color-surface-card) 0%, var(--color-surface) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.persona-card__titulo {
+  margin: 0 0 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.persona-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.persona-card__nombre {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.persona-card__doc {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--color-text-soft);
+}
+
+.persona-card__tipo {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.persona-card__numero {
+  font-variant-numeric: tabular-nums;
+}

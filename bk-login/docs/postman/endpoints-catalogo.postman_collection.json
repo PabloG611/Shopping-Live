@@ -1,0 +1,190 @@
+{
+  "info": {
+    "_postman_id": "c7d2f1b0-8a4c-4b1b-9d3e-endpoints-catalogo-bk-login",
+    "name": "bk-login — Catálogo de Endpoints y Roles (Gateway)",
+    "description": "CRUD del catálogo de endpoints del gateway (tabla Endpoint) y de las asignaciones endpoint-rol (tabla EndpointsRole).\n\nBase: /api-gateway/endpoints/\n\nTodos los requests requieren JWT válido en el header Authorization: Bearer <token> (setea la variable jwt_token con un access_token obtenido en /api-auth/auth/microsoft/ o /api-auth/auth/2fa/).\n\nContrato completo: gateway/services/docs/endpoints-catalogo.md\nInventario general de rutas: docs/endpoints.md",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{jwt_token}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://172.16.20.119:8000", "type": "string" },
+    { "key": "jwt_token", "value": "", "type": "string", "description": "access_token obtenido del login (Microsoft o propio). Se usa como Bearer en todos los requests de esta colección." },
+    { "key": "id_endpoint", "value": "", "type": "string", "description": "UUID de un Endpoint existente. Se llena a mano con el valor devuelto por 'Guardar endpoint (crear)' o por 'Listar endpoints'." },
+    { "key": "id_rol", "value": "3100", "type": "string", "description": "Id de un Rol existente (Rol.id_rol). Ver GET /api-auth/users/rol/ para valores válidos." },
+    { "key": "id_endpoints_role", "value": "", "type": "string", "description": "UUID de una asignación EndpointsRole existente. Se llena a mano con el valor devuelto por 'Guardar rol de endpoint (crear)' o por 'Listar roles de endpoints'." }
+  ],
+  "item": [
+    {
+      "name": "1. Endpoints (catálogo)",
+      "item": [
+        {
+          "name": "Listar endpoints",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-gateway/endpoints/?is_active=true",
+              "host": ["{{base_url}}"],
+              "path": ["api-gateway", "endpoints", ""],
+              "query": [
+                { "key": "is_active", "value": "true" },
+                { "key": "locked", "value": "false", "disabled": true },
+                { "key": "public", "value": "false", "disabled": true },
+                { "key": "filtro", "value": "infraestructura", "disabled": true }
+              ]
+            },
+            "description": "Filtros opcionales: is_active, locked, public (true/false) y filtro (substring sobre el campo endpoint)."
+          }
+        },
+        {
+          "name": "Guardar endpoint (crear)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"api-sgai/gi/infraestructura/casos\",\n  \"is_active\": true,\n  \"locked\": false,\n  \"public\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-gateway/endpoints/guardar/",
+              "host": ["{{base_url}}"],
+              "path": ["api-gateway", "endpoints", "guardar", ""]
+            },
+            "description": "Sin 'id_endpoint' en el body, crea uno nuevo (o reutiliza el existente vía update_or_create si 'endpoint' ya existe, por ser único). Copia el 'id_endpoint' de la respuesta a la variable de colección para usarlo en los siguientes requests."
+          }
+        },
+        {
+          "name": "Guardar endpoint (actualizar)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_endpoint\": \"{{id_endpoint}}\",\n  \"endpoint\": \"api-sgai/gi/infraestructura/casos\",\n  \"is_active\": true,\n  \"locked\": false,\n  \"public\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-gateway/endpoints/guardar/",
+              "host": ["{{base_url}}"],
+              "path": ["api-gateway", "endpoints", "guardar", ""]
+            },
+            "description": "Con 'id_endpoint' actualiza ese registro puntual. Requiere la variable id_endpoint ya seteada (ver 'Guardar endpoint (crear)' o 'Listar endpoints')."
+          }
+        },
+        {
+          "name": "Eliminar endpoint",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_endpoint\": \"{{id_endpoint}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-gateway/endpoints/eliminar/",
+              "host": ["{{base_url}}"],
+              "path": ["api-gateway", "endpoints", "eliminar", ""]
+            },
+            "description": "Elimina el endpoint y, en cascada, cualquier EndpointsRole que lo referencie. También acepta método DELETE con el mismo body."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Roles de endpoints",
+      "item": [
+        {
+          "name": "Listar roles de endpoints",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-gateway/endpoints/roles/?id_endpoint={{id_endpoint}}",
+              "host": ["{{base_url}}"],
+              "path": ["api-gateway", "endpoints", "roles", ""],
+              "query": [
+                { "key": "id_endpoint", "value": "{{id_endpoint}}" },
+                { "key": "id_rol", "value": "{{id_rol}}", "disabled": true },
+                { "key": "is_active", "value": "true", "disabled": true }
+              ]
+            },
+            "description": "Filtros opcionales: id_endpoint, id_rol, is_active."
+          }
+        },
+        {
+          "name": "Guardar rol de endpoint (crear)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_endpoint\": \"{{id_endpoint}}\",\n  \"id_rol\": {{id_rol}},\n  \"is_active\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-gateway/endpoints/roles/guardar/",
+              "host": ["{{base_url}}"],
+              "path": ["api-gateway", "endpoints", "roles", "guardar", ""]
+            },
+            "description": "Sin 'id_endpoints_role' en el body, crea (o reutiliza vía update_or_create) la asignación para el par id_endpoint/id_rol. Requiere id_endpoint ya seteado. Copia el 'id_endpoints_role' de la respuesta a la variable de colección para usarlo en los siguientes requests."
+          }
+        },
+        {
+          "name": "Guardar rol de endpoint (actualizar / desactivar)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_endpoints_role\": \"{{id_endpoints_role}}\",\n  \"is_active\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-gateway/endpoints/roles/guardar/",
+              "host": ["{{base_url}}"],
+              "path": ["api-gateway", "endpoints", "roles", "guardar", ""]
+            },
+            "description": "Con 'id_endpoints_role' actualiza ese registro puntual (aquí, ejemplo desactivando el acceso sin borrar la asignación). También se puede reenviar id_endpoint y/o id_rol para reasignar la relación."
+          }
+        },
+        {
+          "name": "Eliminar rol de endpoint",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_endpoints_role\": \"{{id_endpoints_role}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-gateway/endpoints/roles/eliminar/",
+              "host": ["{{base_url}}"],
+              "path": ["api-gateway", "endpoints", "roles", "eliminar", ""]
+            },
+            "description": "Elimina la asignación endpoint-rol (no borra el Endpoint ni el Rol). También acepta método DELETE con el mismo body."
+          }
+        }
+      ]
+    }
+  ]
+}

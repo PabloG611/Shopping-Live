@@ -1,0 +1,222 @@
+{
+  "info": {
+    "_postman_id": "b6a1f0a0-6e3e-4a4a-9a1a-datos-basicos-bk-login",
+    "name": "bk-login — Actualizar datos básicos",
+    "description": "Colección para actualizar/crear los datos básicos de un usuario en bk-login (POST /api-auth/users/update_data/) y los catálogos de apoyo necesarios para llenar los campos tipo FK (país, departamento, municipio, zona, EPS, fondo de pensiones, tipo de identificación, tipo de vinculación).\n\nVer docs/endpoints.md y docs/replicas.md en el repo para más contexto.\n\nRequisitos:\n- El endpoint requiere que el `username` ya exista como `User` de Django (ej. registrado vía /api-auth/users/register/ o autenticado al menos una vez vía /api-auth/auth/microsoft/).\n- No requiere JWT (`save_data_basic` no tiene @jwt_required), pero SecureRequestMiddleware puede bloquear peticiones fuera de ALLOWED_SOURCES en entornos 'prod'; en local/dev normalmente pasa igual con un warning.\n- Guardar DatosBasicosUsuario/DatosContactoUsuario/PerfilUsuario dispara réplica automática hacia las sedes sesp/unp/ser (ver docs/replicas.md).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://172.16.20.119:8000", "type": "string" },
+    { "key": "username", "value": "daniel.ballesteros", "type": "string" },
+    { "key": "basicos_usuario", "value": "8d11674e-d01e-4875-ab24-4ee7034c8bdf", "type": "string", "description": "UUID de DatosBasicosUsuario existente, para forzar actualización en vez de creación. Dejar vacío para que el backend intente inferirlo por perfil o número de identificación." },
+    { "key": "celular_uno_actual", "value": "3001234567", "type": "string", "description": "Valor actual del celular principal del usuario. Debes consultarlo antes (ver nota en 'Actualizar solo correo') y ponerlo aquí para no perderlo." },
+    { "key": "celular_dos_actual", "value": "", "type": "string" },
+    { "key": "celular_emergencia_actual", "value": "3007654321", "type": "string" },
+    { "key": "numero_identificacion_actual", "value": "1234567890", "type": "string", "description": "Obligatorio en CUALQUIER update_data, aunque solo quieras tocar otro campo — ver nota en 'Actualizar solo correo'." },
+    { "key": "tipo_identificacion_actual", "value": "1", "type": "string", "description": "Obligatorio en CUALQUIER update_data — FK requerida (null=False) en IdentificacionUsuario." },
+    { "key": "primer_nombre_actual", "value": "Juan", "type": "string", "description": "Obligatorio en CUALQUIER update_data — NombrePersonaUsuario.primer_nombre es null=False, blank=False." },
+    { "key": "primer_apellido_actual", "value": "Pérez", "type": "string", "description": "Obligatorio en CUALQUIER update_data — NombrePersonaUsuario.primer_apellido es null=False, blank=False." }
+  ],
+  "item": [
+    {
+      "name": "1. Catálogos de apoyo (para obtener IDs válidos)",
+      "item": [
+        {
+          "name": "Tipo de identificación",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/tipoidentificacion/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "tipoidentificacion", ""]
+            }
+          }
+        },
+        {
+          "name": "País",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/pais/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "pais", ""]
+            }
+          }
+        },
+        {
+          "name": "Departamento (por país)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/departamento/?pais=1",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "departamento", ""],
+              "query": [{ "key": "pais", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Municipio (por departamento)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/municipio/?departamento=1",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "municipio", ""],
+              "query": [{ "key": "departamento", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Zona (urbana/rural)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/zona/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "zona", ""]
+            }
+          }
+        },
+        {
+          "name": "Tipo estado civil",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/tipoestadocivil/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "tipoestadocivil", ""]
+            }
+          }
+        },
+        {
+          "name": "EPS",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/tipoeps/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "tipoeps", ""]
+            }
+          }
+        },
+        {
+          "name": "Fondo de pensiones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/tipofondopensiones/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "tipofondopensiones", ""]
+            }
+          }
+        },
+        {
+          "name": "Tipo de vinculación",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/tipovinculacion/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "tipovinculacion", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Actualizar datos básicos",
+      "item": [
+        {
+          "name": "Crear/actualizar — zona urbana (contratista)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"datosFormulario\": {\n    \"username\": \"{{username}}\",\n    \"basicos_usuario\": \"{{basicos_usuario}}\",\n\n    \"numero_identificacion\": \"1234567890\",\n    \"tipo_identificacion\": 1,\n    \"fecha_expedicion\": \"2015-03-10\",\n\n    \"primer_nombre\": \"Juan\",\n    \"segundo_nombre\": \"Carlos\",\n    \"primer_apellido\": \"Pérez\",\n    \"segundo_apellido\": \"Gómez\",\n\n    \"sexo_persona\": 1,\n    \"genero_persona\": 1,\n    \"orientacion_persona\": 1,\n    \"gp_rh\": 1,\n\n    \"celular_uno\": \"3001234567\",\n    \"celular_dos\": \"\",\n    \"celular_emergencia\": \"3007654321\",\n    \"correo_electronico\": \"jperez@example.com\",\n\n    \"pais\": 1,\n    \"departamento\": 1,\n    \"municipio\": 1,\n    \"zona\": \"1\",\n    \"nombre_barrio\": \"Centro\",\n    \"tipo_viaprincipal\": \"Calle\",\n    \"numero_viaprincipal\": \"10\",\n    \"letra_principal\": \"A\",\n    \"es_bis\": false,\n    \"cuadrante_principal\": \"Sur\",\n    \"numero_viasecundaria\": \"5\",\n    \"letra_secundaria\": \"B\",\n    \"cuadrante_secundario\": \"Este\",\n    \"numero_placa\": \"23\",\n    \"complemento\": \"Apto 301\",\n\n    \"estado_civil\": 1,\n    \"fondo_pensiones\": 1,\n    \"eps\": 1,\n    \"acepto_politicas\": true,\n    \"tipo_vinculacion\": 1,\n\n    \"numero_contrato\": \"CT-2026-001\",\n    \"fecha_iniciocontrato\": \"2026-01-15\",\n    \"fecha_fincontrato\": \"2026-12-31\"\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/update_data/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "update_data", ""]
+            },
+            "description": "Zona '1' = urbana (usa los campos nombre_barrio/tipo_viaprincipal/...). tipo_vinculacion=1 = contratista, por eso incluye numero_contrato/fechas. Dejar 'basicos_usuario' vacío en la primera llamada (se crea); reusar el UUID devuelto por la respuesta en llamadas siguientes para actualizar en vez de duplicar."
+          }
+        },
+        {
+          "name": "Crear/actualizar — zona rural",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"datosFormulario\": {\n    \"username\": \"{{username}}\",\n    \"basicos_usuario\": \"{{basicos_usuario}}\",\n\n    \"numero_identificacion\": \"1234567890\",\n    \"tipo_identificacion\": 1,\n    \"fecha_expedicion\": \"2015-03-10\",\n\n    \"primer_nombre\": \"Juan\",\n    \"primer_apellido\": \"Pérez\",\n\n    \"sexo_persona\": 1,\n    \"genero_persona\": 1,\n\n    \"celular_uno\": \"3001234567\",\n    \"correo_electronico\": \"jperez@example.com\",\n\n    \"pais\": 1,\n    \"departamento\": 1,\n    \"municipio\": 1,\n    \"zona\": \"2\",\n    \"corregimiento\": \"El Retiro\",\n    \"centro_poblado\": \"La Esperanza\",\n    \"vereda\": \"La Loma\",\n\n    \"estado_civil\": 2,\n    \"fondo_pensiones\": 1,\n    \"eps\": 1,\n    \"acepto_politicas\": true,\n    \"tipo_vinculacion\": 2\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/update_data/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "update_data", ""]
+            },
+            "description": "Zona '2' = rural (usa corregimiento/centro_poblado/vereda en vez de los campos de dirección urbana). tipo_vinculacion=2 (funcionario) no dispara el guardado de contrato/resolución en este ejemplo — solo se guarda si tipo_vinculacion es 1 (contratista) o el modelo de resolución correspondiente."
+          }
+        },
+        {
+          "name": "Actualización parcial (solo datos complementarios)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"datosFormulario\": {\n    \"username\": \"{{username}}\",\n    \"basicos_usuario\": \"{{basicos_usuario}}\",\n    \"eps\": 2,\n    \"fondo_pensiones\": 2\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/update_data/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "update_data", ""]
+            },
+            "description": "Requiere 'basicos_usuario' con un UUID ya existente (o que el backend logre inferirlo por perfil/identificación). save_complementary_data solo persiste los campos que efectivamente llegan en el body (_has_key), así que se puede mandar solo eps/fondo_pensiones sin tocar el resto."
+          }
+        },
+        {
+          "name": "Actualizar solo correo (preservando identificación/nombre/celulares) ⚠️",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"datosFormulario\": {\n    \"username\": \"{{username}}\",\n    \"basicos_usuario\": \"{{basicos_usuario}}\",\n\n    \"numero_identificacion\": \"{{numero_identificacion_actual}}\",\n    \"tipo_identificacion\": {{tipo_identificacion_actual}},\n    \"primer_nombre\": \"{{primer_nombre_actual}}\",\n    \"primer_apellido\": \"{{primer_apellido_actual}}\",\n\n    \"correo_electronico\": \"nuevo.correo@example.com\",\n    \"celular_uno\": \"{{celular_uno_actual}}\",\n    \"celular_dos\": \"{{celular_dos_actual}}\",\n    \"celular_emergencia\": \"{{celular_emergencia_actual}}\"\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api-auth/users/update_data/",
+              "host": ["{{base_url}}"],
+              "path": ["api-auth", "users", "update_data", ""]
+            },
+            "description": "⚠️ IMPORTANTE: a diferencia de ubicación/datos complementarios/contrato (que sí tienen guard _has_*_payload), TRES grupos de update_user_data() se ejecutan SIEMPRE sin importar qué mandes en el body:\n\n1) Grupo 1 — save_identification_data + save_name_data (identificación y nombre)\n2) Grupo 3 — save_phone_data + save_email_data (contacto)\n\nSi omites un campo de estos grupos, form_data.get(...) devuelve None y ese None SÍ se guarda (la key sigue estando en el dict que recibe save_data()).\n\nConsecuencia real detectada probando este endpoint: si solo mandas 'correo_electronico' (sin numero_identificacion/tipo_identificacion), esos campos quedan en NULL — y como numero_identificacion es null=False y tipo_identificacion es una FK requerida, la base de datos rechaza el guardado con IntegrityError. El código traduce CUALQUIER IntegrityError/DjangoValidationError en este paso al mismo mensaje engañoso: {\"message\": \"El número de identificación ya está registrado\", \"code\": \"IDENTIFICATION_ALREADY_EXISTS\"} — aunque la causa real no sea un duplicado, sino un NOT NULL violado. (primer_nombre/primer_apellido son igual de obligatorios, pero save_name_data no tiene ni siquiera ese try/except, así que omitirlos da un 500 genérico en vez de un mensaje claro.)\n\nPor eso este request reenvía SIEMPRE numero_identificacion, tipo_identificacion, primer_nombre, primer_apellido y los celulares, junto con el correo nuevo — usando las variables *_actual de la colección. Actualiza esas variables con los valores reales del usuario (vía POST /api-auth/users/data/ o GET /api-auth/users/consultarpersona/) antes de correr este request, o sobreescribirás sus datos reales con los valores de ejemplo.\n\nRequiere 'basicos_usuario' con el UUID real del usuario para que get_existing_pks resuelva los registros existentes en vez de crear unos nuevos."
+          }
+        }
+      ]
+    }
+  ]
+}

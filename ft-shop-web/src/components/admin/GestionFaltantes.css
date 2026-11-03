@@ -1,0 +1,55 @@
+/* ===========================================================
+   GestionFaltantes — ajustes de tabla (Faltantes UNP / Floresta)
+   Corrige el solapamiento de columnas (Ubicación/Responsable) y
+   hace que la tabla use la altura disponible del panel.
+   =========================================================== */
+
+/* El bloque de la pestaña ocupa la altura para que la tabla se extienda. */
+.gestion-faltantes .transferencia-page__bloque-tab {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Contenedor de la tabla: crece y permite el scroll interno. */
+.gestion-faltantes .bienes-table-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.gestion-faltantes .bienes-table-frame {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* La zona scrollable del cuerpo usa la altura disponible (antes tenía altura
+   libre y se veía corta). Con un mínimo generoso para que llene el panel. */
+.gestion-faltantes .bienes-table-scroll {
+  flex: 1;
+  min-height: 0;
+  max-height: calc(100vh - 320px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Respetar el ancho del colgroup y evitar que el texto largo desborde/solape.
+   Las celdas de texto se recortan con puntos suspensivos (el contenido completo
+   queda accesible por el atributo title en el TSX). */
+.gestion-faltantes .bienes-table td,
+.gestion-faltantes .bienes-table th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 0; /* junto con table-layout:fixed, fuerza a respetar el colgroup */
+}
+
+/* La columna de acciones no se recorta (contiene los botones). */
+.gestion-faltantes .bienes-table td:last-child,
+.gestion-faltantes .bienes-table th:last-child {
+  overflow: visible;
+  white-space: normal;
+  max-width: none;
+}

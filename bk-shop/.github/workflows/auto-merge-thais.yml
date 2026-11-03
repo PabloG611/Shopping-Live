@@ -1,0 +1,34 @@
+name: Merge prod -> thais
+ 
+on:
+  push:
+    branches:
+      - prod
+ 
+jobs:
+  merge-prod-to-thais:
+    runs-on: release-runner
+ 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # importante para poder hacer merg
+          token: ${{ secrets.RELEASE_REPO_TOKEN }}
+ 
+      - name: Configure Git
+        run: |
+          git config user.name "thais-bot"
+          git config user.email "ecosistema@unp.gov.co"
+ 
+      - name: Checkout thais
+        run: |
+          git checkout thais
+ 
+      - name: Merge prod into thais
+        run: |
+          git merge origin/prod --no-edit
+ 
+      - name: Push changes
+        run: |
+          git push origin thais

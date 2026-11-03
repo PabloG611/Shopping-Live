@@ -1,0 +1,125 @@
+.app-shell {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+}
+
+.app-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  /* Impide que tablas anchas (min-width) ensanchen el main más que el viewport: la barra vertical queda en pantalla */
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  padding: 1.5rem 1.25rem 2.5rem;
+  overflow-x: hidden;
+  /* scroll: carril siempre visible en la mayoría de escritorios (no solo al pasar el mouse) */
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.app-main::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+
+.app-main::-webkit-scrollbar-track {
+  background: transparent;
+  margin-block: 4px;
+}
+
+.app-main::-webkit-scrollbar-thumb {
+  min-height: 40px;
+  background-color: var(--scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.app-main::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+.app-main__inner {
+  min-width: 0;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.app-footer {
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem 1.25rem;
+  padding: 0.4rem 1rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-footer-bg);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.app-footer__block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.app-footer__orgs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 0.45rem;
+  row-gap: 0.15rem;
+}
+
+.app-footer__highlight {
+  font-weight: 500;
+  font-size: 0.68rem;
+  color: var(--color-text-soft);
+}
+
+.app-footer__divider {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1px;
+  height: 0.7rem;
+  background: var(--color-border-strong);
+  opacity: 0.85;
+}
+
+.app-footer__block--meta {
+  font-size: 0.68rem;
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .app-footer__block--meta {
+    text-align: left;
+  }
+}
+
+/* Dispositivos táctiles: evitar que el contenido se corte por la barra del navegador */
+@media (pointer: coarse) {
+  .app-shell {
+    overflow: visible;
+    min-height: auto;
+  }
+  .app-main {
+    overflow-y: visible;
+    min-height: auto;
+    padding-bottom: 4rem;
+  }
+}

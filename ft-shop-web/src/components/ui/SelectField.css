@@ -1,0 +1,44 @@
+/* Mismo patrón que ft-sesp-graerr-analista-riesgo (App.css): truncar placeholder/valor */
+.react-select-container .react-select__value-container {
+  min-width: 0;
+}
+
+.react-select-container .react-select__single-value,
+.react-select-container .react-select__placeholder {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.select-field__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #5c6474;
+}
+
+.select-field__label.required::after {
+  content: ' *';
+  color: #b42318;
+  font-weight: 700;
+}
+
+/* Menú en portal: por encima de tablas; misma familia tipográfica que body (el portal cuelga de body) */
+.react-select__menu-portal {
+  z-index: 10050;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    'Noto Sans',
+    sans-serif;
+}

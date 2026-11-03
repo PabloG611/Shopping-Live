@@ -1,0 +1,323 @@
+/* ============================================================
+   Formulario "Quien recibe" — Diseño limpio y organizado
+   ============================================================ */
+
+.receptor-trx {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+}
+
+.receptor-trx__legend {
+  display: none;
+}
+
+/* ── Fila de documento (tipo + número + lupa) ───────────── */
+
+.receptor-trx__doc-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr;
+  gap: 12px;
+  align-items: start;
+  width: 100%;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  position: relative;
+  overflow: visible;
+}
+
+@media (max-width: 900px) {
+  .receptor-trx__doc-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.receptor-trx__field--tipo-doc {
+  min-width: 0;
+}
+
+.receptor-trx__doc-input-wrap {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.receptor-trx__doc-input-wrap .receptor-trx__input {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+}
+
+
+.receptor-trx__buscar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  font-size: 0.9rem;
+  color: #fff;
+  background: linear-gradient(135deg, #0F2D5C 0%, #1a4a8a 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(15, 45, 92, 0.2);
+}
+
+.receptor-trx__buscar:hover:not(:disabled) {
+  background: linear-gradient(135deg, #162a40 0%, #2563eb 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 45, 92, 0.3);
+}
+
+.receptor-trx__buscar:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .receptor-trx__doc-row {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+}
+
+/* Container query: cuando el panel central es estrecho */
+@container central (max-width: 450px) {
+  .receptor-trx__doc-row {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+  .receptor-trx__grid {
+    grid-template-columns: 1fr;
+  }
+  .receptor-trx__dos-columnas {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Campo base ─────────────────────────────────────────── */
+
+.receptor-trx__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.receptor-trx__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.receptor-trx__req {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.receptor-trx__input,
+.receptor-trx__select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.875rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1e293b;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.receptor-trx__input:focus,
+.receptor-trx__select:focus {
+  outline: none;
+  border-color: #0F2D5C;
+  box-shadow: 0 0 0 3px rgba(15, 45, 92, 0.08);
+}
+
+.receptor-trx__input::placeholder {
+  color: #94a3b8;
+}
+
+/* ── Hints y mensajes ───────────────────────────────────── */
+
+.receptor-trx__hint {
+  margin: 8px 0 0;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid #e2e8f0;
+}
+
+.receptor-trx__hint--loading {
+  color: #0F2D5C;
+  font-weight: 600;
+  background: rgba(15, 45, 92, 0.04);
+  border-left-color: #0F2D5C;
+  animation: hintPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ── Bloque de resultados (después de buscar) ───────────── */
+
+.receptor-trx__bloque {
+  margin-top: 16px;
+  padding: 20px 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  animation: bloqueEntrada 0.3s ease;
+}
+
+@keyframes bloqueEntrada {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Grid de campos (2 columnas) ────────────────────────── */
+
+.receptor-trx__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
+
+@media (max-width: 900px) {
+  .receptor-trx__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .receptor-trx__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.receptor-trx__grid--full {
+  grid-column: 1 / -1;
+}
+
+.receptor-trx__grid--half {
+  grid-column: span 1;
+}
+
+/* ── Nombre completo (readonly, destacado) ──────────────── */
+
+.receptor-trx__readonly {
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0F2D5C;
+  background: linear-gradient(135deg, rgba(15, 45, 92, 0.03) 0%, rgba(15, 45, 92, 0.06) 100%);
+  border: 1.5px solid rgba(15, 45, 92, 0.12);
+  border-radius: 8px;
+  letter-spacing: -0.01em;
+}
+
+/* ── Select wrapper (react-select override) ─────────────── */
+
+.receptor-trx__select-wrap {
+  width: 100%;
+}
+
+/* ── Responsive: panel central estrecho ─────────────────── */
+
+@media (max-width: 900px) {
+  .receptor-trx__bloque {
+    padding: 16px;
+  }
+  .receptor-trx__grid {
+    gap: 12px;
+  }
+}
+
+
+/* ── Validación visual: campos con error ────────────────── */
+
+.receptor-trx__doc-row--error {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1) !important;
+}
+
+.receptor-trx__input--error {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1) !important;
+}
+
+.receptor-trx__field--error {
+  position: relative;
+}
+
+.receptor-trx__field--error .eco-select__control,
+.receptor-trx__field--error .css-13cymwt-control,
+.receptor-trx__field--error [class*="-control"] {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1) !important;
+}
+
+.receptor-trx__error-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fef2f2;
+  color: #dc2626;
+  margin-left: 4px;
+  animation: errorPulse 1.5s ease-in-out infinite;
+  vertical-align: middle;
+}
+
+@keyframes errorPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+
+/* ── Dos columnas: izq (nombre/cargo/dep) | der (grupo/sede/contrato) ── */
+
+.receptor-trx__dos-columnas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .receptor-trx__dos-columnas {
+    grid-template-columns: 1fr;
+  }
+}
+
+.receptor-trx__columna {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .receptor-trx__dos-columnas {
+    grid-template-columns: 1fr;
+  }
+}

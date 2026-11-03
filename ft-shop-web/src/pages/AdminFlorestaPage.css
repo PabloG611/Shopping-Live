@@ -1,0 +1,2392 @@
+﻿/* Admin Floresta - Formulario de bÃºsqueda (mismo estilo que receptor-trx) */
+
+.floresta-busqueda {
+  margin-bottom: 1.5rem;
+}
+
+.floresta-busqueda__fieldset {
+  width: 100%;
+  padding: 1.1rem 1.25rem 1.35rem;
+  border: 1px solid rgb(48 61 80 / 0.18);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgb(48 61 80 / 0.08);
+  text-align: left;
+}
+
+.floresta-busqueda__legend {
+  margin: 0 0 0.85rem;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #303d50;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.floresta-busqueda__info-icon {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  cursor: help;
+  transition: color 0.15s ease;
+}
+
+.floresta-busqueda__info-icon:hover {
+  color: #365072;
+}
+
+/* ── Tooltip enriquecido de ayuda de filtros ────────────────────── */
+.fb-tip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  outline: none;
+}
+
+.fb-tip .floresta-busqueda__info-icon:hover,
+.fb-tip:focus-visible .floresta-busqueda__info-icon {
+  color: #365072;
+}
+
+.fb-tip__pop {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 40;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.85rem 0.95rem;
+  background: linear-gradient(160deg, #303d50 0%, #26313f 100%);
+  color: #e8edf3;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28), 0 2px 6px rgba(15, 23, 42, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  /* Oculto por defecto, aparece con animación al hover/focus */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.98);
+  transform-origin: top left;
+  transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.18s;
+  pointer-events: none;
+  text-align: left;
+  font-weight: 400;
+}
+
+.fb-tip:hover .fb-tip__pop,
+.fb-tip:focus-within .fb-tip__pop {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Flechita */
+.fb-tip__pop::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 12px;
+  width: 12px;
+  height: 12px;
+  background: #303d50;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  transform: rotate(45deg);
+}
+
+.fb-tip__head {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fb-tip__head-icon {
+  color: #7cc0ff;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.fb-tip__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.fb-tip__row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.fb-tip__name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.fb-tip__badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.22);
+  color: #cbd5e1;
+}
+
+.fb-tip__badge--req {
+  background: rgba(217, 119, 6, 0.9);
+  color: #fff;
+}
+
+.fb-tip__desc {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: #b8c2cf;
+}
+
+.fb-tip__foot {
+  font-size: 0.7rem;
+  color: #93a3b5;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.floresta-busqueda__campo-hint {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: #94a3b8;
+}
+
+.floresta-busqueda__fila {
+  display: grid;
+  grid-template-columns: minmax(11rem, 14rem) 1fr auto;
+  gap: 0.75rem 1rem;
+  align-items: end;
+}
+
+.floresta-busqueda__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.floresta-busqueda__campo--grow {
+  min-width: 0;
+}
+
+.floresta-busqueda__campo--btn {
+  align-self: end;
+}
+
+/* Labels ahora manejados por FloatingField */
+.floresta-busqueda__label {
+  display: none;
+}
+
+.floresta-busqueda__label::after {
+  content: '';
+}
+
+.floresta-busqueda__select,
+.floresta-busqueda__input {
+  height: 44px;
+  padding: 0.5rem 0.75rem 0;
+  border: 1px solid rgb(48 61 80 / 0.25);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #212529;
+  background: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.floresta-busqueda__select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+.floresta-busqueda__select:focus,
+.floresta-busqueda__input:focus {
+  outline: none;
+  border-color: #303d50;
+  box-shadow: 0 0 0 3px rgb(48 61 80 / 0.12);
+}
+
+.floresta-busqueda__input::placeholder {
+  color: rgb(48 61 80 / 0.4);
+}
+
+/* FloatingField sobre SelectorCoordinador */
+.floresta-busqueda__campo [data-selector="coordinador"] {
+  z-index: 1;
+}
+
+.floresta-busqueda__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 40px;
+  padding: 0 1.4rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: #303d50;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 2px 6px rgb(48 61 80 / 0.2);
+}
+
+.floresta-busqueda__btn:hover:not(:disabled) {
+  background: #1e2a38;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgb(48 61 80 / 0.25);
+}
+
+.floresta-busqueda__btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.floresta-busqueda__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@media (max-width: 640px) {
+  .floresta-busqueda__fila {
+    grid-template-columns: 1fr;
+  }
+
+  .floresta-busqueda__btn {
+    width: 100%;
+  }
+}
+
+
+/* â”€â”€â”€ Detalle de bien por placa â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.floresta-detalle {
+  margin-top: 1.5rem;
+  animation: floresta-fadeIn 0.3s ease;
+}
+
+@keyframes floresta-fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.floresta-detalle__card {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgb(48 61 80 / 0.15);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgb(48 61 80 / 0.07);
+}
+
+.floresta-detalle__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgb(48 61 80 / 0.08);
+}
+
+.floresta-detalle__placa {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #303d50;
+  letter-spacing: 0.02em;
+}
+
+.floresta-detalle__estado {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+}
+
+.floresta-detalle__estado--activo {
+  color: #1a7a3a;
+  background: rgb(26 122 58 / 0.1);
+}
+
+.floresta-detalle__estado--almacen {
+  color: #8a6d00;
+  background: rgb(138 109 0 / 0.1);
+}
+
+.floresta-detalle__estado--baja {
+  color: #d13c47;
+  background: rgb(209 60 71 / 0.08);
+}
+
+.floresta-detalle__info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.floresta-detalle__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.floresta-detalle__info-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgb(48 61 80 / 0.6);
+}
+
+.floresta-detalle__info-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.floresta-detalle__btn-transferir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid #303d50;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #303d50;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.floresta-detalle__btn-transferir:hover {
+  background: #303d50;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgb(48 61 80 / 0.2);
+}
+
+/* Historial */
+
+.floresta-detalle__historial {
+  margin-top: 1.5rem;
+}
+
+.floresta-detalle__historial-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #303d50;
+}
+
+.floresta-detalle__historial-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: #303d50;
+  border-radius: 20px;
+}
+
+.floresta-detalle__tipo {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.floresta-detalle__tipo--transferencia { color: #303d50; background: rgb(48 61 80 / 0.1); }
+.floresta-detalle__tipo--asignacion { color: #1a7a3a; background: rgb(26 122 58 / 0.1); }
+.floresta-detalle__tipo--reintegro { color: #8a6d00; background: rgb(138 109 0 / 0.1); }
+.floresta-detalle__tipo--baja { color: #d13c47; background: rgb(209 60 71 / 0.08); }
+.floresta-detalle__tipo--entrada { color: #1a5a7a; background: rgb(26 90 122 / 0.1); }
+.floresta-detalle__tipo--salida { color: #6b3fa0; background: rgb(107 63 160 / 0.08); }
+
+.floresta-detalle__cc {
+  color: rgb(48 61 80 / 0.5);
+  font-size: 0.78rem;
+}
+
+
+/* BotÃ³n acciÃ³n en tabla */
+.floresta-tabla__btn-accion {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid #303d50;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #303d50;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.floresta-tabla__btn-accion:hover {
+  background: #303d50;
+  color: #fff;
+}
+
+.floresta-tabla__btn-accion--inventariar {
+  background: #1a7a3a;
+  color: #fff;
+  border: 1.5px solid #1a7a3a;
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(26, 122, 58, 0.25);
+  white-space: nowrap;
+}
+
+.floresta-tabla__btn-accion--inventariar:hover {
+  background: #14612e;
+  border-color: #14612e;
+  box-shadow: 0 3px 8px rgba(26, 122, 58, 0.4);
+  transform: translateY(-1px);
+}
+
+.floresta-tabla__btn-accion--inventariar:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(26, 122, 58, 0.3);
+}
+
+.floresta-tabla__btn-accion--eliminar {
+  background: #fff;
+  color: #d13c47;
+  border: 1.5px solid #d13c47;
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.floresta-tabla__btn-accion--eliminar:hover {
+  background: #d13c47;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(209, 60, 71, 0.35);
+  transform: translateY(-1px);
+}
+
+.floresta-tabla__btn-accion--eliminar:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(209, 60, 71, 0.3);
+}
+
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); box-shadow: 0 0 8px rgba(209, 60, 71, 0.4); }
+}
+
+
+.floresta-detalle__descripcion {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  color: rgb(48 61 80 / 0.7);
+  font-weight: 400;
+}
+
+
+/* Agregar bien */
+.floresta-agregar {
+  margin-top: 1.5rem;
+  animation: floresta-fadeIn 0.3s ease;
+}
+
+
+/* BotÃ³n marcar como inventariado */
+.floresta-detalle__btn-inventariar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid #303d50;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #303d50;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.floresta-detalle__btn-inventariar:hover:not(:disabled) {
+  background: #303d50;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgb(48 61 80 / 0.2);
+}
+
+.floresta-detalle__btn-inventariar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   ANIMACIONES PARA INVENTARIO FÃSICO
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* Efecto incandescente para el Ãºltimo bien agregado */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    background-color: transparent;
+    border: 2px solid transparent;
+  }
+  50% {
+    box-shadow: 0 0 30px 8px rgba(40, 167, 69, 0.8),
+                inset 0 0 30px 5px rgba(40, 167, 69, 0.3);
+    background-color: rgba(40, 167, 69, 0.15);
+    border: 2px solid rgba(40, 167, 69, 0.6);
+  }
+}
+
+/* Indicador sutil para la fila del Ãºltimo bien agregado */
+@keyframes pulseRow {
+  0%, 100% {
+    background-color: rgba(5, 150, 105, 0.05);
+  }
+  50% {
+    background-color: rgba(5, 150, 105, 0.14);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    border-left-color: transparent;
+    opacity: 0.7;
+  }
+  to {
+    border-left-color: #059669;
+    opacity: 1;
+  }
+}
+
+.inventario-ultimo-bien {
+  border-left: 2px solid #94a3b8 !important;
+  background-color: rgba(100, 116, 139, 0.05) !important;
+  box-shadow: none;
+}
+
+.inventario-bien-sin-placa {
+  background: #fff8e1 !important;
+  border-left: 4px solid #ff8f00 !important;
+}
+
+.inventario-bien-sin-placa td {
+  color: #5d4037 !important;
+}
+
+.inventario-bien-sin-placa .bienes-table__placa {
+  color: #e65100 !important;
+  font-style: italic;
+}
+
+/* Efecto pulsante para el icono de alerta de observaciones */
+@keyframes pulseAlert {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   TABS ADMIN FLORESTA - ESTILO CARD (como admin-base-datos)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+.transferencia-page .consulta-tabs__list {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  background: rgb(48 61 80 / 0.06);
+  border-radius: 50px;
+  margin-bottom: 1.5rem;
+  width: fit-content;
+}
+
+.transferencia-page .consulta-tabs__tab {
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  padding: 0.55rem 1.2rem;
+  min-height: auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5c6474;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.transferencia-page .consulta-tabs__tab::after {
+  display: none;
+}
+
+.transferencia-page .consulta-tabs__tab:hover::after {
+  display: none;
+}
+
+.transferencia-page .consulta-tabs__tab:hover {
+  background: rgb(48 61 80 / 0.06);
+  color: #303d50;
+  transform: none;
+  box-shadow: none;
+}
+
+.transferencia-page .consulta-tabs__tab--activa {
+  background: #303d50;
+  border: none;
+  color: white;
+  box-shadow: 0 2px 8px rgb(48 61 80 / 0.25);
+  transform: none;
+  animation: tabEntrar 0.3s ease-out, tabPulso 3s ease-in-out 0.3s infinite;
+}
+
+@keyframes tabEntrar {
+  0% { transform: scale(0.92); opacity: 0.6; }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes tabPulso {
+  0%, 100% { box-shadow: 0 2px 8px rgb(48 61 80 / 0.25); }
+  50% { box-shadow: 0 3px 14px rgb(48 61 80 / 0.4); }
+}
+
+.transferencia-page .consulta-tabs__tab--activa:hover {
+  transform: none;
+  box-shadow: 0 3px 12px rgb(48 61 80 / 0.3);
+  color: white;
+  background: #303d50;
+}
+
+@media (max-width: 768px) {
+  .transferencia-page .consulta-tabs__list {
+    flex-wrap: wrap;
+    border-radius: 12px;
+    width: auto;
+  }
+
+  .transferencia-page .consulta-tabs__tab {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.75rem;
+    min-height: 2.8rem;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .transferencia-page .consulta-tabs__list {
+    flex-wrap: wrap;
+  }
+}
+
+/* BotÃ³n pulsante para generar formato */
+.btn-pulsante-generar-formato {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.btn-pulsante-generar-formato:hover {
+  animation: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgb(40 167 69 / 0.4);
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgb(40 167 69 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgb(40 167 69 / 0);
+  }
+}
+
+
+/* ============================================================
+   GestiÃ³n Inventario â€” Visual refinado panel central
+   ============================================================ */
+
+/* â”€â”€ TÃ­tulo del servicio que se estÃ¡ plaqueteando â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* DiseÃ±o monocromÃ¡tico alineado a la paleta (brand #303d50 / border #365072) */
+.gi-servicio-activo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  margin-bottom: 12px;
+  background: #fff;
+  border: 1px solid var(--consulta-border, #e2e8f0);
+  border-left: 4px solid var(--consulta-tab-active-border, #365072);
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.gi-servicio-activo--vacio {
+  border-left-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.gi-servicio-activo__icono {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(54, 80, 114, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--consulta-tab-active-border, #365072);
+}
+
+.gi-servicio-activo--vacio .gi-servicio-activo__icono {
+  background: rgba(100, 116, 139, 0.1);
+  color: #64748b;
+}
+
+.gi-servicio-activo__contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.gi-servicio-activo__label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #475569;
+}
+
+.gi-servicio-activo__nombre {
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--consulta-brand, #303d50);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gi-servicio-activo__nombre--vacio {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #64748b;
+  white-space: normal;
+}
+
+.gi-servicio-activo__codigo {
+  align-self: flex-start;
+  margin-top: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--consulta-tab-active-border, #365072);
+  background: rgba(54, 80, 114, 0.09);
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+/* â”€â”€ Scanner: focus sutil sin invadir otros inputs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.inventario-fisico__scanner .eco-escaner__input,
+.inventario-fisico__scanner input[type="text"] {
+  border: none !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  transition: background 0.2s ease !important;
+}
+
+.inventario-fisico__scanner input[type="text"]:focus {
+  background: #fff !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Foco sutil en el contenedor del escÃ¡ner */
+.inventario-fisico__scanner .escaner-row {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.inventario-fisico__scanner .escaner-row:focus-within {
+  box-shadow: 0 0 0 2px rgba(71, 85, 105, 0.1);
+  border-color: #94a3b8 !important;
+  background: #fff !important;
+}
+
+/* â”€â”€ Tabla: bordes sutiles y filas mÃ¡s limpias â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.inventario-fisico__tabla-wrap table,
+.bienes-table,
+table.inventario-table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 1px solid rgba(48, 61, 80, 0.08) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+.inventario-fisico__tabla-wrap table thead tr th,
+.bienes-table thead tr th,
+table.inventario-table thead tr th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  background: #eef1f5 !important;   /* sólido: la fila no se transparenta al scrollear */
+  color: #475569 !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 11px 12px !important;
+  border-bottom: 2px solid #cbd5e1 !important;
+  border-right: none !important;
+}
+
+/* Alineación de títulos = alineación del contenido de cada columna.
+   Orden columnas: 1 N°, 2 Placa, 3 Descripción, 4 Serial, 5 Est., 6 Cédula,
+   7 Responsable, 8 Servicio, 9 Ubicación, 10 Fecha, 11 Acciones. */
+.bienes-table thead tr th:nth-child(1),   /* N° */
+.bienes-table thead tr th:nth-child(5),   /* Est. */
+.bienes-table thead tr th:nth-child(11) { /* Acciones */
+  text-align: center !important;
+}
+
+.inventario-fisico__tabla-wrap table tbody tr td,
+.bienes-table tbody tr td,
+table.inventario-table tbody tr td {
+  border-bottom: 1px solid rgba(48, 61, 80, 0.05) !important;
+  padding: 8px 10px !important;
+  vertical-align: middle !important;
+}
+
+.inventario-fisico__tabla-wrap table tbody tr:last-child td,
+.bienes-table tbody tr:last-child td,
+table.inventario-table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+.inventario-fisico__tabla-wrap table tbody tr:hover td,
+.bienes-table tbody tr:hover td,
+table.inventario-table tbody tr:hover td {
+  background: rgba(48, 61, 80, 0.02) !important;
+}
+
+/* â”€â”€ Botones de acciÃ³n inferiores â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.inventario-fisico__acciones,
+div.inventario-fisico__acciones {
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  margin-top: 1rem !important;
+}
+
+/* Guardar Inventario */
+.floresta-busqueda__btn[style*="background: rgb(40, 167, 69)"],
+.floresta-busqueda__btn[style*="background: #28a745"] {
+  background: linear-gradient(135deg, #1a7a3a 0%, #22a050 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(26, 122, 58, 0.25) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  transition: all 0.18s ease !important;
+}
+
+.floresta-busqueda__btn[style*="background: rgb(40, 167, 69)"]:hover:not(:disabled),
+.floresta-busqueda__btn[style*="background: #28a745"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #145f2c 0%, #1a7a3a 100%) !important;
+  box-shadow: 0 4px 14px rgba(26, 122, 58, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Excel Provisional */
+.floresta-busqueda__btn[style*="background: rgb(26, 122, 58)"],
+.floresta-busqueda__btn[style*="background: #1a7a3a"] {
+  background: linear-gradient(135deg, #1a7a3a 0%, #2d9a50 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(26, 122, 58, 0.2) !important;
+  font-weight: 600 !important;
+}
+
+/* Limpiar registros */
+.floresta-busqueda__btn[style*="background: rgb(209, 60, 71)"],
+.floresta-busqueda__btn[style*="background: #d13c47"] {
+  background: linear-gradient(135deg, #b91c1c 0%, #d13c47 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2) !important;
+  font-weight: 600 !important;
+  transition: all 0.18s ease !important;
+}
+
+.floresta-busqueda__btn[style*="background: rgb(209, 60, 71)"]:hover:not(:disabled),
+.floresta-busqueda__btn[style*="background: #d13c47"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #991b1b 0%, #b91c1c 100%) !important;
+  box-shadow: 0 4px 14px rgba(185, 28, 28, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Base del botÃ³n floresta con mejor look */
+.floresta-busqueda__btn {
+  padding: 0.55rem 1.1rem !important;
+  font-size: 0.82rem !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  min-height: 36px !important;
+}
+
+/* ============================================================
+   MÃ³dulo Coordinador â€” versiÃ³n GRANDE (panel central)
+   Reutiliza el DetalleCoordinador con la clase modificadora
+   .gi-detalle-coord--grande para aprovechar todo el ancho.
+   ============================================================ */
+
+.gi-coord-central {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* Sin altura fija ni scroll propio: el contenido fluye y el scroll lo
+     maneja el contenedor central (.consulta-central__body), evitando el
+     doble scroll dentro del panel. */
+}
+
+/* Encabezado del mÃ³dulo â€” centrado */
+.gi-coord-central__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  padding: 1.3rem 1.25rem;
+  background: linear-gradient(135deg, #303d50 0%, #3d4d66 100%);
+  border-radius: 14px;
+  color: #fff;
+}
+
+.gi-coord-central__header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.14);
+  flex-shrink: 0;
+}
+
+.gi-coord-central__header-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gi-coord-central__title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.gi-coord-central__subtitle {
+  margin: 0.35rem auto 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 560px;
+}
+
+/* Barra de filtro */
+/* Cuerpo: fluye con el contenido (sin scroll propio) */
+.gi-coord-central__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Estado inicial: centra vertical y horizontalmente la tarjeta de búsqueda,
+   que ahora es el único elemento de la pantalla. */
+.gi-coord-central__body:has(.gi-coord-inicio) {
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+/* --- Modo grande del DetalleCoordinador --- */
+
+/* Flujo vertical claro: buscador â†’ ficha â†’ barra de bienes â†’ secciones */
+.gi-detalle-coord--grande {
+  gap: 1.25rem;
+}
+
+/* Buscador de coordinador (antes de seleccionar) */
+.gi-detalle-coord--grande .gi-detalle-coord__buscador {
+  max-width: 560px;
+}
+
+.gi-detalle-coord--grande .gi-detalle-coord__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  margin-bottom: 0.45rem;
+}
+
+/* Ficha del coordinador: monocromÃ¡tica, con aire y jerarquÃ­a clara */
+/* Ficha del coordinador (modo grande): franja compacta única en gradiente
+   slate. Sustituye al banner + ficha separados: todo en una sola barra. */
+.gi-detalle-coord--grande .gi-coord-ficha {
+  padding: 0.7rem 1rem;
+  background: linear-gradient(135deg, #303d50 0%, #3d4d66 100%);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+}
+
+.gi-detalle-coord--grande .gi-coord-ficha__top {
+  gap: 0.85rem;
+  align-items: center;
+}
+
+/* Avatar sobre la franja oscura: fondo translúcido */
+.gi-detalle-coord--grande .gi-coord-ficha__avatar {
+  width: 44px;
+  height: 44px;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+
+.gi-detalle-coord--grande .gi-coord-ficha__label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.gi-detalle-coord--grande .gi-coord-ficha__nombre {
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+.gi-detalle-coord--grande .gi-coord-ficha__cc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Badge de pendientes: inline dentro de la franja, a la derecha */
+.gi-detalle-coord--grande .gi-coord-ficha__top .gi-detalle-coord__badge--pend {
+  margin-left: auto;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  font-weight: 700;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* "Buscar otro": botón claro sobre la franja oscura */
+.gi-detalle-coord--grande .gi-detalle-coord__limpiar {
+  align-self: center;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #303d50;
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.gi-detalle-coord--grande .gi-detalle-coord__limpiar:hover {
+  background: #e7ebf1;
+  border-color: #e7ebf1;
+  color: #303d50;
+}
+
+.gi-detalle-coord--grande .gi-detalle-coord__limpiar:active {
+  transform: translateY(1px);
+}
+
+/* La fila de badges separada ya no se usa en modo grande (el badge va inline) */
+.gi-detalle-coord--grande .gi-coord-ficha__top ~ .gi-detalle-coord__badges {
+  display: none;
+}
+
+/* Barra: tÃ­tulo de la lista + filtro de bienes en la misma fila */
+.gi-coord-lista__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid #eef2f7;
+}
+
+.gi-detalle-coord--grande .gi-coord-lista__titulo {
+  font-size: 1rem;
+  margin-top: 0;
+}
+
+.gi-detalle-coord--grande .gi-coord-lista__titulo-count {
+  color: #303d50;
+  background: #e7ebf1;
+}
+
+/* Input de filtro de bienes */
+.gi-coord-lista__filtro {
+  flex: 1;
+  min-width: 220px;
+  max-width: 360px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.88rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  color: #303d50;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gi-coord-lista__filtro::placeholder {
+  color: #94a3b8;
+}
+
+.gi-coord-lista__filtro:focus {
+  border-color: #303d50;
+  box-shadow: 0 0 0 3px rgba(48, 61, 80, 0.12);
+}
+
+/* Secciones por servicio: cada servicio se separa visiblemente */
+.gi-coord-secciones {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.gi-coord-seccion {
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+}
+
+/* Barra para plegar/expandir todos los servicios */
+.gi-coord-secciones__barra {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.gi-coord-secciones__info {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+}
+.gi-coord-secciones__toggle {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 0.8rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #303d50;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.gi-coord-secciones__toggle:hover { border-color: #94a3b8; }
+
+/* Banda de encabezado del servicio: muy evidente (ahora clicable = acordeón) */
+.gi-coord-seccion__header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: #e7ebf1;
+  border: none;
+  border-bottom: 3px solid #303d50;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+.gi-coord-seccion:not(.is-open) .gi-coord-seccion__header {
+  border-bottom: 1px solid transparent;
+}
+.gi-coord-seccion__header:hover { background: #dde3ec; }
+
+/* Chevron del acordeón de servicio */
+.gi-coord-seccion__chevron {
+  color: #303d50;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.gi-coord-seccion__chevron.is-open { transform: rotate(90deg); }
+
+.gi-coord-seccion__badge-serv {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: #303d50;
+  padding: 0.18rem 0.5rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.gi-coord-seccion__codigo {
+  font-family: ui-monospace, monospace;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #303d50;
+  flex-shrink: 0;
+}
+
+.gi-coord-seccion__nombre {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+  min-width: 0;
+  flex: 1;
+}
+
+.gi-coord-seccion__count {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #303d50;
+  background: #e7ebf1;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Tabla de bienes dentro de cada secciÃ³n de servicio */
+.gi-coord-tabla-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.gi-coord-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.gi-coord-tabla thead th {
+  text-align: left;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  background: #f1f4f8;
+  border-bottom: 1px solid #cbd5e1;
+  white-space: nowrap;
+}
+
+.gi-coord-tabla__th-placa { width: 130px; }
+.gi-coord-tabla__th-serial { width: 180px; }
+.gi-coord-tabla__th-accion { width: 180px; text-align: center; }
+
+.gi-coord-tabla tbody td {
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid #eef2f7;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.gi-coord-tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.gi-coord-tabla tbody tr:hover td {
+  background: #f8fafc;
+}
+
+.gi-coord-tabla__placa {
+  font-weight: 700;
+  color: #303d50;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.gi-coord-tabla__serial {
+  color: #475569;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.gi-coord-tabla__accion {
+  text-align: center;
+}
+
+/* BotÃ³n Inventariar por fila */
+.gi-coord-inventariar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  background: #303d50;
+  border: 1px solid #303d50;
+  border-radius: 7px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.gi-coord-inventariar-btn:hover:not(:disabled) {
+  background: #3d4d66;
+  border-color: #3d4d66;
+}
+
+.gi-coord-inventariar-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* â”€â”€ Estado inicial (sin coordinador): zona destacada centrada â”€â”€ */
+.gi-coord-inicio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 680px;
+  margin: auto;
+  padding: 3.5rem 3rem;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+}
+
+.gi-coord-inicio__icono {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  /* Gradiente diagonal con brillo superior para dar volumen (no plano) */
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 45%),
+    linear-gradient(145deg, #3d4d66 0%, #303d50 55%, #232e3d 100%);
+  color: #fff;
+  margin-bottom: 0.4rem;
+  /* Sombra externa + anillo + luz interior superior = profundidad */
+  box-shadow:
+    0 10px 24px rgba(48, 61, 80, 0.35),
+    0 0 0 6px rgba(48, 61, 80, 0.08),
+    inset 0 2px 4px rgba(255, 255, 255, 0.25),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Sutil brillo/reflejo en la parte superior del círculo */
+.gi-coord-inicio__icono::after {
+  content: '';
+  position: absolute;
+  top: 8%;
+  left: 18%;
+  width: 46%;
+  height: 30%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+.gi-coord-inicio__icono svg {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.gi-coord-inicio__icono svg {
+  width: 34px;
+  height: 34px;
+}
+
+.gi-coord-inicio__titulo {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #303d50;
+}
+
+.gi-coord-inicio__texto {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #64748b;
+  max-width: 460px;
+}
+
+.gi-coord-inicio__campo {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  margin-top: 1.1rem;
+}
+
+.gi-coord-inicio__campo .gi-detalle-coord__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  text-align: center;
+}
+
+/* ── Input del buscador de coordinador (estado inicial): más grande y
+   llamativo, con halo animado que invita a escribir. Scoped a la tarjeta
+   para no afectar el mismo selector en otras pantallas. ── */
+.gi-coord-inicio__campo [data-selector="coordinador"] > div:first-child {
+  padding: 0.85rem 1.1rem !important;
+  border-width: 2px !important;
+  border-color: #c7d2fe !important;
+  border-radius: 12px !important;
+  gap: 0.7rem !important;
+  box-shadow: 0 4px 14px rgba(48, 61, 80, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  animation: gi-coord-input-pulse 2.4s ease-in-out infinite;
+}
+
+.gi-coord-inicio__campo [data-selector="coordinador"] > div:first-child:hover {
+  border-color: #6366f1 !important;
+  transform: translateY(-1px);
+}
+
+/* Al enfocar/escribir (borde slate que ya aplica el selector) se resalta el halo y se detiene el pulso */
+.gi-coord-inicio__campo [data-selector="coordinador"] > div:first-child:focus-within {
+  border-color: #303d50 !important;
+  box-shadow: 0 0 0 4px rgba(48, 61, 80, 0.15), 0 6px 18px rgba(48, 61, 80, 0.12);
+  animation: none;
+}
+
+/* Input y placeholder más grandes dentro de la caja */
+.gi-coord-inicio__campo [data-selector="coordinador"] input {
+  font-size: 1rem !important;
+}
+
+.gi-coord-inicio__campo [data-selector="coordinador"] svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Halo pulsante sutil para llamar la atención en reposo */
+@keyframes gi-coord-input-pulse {
+  0%, 100% { box-shadow: 0 4px 14px rgba(48, 61, 80, 0.08); }
+  50% { box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.1), 0 4px 14px rgba(48, 61, 80, 0.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gi-coord-inicio__campo [data-selector="coordinador"] > div:first-child {
+    animation: none;
+  }
+}
+
+
+/* ============================================================
+   Reportes de inventario — lista plana (acordeon) + detalle inline
+   Sin cajas/lienzos anidados: el modulo fluye en el panel central.
+   ============================================================ */
+
+.gi-rep {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Barra de filtros ── */
+.gi-rep-filtros {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.gi-rep-filtros__anio {
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.82rem;
+  background: #fff;
+  font-weight: 700;
+  color: #303d50;
+  cursor: pointer;
+}
+
+.gi-rep-filtros__sep {
+  height: 22px;
+  width: 1px;
+  background: #cbd5e1;
+}
+
+.gi-rep-filtros__input {
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.82rem;
+  background: #fff;
+  color: #303d50;
+  outline: none;
+}
+
+.gi-rep-filtros__input:focus {
+  border-color: #303d50;
+  box-shadow: 0 0 0 3px rgba(48, 61, 80, 0.1);
+}
+
+.gi-rep-filtros__limpiar {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #eef2f7;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.gi-rep-filtros__limpiar:hover { background: #e2e8f0; }
+
+.gi-rep-filtros__count {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* ── Mensajes / resultado placa ── */
+.gi-rep-msg {
+  text-align: center;
+  color: #64748b;
+  padding: 2.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* ── Búsqueda de placa: input con spinner ── */
+.gi-rep-placa-box { position: relative; display: inline-flex; align-items: center; }
+.gi-rep-placa-box__spinner {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 2px solid #cbd5e1; border-top-color: #365072;
+  animation: gi-rep-spin 0.7s linear infinite;
+}
+@keyframes gi-rep-spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+/* ── Tarjeta de resultado de búsqueda de placa ── */
+.gi-rep-placa-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+  animation: gi-rep-card-in 0.22s ease;
+}
+@keyframes gi-rep-card-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.gi-rep-placa-card.is-loading { color: #475569; font-size: 0.85rem; border-style: dashed; }
+.gi-rep-placa-card.is-ok { border-color: #86efac; background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 60%); }
+.gi-rep-placa-card.is-no { border-color: #fca5a5; background: linear-gradient(135deg, #fef2f2 0%, #ffffff 60%); }
+
+.gi-rep-placa-card__spinner {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid #cbd5e1; border-top-color: #365072;
+  animation: gi-rep-spin2 0.7s linear infinite; flex-shrink: 0;
+}
+@keyframes gi-rep-spin2 { to { transform: rotate(360deg); } }
+
+.gi-rep-placa-card__icon {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.05rem; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.gi-rep-placa-card.is-ok .gi-rep-placa-card__icon { background: #16a34a; }
+.gi-rep-placa-card.is-no .gi-rep-placa-card__icon { background: #dc2626; }
+
+.gi-rep-placa-card__body { flex: 1; min-width: 0; }
+.gi-rep-placa-card__title { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+.gi-rep-placa-card__placa {
+  font-size: 1rem; font-weight: 800; color: #1e293b;
+  font-family: ui-monospace, monospace; letter-spacing: 0.02em;
+}
+.gi-rep-placa-card__ok-txt { font-size: 0.8rem; font-weight: 700; color: #16a34a; }
+.gi-rep-placa-card__no-txt { font-size: 0.8rem; font-weight: 700; color: #dc2626; }
+.gi-rep-placa-card__meta {
+  display: flex; flex-wrap: wrap; gap: 0.25rem 1rem;
+  margin-top: 3px; font-size: 0.78rem; color: #64748b;
+}
+.gi-rep-placa-card__meta b { color: #475569; font-weight: 600; }
+
+.gi-rep-placa-card__btn {
+  flex-shrink: 0; padding: 0.4rem 0.85rem; font-size: 0.78rem; font-weight: 700;
+  border: 1px solid #16a34a; border-radius: 8px;
+  background: #16a34a; color: #fff; cursor: pointer; transition: background 0.15s ease;
+}
+.gi-rep-placa-card__btn:hover { background: #15803d; }
+
+/* Resaltado de la fila del inventario donde está la placa buscada */
+.gi-rep-item.is-resaltado {
+  outline: 2px solid #16a34a;
+  outline-offset: -1px;
+  border-radius: 10px;
+  animation: gi-rep-flash 1.2s ease;
+}
+@keyframes gi-rep-flash {
+  0% { background: #dcfce7; }
+  100% { background: transparent; }
+}
+
+/* ── Grupos regionales (acordeon nivel 1) ── */
+.gi-rep-grupos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gi-rep-grupo {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.gi-rep-grupo:not(.is-colapsado) {
+  border-color: #303d50;
+  box-shadow: 0 6px 18px rgba(48, 61, 80, 0.14);
+}
+
+.gi-rep-grupo__header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  background: #f8fafc;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.gi-rep-grupo__header:hover { background: #eef2f7; }
+
+.gi-rep-grupo:not(.is-colapsado) .gi-rep-grupo__header {
+  background: linear-gradient(135deg, #3a4a60 0%, #303d50 100%);
+}
+
+/* Chevron dentro de una cajita, más visible */
+.gi-rep-grupo__chevron {
+  color: #94a3b8;
+  transition: transform 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.gi-rep-grupo:not(.is-colapsado) .gi-rep-grupo__chevron {
+  transform: rotate(90deg);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.gi-rep-grupo__icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.gi-rep-grupo:not(.is-colapsado) .gi-rep-grupo__icono {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* Título + subtítulo apilados, sin apiñarse */
+.gi-rep-grupo__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.gi-rep-grupo__titulo {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #303d50;
+  line-height: 1.2;
+}
+
+.gi-rep-grupo__sub {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.gi-rep-grupo:not(.is-colapsado) .gi-rep-grupo__titulo { color: #fff; }
+.gi-rep-grupo:not(.is-colapsado) .gi-rep-grupo__sub { color: rgba(255, 255, 255, 0.75); }
+
+/* Badge de conteo: número grande + etiqueta pequeña, centrados en columna */
+.gi-rep-grupo__badge {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  min-width: 72px;
+  padding: 0.35rem 0.85rem;
+  border-radius: 10px;
+  background: #e7ebf1;
+  color: #303d50;
+  flex-shrink: 0;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.gi-rep-grupo__badge-num {
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.gi-rep-grupo__badge-lbl {
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.72;
+}
+
+.gi-rep-grupo:not(.is-colapsado) .gi-rep-grupo__badge {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+.gi-rep-grupo__body {
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ── Inventario (acordeon nivel 2) ── */
+.gi-rep-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gi-rep-item:hover { border-color: #cbd5e1; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06); }
+
+.gi-rep-item.is-open {
+  border-color: #303d50;
+  box-shadow: 0 2px 8px rgba(48, 61, 80, 0.1);
+}
+
+.gi-rep-item__row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0.95rem;
+}
+
+.gi-rep-item.is-open .gi-rep-item__row { background: #f1f4f8; }
+
+.gi-rep-item__main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  flex: 1.4;
+}
+
+.gi-rep-item__sede { font-weight: 700; font-size: 0.9rem; color: #303d50; }
+.gi-rep-item__ubic { font-size: 0.78rem; color: #64748b; }
+.gi-rep-item__srv { font-size: 0.72rem; font-weight: 600; color: #475569; }
+
+.gi-rep-item__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.gi-rep-item__meta-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.gi-rep-item__meta-val {
+  font-size: 0.83rem;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gi-rep-item__bienes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  flex-shrink: 0;
+  min-width: 76px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  background: #f1f5f9;
+  text-align: center;
+}
+
+.gi-rep-item.is-open .gi-rep-item__bienes { background: #e7ebf1; }
+
+.gi-rep-item__bienes-num {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #303d50;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.gi-rep-item__bienes-tot { font-weight: 400; color: #94a3b8; }
+
+.gi-rep-item__bienes-lbl {
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.gi-rep-tipo {
+  flex-shrink: 0;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #e7ebf1;
+  color: #475569;
+}
+
+.gi-rep-tipo.is-reg { background: #dbeafe; color: #1e40af; }
+
+.gi-rep-item__acciones {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.gi-rep-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gi-rep-icon-btn:hover { background: #eef2f7; color: #303d50; }
+
+.gi-rep-icon-btn.is-active {
+  background: #303d50;
+  border-color: #303d50;
+  color: #fff;
+}
+
+.gi-rep-icon-btn--danger { border-color: #fecaca; color: #dc2626; }
+.gi-rep-icon-btn--danger:hover { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
+
+/* ── Detalle inline del inventario ── */
+.gi-rep-item__detalle {
+  padding: 1rem 1.1rem 1.2rem;
+  border-top: 1px solid #e2e8f0;
+  background: #fbfcfe;
+}
+
+.gi-rep-detalle__cargando {
+  padding: 1.25rem;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+/* "Realizado por" (colaboradores del acta) */
+.gi-rep-realizado {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.gi-rep-realizado__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.gi-rep-realizado__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gi-rep-realizado__chip {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #303d50;
+  background: #eef2f7;
+  border: 1px solid #dbe2ea;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+}
+
+.gi-rep-realizado__cargo {
+  font-weight: 400;
+  color: #64748b;
+}
+
+/* Titulo de la lista de bienes */
+.gi-rep-bienes-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #475569;
+  margin-bottom: 0.7rem;
+}
+
+.gi-rep-bienes-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #303d50;
+  background: #e7ebf1;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+}
+
+.gi-rep-vacio {
+  margin: 0;
+  padding: 0.9rem;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  background: #fff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+}
+
+/* ── Lista de bienes: "tabla ligera" (filas alineadas, sin bordes pesados) ── */
+.gi-rep-lista {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Grilla compartida por cabecera y filas: columnas alineadas */
+.gi-rep-lista__head,
+.gi-rep-lista__row {
+  display: grid;
+  grid-template-columns:
+    36px            /* # */
+    minmax(90px, 0.7fr)   /* placa */
+    46px            /* est */
+    minmax(160px, 1.6fr)  /* descripcion */
+    minmax(110px, 1fr)    /* serial */
+    minmax(150px, 1.3fr)  /* responsable */
+    minmax(150px, 1.3fr)  /* custodio */
+    minmax(120px, 1.1fr)  /* ubicacion */
+    minmax(120px, 0.9fr)  /* fecha */
+    minmax(120px, 1.1fr); /* nota */
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.8rem;
+}
+
+.gi-rep-lista__head {
+  background: #303d50;
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Los títulos de columna son <span> con color propio; forzar blanco en la cabecera */
+.gi-rep-lista__head > span {
+  color: #fff !important;
+  font-weight: 700;
+}
+
+.gi-rep-lista__row {
+  border-top: 1px solid #eef2f7;
+  font-size: 0.82rem;
+  color: #1e293b;
+}
+
+.gi-rep-lista__row:nth-child(odd) { background: #fbfcfe; }
+.gi-rep-lista__row:hover { background: #eef2f7; }
+.gi-rep-lista__row.is-malo { background: #fef2f2; }
+
+/* Celdas */
+.gi-rep-c-idx { color: #94a3b8; font-weight: 700; text-align: center; }
+.gi-rep-c-placa { font-weight: 800; color: #303d50; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; gap: 2px; }
+.gi-rep-c-est { text-align: center; }
+.gi-rep-c-desc { color: #1e293b; }
+.gi-rep-c-serial { color: #475569; font-variant-numeric: tabular-nums; word-break: break-word; }
+.gi-rep-c-resp,
+.gi-rep-c-cust { color: #1e293b; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.gi-rep-c-ubic { color: #475569; }
+.gi-rep-c-fecha { color: #64748b; font-size: 0.76rem; font-variant-numeric: tabular-nums; }
+.gi-rep-c-nota { color: #64748b; font-size: 0.78rem; word-break: break-word; }
+.gi-rep-c-cc { font-size: 0.7rem; color: #94a3b8; }
+.gi-rep-c-dash { color: #cbd5e1; }
+
+.gi-rep-tag-sobrante {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #92400e;
+  background: #fef3c7;
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+/* Badge de estado */
+.gi-rep-est {
+  display: inline-block;
+  padding: 0.12rem 0.45rem;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.gi-rep-est.is-b { background: #dcfce7; color: #166534; }
+.gi-rep-est.is-r { background: #fef9c3; color: #854d0e; }
+.gi-rep-est.is-m { background: #fee2e2; color: #991b1b; }
+
+/* En pantallas estrechas, la tabla ligera se apila como filas legibles */
+@media (max-width: 1100px) {
+  .gi-rep-lista__head { display: none; }
+  .gi-rep-lista__row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 0.8rem;
+    padding: 0.7rem 0.8rem;
+  }
+  .gi-rep-lista__row > span { display: flex; flex-direction: column; gap: 2px; }
+  .gi-rep-lista__row > span::before {
+    content: attr(data-label);
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #94a3b8;
+  }
+  .gi-rep-c-desc, .gi-rep-c-nota { grid-column: 1 / -1; }
+}
+
+/* ── Boton generar PDF ── */
+.gi-rep-pdf-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.gi-rep-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  background: #303d50;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.gi-rep-pdf-btn:hover { background: #3d4d66; }
+
+/* ── Selector rápido de servicio (título Plaqueteando) ──────── */
+.gi-servicio-activo__selector {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  min-width: 0;
+}
+
+.gi-servicio-activo__selector:disabled {
+  cursor: default;
+}
+
+.gi-servicio-activo__chevron {
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: transform 0.2s ease;
+}
+
+.gi-servicio-activo__selector[aria-expanded="true"] .gi-servicio-activo__chevron {
+  transform: rotate(180deg);
+}
+
+.gi-servicio-selector__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.gi-servicio-selector__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 41;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
+  padding: 0.4rem;
+  max-height: 340px;
+  overflow-y: auto;
+  animation: giSelectorIn 0.16s ease;
+}
+
+@keyframes giSelectorIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.gi-servicio-selector__titulo {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  padding: 0.5rem 0.6rem 0.4rem;
+}
+
+.gi-servicio-selector__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.6rem;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+
+.gi-servicio-selector__item:hover {
+  background: #f1f5f9;
+}
+
+.gi-servicio-selector__item.is-activo {
+  background: #eff6ff;
+}
+
+.gi-servicio-selector__item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.gi-servicio-selector__item-nombre {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1e293b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gi-servicio-selector__item-codigo {
+  font-size: 0.68rem;
+  color: #64748b;
+}
+
+.gi-servicio-selector__item-badge {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #303d50;
+  background: #e2e8f0;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  min-width: 32px;
+  text-align: center;
+}
+
+/* ── Estados del selector: cargando y CTA sin servicio ──────── */
+.gi-servicio-activo__nombre--cargando {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.85;
+}
+
+.gi-servicio-activo__spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: giSpin 0.7s linear infinite;
+}
+
+@keyframes giSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Cuando no hay servicio seleccionado: llamar la atención suavemente */
+.gi-servicio-activo__selector--pulso {
+  animation: giPulso 1.6s ease-in-out infinite;
+  border-radius: 10px;
+}
+
+@keyframes giPulso {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+  50% { box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); }
+}
+
+/* ── Fila superior: servicio a inventariar + persona presente ── */
+.gi-fila-superior {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: stretch;
+  margin-bottom: 12px;
+}
+
+/* Dentro de la fila, quitar el margen inferior propio de cada bloque
+   y hacer que ocupen toda la altura de la celda. */
+.gi-fila-superior > .gi-servicio-activo {
+  margin-bottom: 0;
+  height: 100%;
+}
+
+.gi-fila-superior > * {
+  min-width: 0;
+}
+
+/* El banner "¿Quién tiene los bienes?" puede traer margin-bottom inline;
+   lo neutralizamos dentro de la fila para alinear con el servicio. */
+.gi-fila-superior > div:last-child {
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .gi-fila-superior {
+    grid-template-columns: 1fr;
+  }
+}
